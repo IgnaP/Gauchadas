@@ -1,5 +1,5 @@
 # Ingenieria de Software 2
 
-ICI
+## ICI
 
-Grupo 18
+### Grupo 18
