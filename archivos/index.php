@@ -46,7 +46,7 @@
       </div>
       <ul class="nav navbar-nav">
         <li class="borde"><strong class="navbar-text tituloDeLaNavbar">Una Gauchada</strong></li>
-        <li class="active" id="pestgauchadas"><a href="">Gauchadas</a></li>
+        <li class="active" id="pestgauchadas"><a href="index.php">Gauchadas</a></li>
 
       </ul>
       <ul class="nav navbar-nav navbar-right">

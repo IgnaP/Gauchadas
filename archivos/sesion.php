@@ -3,6 +3,11 @@
   if (!isset($_SESSION["usuario"])) {
     header("location: http://localhost/UnaGauchada/");
   }
+  if (isset($_GET['pID'])) {
+    $publID=$_GET['pID'];
+  } else {
+    $publID=0;
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +23,12 @@
   <script src="js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function(){
-      $("#lacaja").load("gauchadas.php");
+      var pID=<?php echo $publID; ?>;
+      if (pID==0) {
+        $("#lacaja").load("gauchadas.php");
+      } else {
+        $("#lacaja").load("publicacion.php",{"ID":pID});
+      }
     });
     function cargarPerfil(){
       $("#lacaja").load("perfil.php");
@@ -55,7 +65,7 @@
       </div>
       <ul class="nav navbar-nav">
         <li class="borde"><strong class="navbar-text tituloDeLaNavbar">Una Gauchada</strong></li>
-        <li class="active" id="pestgauchadas"><a href="">Gauchadas</a></li>
+        <li class="active" id="pestgauchadas"><a href="sesion.php">Gauchadas</a></li>
         <li id="pestMG"><a onclick="misGauchadas()" class="puntero">Mis gauchadas</a></li>
         <li id="pestNG"><a onclick="nuevaGauchada()" class="puntero">Nueva gauchada</a></li>
         <li id="pestComprar"><a onclick="comprar()" class="puntero">Comprar creditos</a></li>

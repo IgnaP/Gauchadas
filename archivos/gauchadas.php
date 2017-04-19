@@ -14,18 +14,9 @@
       $("#publicaciones").load("publicaciones.php");
 
       $("#filtrarForm").submit(function(){
-//        var datosFormulario= $(this).serialize();
-//        $.post("publicaciones.php", datosFormulario, publResp);
+        $("#publicaciones").load("publicaciones.php", {"tit": $("#titulo").val(), "cat": $("#categorias").val(), "ciu": $("#ciudades").val(),});
         return false;
       });
-
-      function publResp(datos){
-        if (datos=="exito") {
-
-        } else {
-
-        }
-      }
     });
   </script>
 </head>
@@ -36,7 +27,7 @@
         <div class="col-md-10 col-md-offset-1">
           <h3>Filtros</h3>
           <form class="" action="" method="post" id="filtrarForm">
-            <input type="text" class="form-control separar" placeholder="Buscar">
+            <input type="text" class="form-control separar" placeholder="Buscar" id="titulo">
             <label for="ciudades">Ciudades</label>
             <select class="form-control" name="ciudades" id="ciudades">
               <option>Todas</option>

@@ -1,13 +1,21 @@
 <?php
-  session_start();
-  require("conexionBD.php");
-  conectarse($conexion);
-  $email=$_SESSION["usuario"];
-  $consulta="SELECT * FROM Usuarios WHERE Email='$email'";
-  $resultado=mysqli_query($conexion,$consulta);
-  $fila=mysqli_fetch_row($resultado);
-  $nom=$fila[3];$ap=$fila[4];$fn=$fila[5];$tel=$fila[6];
+  require("datosDelUsuario.php");
   $fechaN=date("d/m/Y", strtotime($fn));
+
+  $cons="SELECT `Nombre` FROM `reputacion` WHERE `Puntos`<='$pRep' OR `Puntos`<=-1";
+  $result=mysqli_query($conexion,$cons);
+  $cant=mysqli_num_rows($result);
+  if ($cant == 1) {
+    $row=mysqli_fetch_row($result);
+    $rep=$row[0];
+  } else {
+    $cont=0;
+    while ($row=mysqli_fetch_row($result)) {
+      if (++$cont == $cant) {
+        $rep=$row[0];
+      }
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +30,7 @@
     barRep();
   });
   function barRep(){
-    var rep = 0;
+    var rep = <?php echo $pRep; ?>;
     $("#barRep").text(rep);
     if (rep >= 0) {
       if (rep == 0) {
@@ -63,7 +71,7 @@
       <div class="">
         <div class="row">
           <div class="col-sm-5"><label>Reputacion:</label></div>
-          <div class="col-sm-7"><p id="repNom" class="text-left">Observador</p></div>
+          <div class="col-sm-7"><p id="repNom" class="text-left"><?php echo $rep; ?></p></div>
         </div>
         <div class="progress">
           <div class="progress-bar" role="progressbar" aria-valuemin="10" aria-valuemax="100" id="barRep"></div>

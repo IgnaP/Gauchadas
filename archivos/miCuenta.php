@@ -1,5 +1,5 @@
 <?php
-  session_start();
+  require("datosDelUsuario.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,7 @@
 </head>
 <body>
   <div class="row">
-    <div class="col-md-5 col-md-offset-4 transparente">
+    <div class="col-md-6 col-md-offset-3 transparente">
       <h3>Mi cuenta</h3>
       <div class="container-fluid separar">
         <div class="bordeDiv separar">
@@ -66,13 +66,13 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="nombre" class="control-label">Nombre</label>
-                      <input type="text" class="form-control inps" id="nombre" value="<?php echo "$_SESSION[nombre]"; ?>" required autofocus maxlength="20" name="nombre">
+                      <input type="text" class="form-control inps" id="nombre" value="<?php echo $nom; ?>" required autofocus maxlength="20" name="nombre">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="apellido" class="control-label">Apellido</label>
-                      <input type="text" class="form-control inps" id="apellido" value="<?php echo "$_SESSION[apellido]"; ?>" required maxlength="20" name="apellido">
+                      <input type="text" class="form-control inps" id="apellido" value="<?php echo $ap; ?>" required maxlength="20" name="apellido">
                     </div>
                   </div>
                 </div>
@@ -80,13 +80,13 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="fecha" class="control-label">Fecha de nacimiento</label>
-                      <input type="date" class="form-control inps" id="fecha" value="<?php echo "$_SESSION[fn]"; ?>" min="1900-01-01" max="2010-12-31" required name="fecha">
+                      <input type="date" class="form-control inps" id="fecha" value="<?php echo $fn; ?>" min="1900-01-01" max="2010-12-31" required name="fecha">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="telefono" class="control-label">Telefono</label>
-                      <input type="tel" class="form-control inps" id="telefono" value="<?php echo "$_SESSION[tel]"; ?>" pattern="[0-9]{7,15}" required title="De 7 a 15 numeros" name="telefono">
+                      <input type="tel" class="form-control inps" id="telefono" value="<?php echo $tel; ?>" pattern="[0-9]{7,15}" required title="De 7 a 15 numeros" name="telefono">
                     </div>
                   </div>
                 </div>

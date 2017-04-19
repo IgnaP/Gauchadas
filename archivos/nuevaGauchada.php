@@ -85,7 +85,7 @@
                 <div class="col-md-10">
                   <div class="form-group">
                     <label for="descrip">Descripcion</label>
-                    <textarea name="descrip" rows="5" class="form-control" placeholder="Escriba una descripcion" required style="resize: none;" maxlength="200"></textarea>
+                    <textarea name="descrip" rows="5" class="form-control" placeholder="Escriba una descripcion" required style="resize: none;" maxlength="400"></textarea>
                   </div>
                 </div>
               </div>
