@@ -32,7 +32,8 @@
       $("#pestIS").addClass("active");
     }
     function recuperarClave(){
-    //  $("#lacaja").load(".php");
+      $("li").removeClass("active");
+      $("#lacaja").load("recuperarClave.php");
     }
   </script>
 </head>

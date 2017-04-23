@@ -1,6 +1,8 @@
 <?php
+  session_start();
   require("conexionBD.php");
   conectarse($conexion);
+  $mail=$_SESSION['usuario'];
   $ID=$_POST["ID"];
   $sql = "SELECT * FROM `publicaciones` WHERE `ID`='$ID'";
   $result=mysqli_query($conexion, $sql);
@@ -15,6 +17,16 @@
   $resultado=mysqli_query($conexion,$sql2);
   $fila = mysqli_fetch_row($resultado);
   $cat=$fila[0];
+  $sql2="SELECT `ID` FROM `usuarios` WHERE `Email`='$mail'";
+  $resultado=mysqli_query($conexion,$sql2);
+  $fila = mysqli_fetch_row($resultado);
+  $usrID=$fila[0];
+  if ($row[8]==$usrID) {
+    $owner=true;
+  } else {
+    $owner=false;
+  }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +57,11 @@
             </div>
           </div>
           <div class="col-md-3 col-md-offset-1">
-            <button type="button" name="button" class="btn btn-default">Postularse</button>
+            <?php if ($owner) { ?>
+              <button type="button" name="button" class="btn btn-default">Ver postulantes</button>
+            <?php } else { ?>
+              <button type="button" name="button" class="btn btn-default">Postularse</button>
+            <?php } ?>
           </div>
         </div>
         <div class="row">

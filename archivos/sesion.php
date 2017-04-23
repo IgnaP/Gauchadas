@@ -49,7 +49,7 @@
       $("#pestMG").addClass("active");
     }
     function comprar(){
-    //  $("#lacaja").load(".php");
+      $("#lacaja").load("creditos.php");
       $("li").removeClass("active");
       $("#pestComprar").addClass("active");
     }
