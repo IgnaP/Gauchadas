@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
-
   <script>
   $(document).ready(function(){
+    $("#historialDiv").load("publicaciones.php", {"activa": "false"});
     $.get("datosDelUsuario.php?datos=devolver", function(datos){
       var jDatos= JSON.parse(datos);
       $("#nombreApellido").text(jDatos.nom+" "+jDatos.ap);
@@ -68,7 +68,9 @@
     </div>
     <div class="col-md-7 col-md-offset-1 transparente alturaminima">
       <h3 class="text-center">Historial</h3>
+      <div class="" id="historialDiv">
 
+      </div>
     </div>
   </div>
 </body>

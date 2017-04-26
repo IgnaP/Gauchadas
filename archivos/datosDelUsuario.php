@@ -6,14 +6,21 @@
   $consulta="SELECT * FROM Usuarios WHERE Email='$email'";
   $resultado=mysqli_query($conexion,$consulta);
   $fila=mysqli_fetch_row($resultado);
+  $ID=$fila[0];
   $nom=$fila[3];
   $ap=$fila[4];
   $fn=$fila[5];
   $tel=$fila[6];
+  $preID=$fila[7];
+  $resp=$fila[8];
   $pRep=$fila[12];
   $creditos=$fila[13];
   $fechaN=date("d/m/Y", strtotime($fn));
 
+  $sql = "SELECT `Pregunta` FROM `preguntas` WHERE `ID`='$preID'";
+  $result=mysqli_query($conexion, $sql);
+  $row = mysqli_fetch_row($result);
+  $pre=$row[0];
   $cons="SELECT `Nombre` FROM `reputacion` WHERE `Puntos`<='$pRep' OR `Puntos`<=-1";
   $result=mysqli_query($conexion,$cons);
   $cant=mysqli_num_rows($result);
@@ -31,7 +38,10 @@
 
   if ( isset($_GET["datos"]) ) {
     if ( $_GET["datos"]=="devolver" ) {
-      $arreglo = array('nom' => "$nom", 'ap' => "$ap", 'fn' => "$fechaN", 'tel' => "$tel", 'pRep' => "$pRep", 'creditos' => "$creditos", 'rep' => "$rep");
+      $arreglo = array('nom' => "$nom", 'ap' => "$ap", 'fn' => "$fechaN", 'tel' => "$tel",
+       'pRep' => "$pRep", 'creditos' => "$creditos", 'rep' => "$rep", 'fn2' => "$fn", 'resp' => "$resp",
+        'pre' => "$pre", 'ID' => "$ID");
+
       $jDatos = json_encode($arreglo);
       echo $jDatos;
     }

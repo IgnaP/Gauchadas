@@ -1,14 +1,14 @@
 <?php
-session_start();
-$email = $_POST["email"];
-$clave = $_POST["clave"];
 require("conexionBD.php");
 conectarse($conexion);
-
 if (!$conexion) {
   echo "Fallo al conectar con el servidor";
   exit();
 } else {
+  session_start();
+  $email = $_POST["email"];
+  $clave = $_POST["clave"];
+
   $consulta="SELECT * FROM Usuarios WHERE Email='$email'";
   $resultado=mysqli_query($conexion,$consulta);
   $num_filas=mysqli_num_rows($resultado);

@@ -1,7 +1,3 @@
-<?php
-  require("conexionBD.php");
-  conectarse($conexion);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +13,18 @@
         $("#publicaciones").load("publicaciones.php", {"tit": $("#titulo").val(), "cat": $("#categorias").val(), "ciu": $("#ciudades").val(),});
         return false;
       });
+      $.get("selects.php?select=ciudades", function(datos){
+        var jDatos= JSON.parse(datos);
+        for (var x in jDatos) {
+          $('#ciudades').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
+        }
+      });
+      $.get("selects.php?select=categorias", function(datos){
+        var jDatos= JSON.parse(datos);
+        for (var x in jDatos) {
+          $('#categorias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
+        }
+      });
     });
   </script>
 </head>
@@ -31,17 +39,11 @@
             <label for="ciudades">Ciudades</label>
             <select class="form-control" name="ciudades" id="ciudades">
               <option>Todas</option>
-              <?php
-                require("cargaCiudades.php");
-              ?>
             </select>
             <div class="separar">
               <label for="categorias">Categorias</label>
               <select class="form-control" name="categorias" id="categorias">
                 <option>Todas</option>
-                <?php
-                  require("cargaCategorias.php");
-                ?>
               </select>
             </div>
             <div class="form-group">

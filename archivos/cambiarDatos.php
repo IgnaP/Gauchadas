@@ -1,34 +1,43 @@
 <?php
-session_start();
-$nombre = $_POST["nombre"];
-$apellido = $_POST["apellido"];
-$nac = $_POST["fecha"];
-$tel = $_POST["telefono"];
-$email = $_SESSION["usuario"];
-#$clave = $_POST["clave"];
-#$pregunta = $_POST["preguntas"];
-#$res = $_POST["respuesta"];
-
 require("conexionBD.php");
 conectarse($conexion);
-
 if (!$conexion) {
   echo "Fallo al conectar con el servidor";
   exit();
 } else {
-  $sql="UPDATE `usuarios`
-        SET `Nombre`='$nombre',`Apellido`='$apellido',`FechaDeNacimiento`='$nac',`Telefono`='$tel'
-        WHERE Email='$email'";
-  $resultado=mysqli_query($conexion,$sql);
+  session_start();
+  $email = $_SESSION["usuario"];
+  $clave = $_POST["clave"];
+  $consulta="SELECT * FROM Usuarios WHERE Email='$email'";
+  $resultado=mysqli_query($conexion,$consulta);
+  $fila=mysqli_fetch_row($resultado);
+  if($fila[2]==$clave){
+    $nombre = $_POST["nombre"];
+    $apellido = $_POST["apellido"];
+    $nac = $_POST["fecha"];
+    $tel = $_POST["telefono"];
+    $pre = $_POST["preguntas"];
+    $res = $_POST["respuesta"];
 
-  if($resultado==false){
-    echo "Se produjo un error al intentar cambiar los datos";
+    $sql="SELECT ID FROM preguntas WHERE Pregunta='$pre'";
+    $result=mysqli_query($conexion,$sql);
+    $fila=mysqli_fetch_row($result);
+    $preID=$fila[0];
+    $sql="UPDATE `usuarios` SET `Nombre`='$nombre',`Apellido`='$apellido',`FechaDeNacimiento`='$nac',`Telefono`='$tel',`PreguntaDeSeguridad`='$preID',`Respuesta`='$res'";
+    $sql2="WHERE Email='$email'";
+    if (isset($_POST["claveN"]) && ($_POST["claveN"]!="")) {
+      $claveN = $_POST["claveN"];
+      $sql=$sql." ,`Clave`='$claveN'";
+    }
+    $sql3=$sql." ".$sql2;
+    $result=mysqli_query($conexion,$sql3);
+    if($result){
+      echo "exito";
+    } else {
+      echo "Se produjo un error al intentar cambiar los datos $sql3";
+    }
   } else {
-    $_SESSION["nombre"]=$nombre;
-    $_SESSION["apellido"]=$apellido;
-    $_SESSION["fn"]=$nac;
-    $_SESSION["tel"]=$tel;
-    echo "exito";
+    echo "La clave es incorrecta";
   }
 }
 ?>

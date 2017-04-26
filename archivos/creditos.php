@@ -27,12 +27,10 @@
       });
       function compraResp(datos){
         if (datos=="exito") {
-          $("#alertaTxt").text("La compra se ha realizado con exito");
-          cambiarAlerta(true);
+          cambiarAlerta(true, "La compra se ha realizado con exito");
           creditosFuncion();
         } else {
-          $("#alertaTxt").text(datos);
-          cambiarAlerta(false);
+          cambiarAlerta(false, datos);
         }
       }
     });
@@ -42,7 +40,8 @@
         $("#creditosActuales").text(jDatos.creditos);
       });
     }
-    function cambiarAlerta(tf){
+    function cambiarAlerta(tf, txt){
+      $("#alertaTxt").text(txt);
       if (tf) {
         $("#alerta").addClass('alert-success');
         $("#alerta").removeClass('alert-danger');

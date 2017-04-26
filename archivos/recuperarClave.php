@@ -26,27 +26,29 @@
         $("#inputEmail").prop("disabled",true);
         $("#pregunta").text(JSONresp.pregunta);
       } else {
-        $("#alertaTxt").text(JSONresp.exito);
-        $("#alerta").addClass('alert-danger');
-        $("#alerta").removeClass('alert-success');
-        $("#alerta").removeClass('hidden');
+        cambiarAlerta(false, JSONresp.exito);
       }
     }
     function validarRespuesta(datos){
       var JSONresp= JSON.parse(datos);
       if (JSONresp.exito=="exito") {
-        $("#alertaTxt").text("La clave ha sido cambiada con exito");
-        $("#alerta").addClass('alert-success');
-        $("#alerta").removeClass('alert-danger');
-        $("#alerta").removeClass('hidden');
+        cambiarAlerta(true, "La clave ha sido cambiada con exito");
       } else {
-        $("#alertaTxt").text(JSONresp.exito);
-        $("#alerta").addClass('alert-danger');
-        $("#alerta").removeClass('alert-success');
-        $("#alerta").removeClass('hidden');
+        cambiarAlerta(false, JSONresp.exito);
       }
     }
   });
+  function cambiarAlerta(tf, txt){
+    $("#alertaTxt").text(txt);
+    if (tf) {
+      $("#alerta").addClass('alert-success');
+      $("#alerta").removeClass('alert-danger');
+    } else {
+      $("#alerta").addClass('alert-danger');
+      $("#alerta").removeClass('alert-success');
+    }
+    $("#alerta").removeClass('hidden');
+  }
   </script>
 </head>
 <body>

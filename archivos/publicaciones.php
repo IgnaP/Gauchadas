@@ -1,7 +1,16 @@
 <?php
   require("conexionBD.php");
   conectarse($conexion);
-  $sql = "SELECT * FROM `publicaciones` WHERE `Activa`='1'";
+  $sql = "SELECT * FROM `publicaciones` WHERE ";
+  if (isset($_POST["activa"])) {
+    if ($_POST["activa"]=="false") {
+      $sql=$sql."`Activa`='0'";
+    } else {
+      $sql=$sql."`Activa`='1'";
+    }
+  }else {
+    $sql=$sql."`Activa`='1'";
+  }
   if (isset($_POST["usr"])) {
     $usrID=$_POST["usr"];
     $sql=$sql." AND usuario=".$usrID;

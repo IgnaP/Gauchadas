@@ -1,13 +1,3 @@
-<?php
-  session_start();
-  require("conexionBD.php");
-  conectarse($conexion);
-  $usr=$_SESSION["usuario"];
-  $sql="SELECT `ID` FROM `usuarios` WHERE `Email`='$usr'";
-  $result=mysqli_query($conexion, $sql);
-  $row = mysqli_fetch_row($result);
-  $usrID=$row[0];
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +7,10 @@
   <link rel="stylesheet" href="css/estilos.css">
   <script>
     $(document).ready(function(){
-      $("#misPublicaciones").load("publicaciones.php", {"usr": "<?php echo $usrID; ?>"});
+      $.get("datosDelUsuario.php?datos=devolver", function(datos){
+        var jDatos= JSON.parse(datos);
+        $("#misPublicaciones").load("publicaciones.php", {"usr": jDatos.ID});
+      });
     });
   </script>
 </head>
