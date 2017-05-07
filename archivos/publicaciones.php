@@ -51,14 +51,25 @@
   $(document).ready(function(){
     $(".publicacionDiv").click(function(){
       var pID= $("label:first", this).text();
-      window.location.href="sesion.php?pID=" + pID;
+      cargarPublicacion(pID);
     });
   });
 </script>
 </head>
 <body>
   <?php
+    session_start();
+    $logueado=false;
+    if ( isset($_SESSION['usuario']) ) {
+      $logueado=true;
+      $mail=$_SESSION['usuario'];
+      $sql2="SELECT `ID` FROM `usuarios` WHERE `Email`='$mail'";
+      $resultado=mysqli_query($conexion,$sql2);
+      $fila = mysqli_fetch_row($resultado);
+      $usrID=$fila[0];
+    }
     while ($row = mysqli_fetch_row($result)) {
+      $pID=$row[0];
       $ciuID=$row[2];
       $catID=$row[4];
       $sql2="SELECT `Nombre` FROM `ciudades` WHERE `ID`='$ciuID'";
@@ -69,12 +80,42 @@
       $resultado=mysqli_query($conexion,$sql2);
       $fila = mysqli_fetch_row($resultado);
       $cat=$fila[0];
+      $pregPend=false;
+      $resPend=false;
+      if ($logueado) {
+        if ($usrID==$row[8]) {
+          $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`='' AND `Publicacion`='$pID'";
+          $resultado=mysqli_query($conexion,$consulta);
+          $num_filas=mysqli_num_rows($resultado);
+          if ($num_filas!=0) {
+            $pregPend=true;
+          }
+        }else {
+          $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`!='' AND `Publicacion`='$pID' AND `Vista`='0'";
+          $resultado=mysqli_query($conexion,$consulta);
+          $num_filas=mysqli_num_rows($resultado);
+          if ($num_filas!=0) {
+            $resPend=true;
+          }
+        }
+      }
   ?>
     <div class="publicacion">
       <div class="row">
         <div class="col-md-10 col-md-offset-1 publicacionDiv">
           <label hidden><?php echo $row[0]; ?></label>
-          <h3><?php echo $row[1]; ?></h3>
+          <div class="row">
+            <div class="col-md-10">
+              <h3><?php echo $row[1]; ?></h3>
+            </div>
+            <div class="col-md-2">
+              <?php if ($pregPend) { ?>
+                <label class="label label-warning">Preguntas</label>
+            <?php  } else {if ($resPend) {   ?>
+                <label class="label label-warning">Respuestas</label>
+            <?php } } ?>
+            </div>
+          </div>
           <img src="css/dog-bag.jpg" style="max-width:300px;max-height:300px;" class="center-block">
           <div class="row separar">
             <label class="label label-primary"><?php echo $ciu; ?></label>

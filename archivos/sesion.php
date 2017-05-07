@@ -1,14 +1,3 @@
-<?php
-  session_start();
-  if (!isset($_SESSION["usuario"])) {
-    header("location: http://localhost/UnaGauchada/");
-  }
-  if (isset($_GET['pID'])) {
-    $publID=$_GET['pID'];
-  } else {
-    $publID=0;
-  }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,13 +12,25 @@
   <script src="js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function(){
-      var pID=<?php echo $publID; ?>;
-      if (pID==0) {
-        $("#lacaja").load("gauchadas.php");
-      } else {
-        $("#lacaja").load("publicacion.php",{"ID":pID});
-      }
+      $.get("estadoDeSesion.php", function (estado, status){
+        if (estado=="false") {
+          window.location = "index.php";
+        } else {
+          nombreDelUsuario();
+          $("#lacaja").load("gauchadas.php");
+        }
+      });
     });
+    function nombreDelUsuario(){
+      $.get("datosDelUsuario.php?datos=devolver", function(datos){
+        var jDatos= JSON.parse(datos);
+        $("#nombreUsuario").text(jDatos.email);
+      });
+    }
+    function cargarPublicacion(pID){
+      $("#lacaja").load("publicacion.php",{"ID":pID});
+      $("li").removeClass("active");
+    }
     function cargarPerfil(){
       $("#lacaja").load("perfil.php");
       $("li").removeClass("active");
@@ -72,7 +73,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo "$_SESSION[usuario] "; ?> <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span> <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li onclick="cargarPerfil()" id="pestperfil"><a class="puntero">Perfil</a></li>
             <li onclick="miCuenta()" id="pestMiCuenta"><a class="puntero">Mi cuenta</a></li>

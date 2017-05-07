@@ -40,7 +40,7 @@
     if ( $_GET["datos"]=="devolver" ) {
       $arreglo = array('nom' => "$nom", 'ap' => "$ap", 'fn' => "$fechaN", 'tel' => "$tel",
        'pRep' => "$pRep", 'creditos' => "$creditos", 'rep' => "$rep", 'fn2' => "$fn", 'resp' => "$resp",
-        'pre' => "$pre", 'ID' => "$ID");
+        'pre' => "$pre", 'ID' => "$ID", 'email' => "$email");
 
       $jDatos = json_encode($arreglo);
       echo $jDatos;

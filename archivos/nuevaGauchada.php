@@ -16,7 +16,19 @@
   <script>
     $(document).ready(function(){
       creditosFuncion();
-
+      $.get("selects.php?select=ciudades", function(datos){
+        var jDatos= JSON.parse(datos);
+        for (var x in jDatos) {
+          $('#ciudades').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
+        }
+      });
+      $.get("selects.php?select=categorias", function(datos){
+        var jDatos= JSON.parse(datos);
+        for (var x in jDatos) {
+          $('#categorias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
+        }
+      });
+      
       $(".esconderAlerta").on("click keypress", function(){
         $("#alertaForm").addClass('hidden');
       });
@@ -85,11 +97,7 @@
                 <div class="col-md-4 col-md-offset-1">
                   <div class="form-group">
                     <label for="ciudades">Ciudad</label>
-                    <select class="form-control esconderAlerta" name="ciudad" id="ciudades" required>
-                      <?php
-                        require("cargaCiudades.php");
-                      ?>
-                    </select>
+                    <select class="form-control esconderAlerta" name="ciudad" id="ciudades" required></select>
                   </div>
                 </div>
               </div>
@@ -103,11 +111,7 @@
                 <div class="col-md-4 col-md-offset-1">
                   <div class="form-group">
                     <label for="categoria">Categorias</label>
-                    <select class="form-control esconderAlerta" name="categoria" id="categorias" required>
-                      <?php
-                        require("cargaCategorias.php");
-                      ?>
-                    </select>
+                    <select class="form-control esconderAlerta" name="categoria" id="categorias" required></select>
                   </div>
                 </div>
               </div>

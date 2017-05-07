@@ -10,6 +10,7 @@
     var pregunta;
     $.get("datosDelUsuario.php?datos=devolver", function(datos){
       var jDatos= JSON.parse(datos);
+      $("#nMail").val(jDatos.email);
       $("#nombre").val(jDatos.nom);
       $("#apellido").val(jDatos.ap);
       $("#fecha").val(jDatos.fn2);
@@ -41,6 +42,7 @@
     });
     function cambiarDatosResp(datos){
       if (datos=="exito") {
+        nombreDelUsuario();
         $("#botonCambiar").prop("disabled", true);
         cambiarAlerta(true, "Los datos de la cuenta se han modificado con exito");
       } else {
@@ -91,6 +93,14 @@
             <div class="container-fluid separar">
               <form class="" action="" method="post" id="cambiarDatosForm">
                 <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="email" class="control-label">Email</label>
+                      <input type="email" class="form-control inps" id="nMail" placeholder="Email" required pattern="[A-Za-z0-9._+-]{1,}@[a-z]{1,}.com" title="ejemplo@mail.com" name="nMail">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="nombre" class="control-label">Nombre</label>
@@ -135,13 +145,13 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="preguntas" class="control-label">Preguntas</label>
+                      <label for="preguntas" class="control-label">Pregunta de seguridad</label>
                       <select class="form-control inps" name="preguntas" id="preguntas"></select>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="respuesta" class="control-label">Respuesta</label>
+                      <label for="respuesta" class="control-label">Respuesta de seguridad</label>
                       <input type="text" class="form-control inps" id="respuesta" placeholder="Respuesta" required pattern="[A-Za-z0-9]{3,}" title="De 3 a 20 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="respuesta">
                     </div>
                   </div>
