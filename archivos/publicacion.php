@@ -16,6 +16,7 @@
       $("#ciudad").text(jDatos.ciu);
       $("#categoria").text(jDatos.cat);
       $("#descripcion").text(jDatos.desc);
+      $("#fecha").text(jDatos.fecha);
       if (jDatos.logueado) {
         if (jDatos.owner==jDatos.usr) {
           $(".delDueño").prop('hidden', false);
@@ -108,8 +109,13 @@
             <h3 id="titulo"></h3>
             <img src="css/dog-bag.jpg" style="max-width:400px;max-height:400px;" class="center-block">
             <div class="row separar">
-              <label class="label label-primary" id="ciudad"></label>
-              <label class="label label-info" id="categoria"></label>
+              <div class="col-md-10">
+                <label class="label label-primary" id="ciudad"></label>
+                <label class="label label-info" id="categoria"></label>
+              </div>
+              <div class="col-md-2">
+                <span id="fecha"></span>
+              </div>
             </div>
             <div class="">
               <p class="text-justify" id="descripcion"></p>

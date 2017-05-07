@@ -8,6 +8,7 @@
   $ciuID=$row[2];
   $catID=$row[4];
   $dueñoID=$row[8];
+  $fecha=date("d/m/Y", strtotime($row[3]));
   $sql2="SELECT `Nombre` FROM `ciudades` WHERE `ID`='$ciuID'";
   $resultado=mysqli_query($conexion,$sql2);
   $fila = mysqli_fetch_row($resultado);
@@ -40,7 +41,7 @@
     mysqli_query($conexion,$sql2);
   }
 
-  $arreglo = array('tit' => "$row[1]", 'cat' => "$cat", 'ciu' => "$ciu", 'desc' => "$row[5]", 'owner' => "$dueñoUsr", 'usr' => "$mail", 'logueado' => "$logueado");
+  $arreglo = array('tit' => "$row[1]", 'cat' => "$cat", 'ciu' => "$ciu", 'desc' => "$row[5]", 'owner' => "$dueñoUsr", 'usr' => "$mail", 'logueado' => "$logueado", 'fecha' => "$fecha");
 
   $jDatos = json_encode($arreglo);
   echo $jDatos;

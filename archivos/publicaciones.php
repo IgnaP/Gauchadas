@@ -72,6 +72,7 @@
       $pID=$row[0];
       $ciuID=$row[2];
       $catID=$row[4];
+      $fecha=date("d/m/Y", strtotime($row[3]));
       $sql2="SELECT `Nombre` FROM `ciudades` WHERE `ID`='$ciuID'";
       $resultado=mysqli_query($conexion,$sql2);
       $fila = mysqli_fetch_row($resultado);
@@ -108,7 +109,7 @@
             <div class="col-md-10">
               <h3><?php echo $row[1]; ?></h3>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 separar">
               <?php if ($pregPend) { ?>
                 <label class="label label-warning">Preguntas</label>
             <?php  } else {if ($resPend) {   ?>
@@ -118,8 +119,13 @@
           </div>
           <img src="css/dog-bag.jpg" style="max-width:300px;max-height:300px;" class="center-block">
           <div class="row separar">
-            <label class="label label-primary"><?php echo $ciu; ?></label>
-            <label class="label label-info"><?php echo $cat; ?></label>
+            <div class="col-md-10">
+              <label class="label label-primary"><?php echo $ciu; ?></label>
+              <label class="label label-info"><?php echo $cat; ?></label>
+            </div>
+            <div class="col-md-2">
+              <span><?php echo $fecha; ?></span>
+            </div>
           </div>
           <div class="">
             <p class="text-justify"><?php echo $row[5]; ?></p>
