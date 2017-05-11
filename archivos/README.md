@@ -1,1 +1,2 @@
-Archivos de la pagina web
+# Archivos de la pagina web
+HTML, CSS, PHP, JavaScript, etc...
