@@ -1,0 +1,68 @@
+body {
+    background-image: url("gaucho.jpg");
+}
+.filtros{
+  background-color: #F8F8F8;
+}
+.alturaminima{
+  min-height: 500px;
+}
+.transparente {
+  background-color: rgba(255,255,255,0.8);
+}
+.separar{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.separar2{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.tituloDeLaNavbar{            /*Arregla problema con el titulo en la navbar */
+  font-size: 22px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.borde{
+  border-right-style: groove;
+}
+.puntero{
+  cursor: pointer;
+}
+.publicacion{
+  border-bottom-style: groove;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.publicacionDiv{
+  cursor: pointer;
+}
+.publicacionDiv:hover{
+  background-color: rgb(204,204,255);
+}
+.navbar-brand{
+  padding: 0px;         /*Sobreescribe CSS de Bootstrap */
+}
+.fondoRojo{
+  background-color: red;
+}
+.fondoBlanco{
+  background-color: rgb(255,255,255);
+}
+.fondoGris{
+  background-color: rgb(230,230,230);
+}
+.bordeDiv{
+  border-style: groove;
+  border-width: 1px;
+  border-color: black;
+}
+.letraRoja{
+  color: red;
+}
+.letraBlanca{
+  color: white;
+}
+.letraAzul{
+  color: blue;
+}
