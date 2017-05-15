@@ -28,7 +28,7 @@
           $('#categorias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
         }
       });
-      
+
       $(".esconderAlerta").on("click keypress", function(){
         $("#alertaForm").addClass('hidden');
       });
@@ -86,6 +86,9 @@
             <div class="alert col-md-10 text-center" id="creditosDiv">
               <strong id="creditosTxt"></strong>
             </div>
+            <div class="alert col-md-10 hidden text-center" id="alertaForm">
+              <strong id="alertaTxt"></strong>
+            </div>
             <form class="form-horizontal" action="" method="post" id="nuevaForm">
               <div class="row">
                 <div class="col-md-5">
@@ -139,9 +142,6 @@
                 </div>
               </div>
             </form>
-            <div class="alert col-md-10 hidden text-center" id="alertaForm">
-              <strong id="alertaTxt"></strong>
-            </div>
           </div>
           </div>
         </div>
