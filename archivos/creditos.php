@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
-
+  <script src="js/miScrips.js"></script>
   <script>
     $(document).ready(function() {
       creditosFuncion();
@@ -17,7 +17,7 @@
       };
 
       $(".esconderAlerta").on("click keypress", function(){
-        $("#alerta").addClass('hidden');
+        $("#alertaForm").addClass('hidden');
       });
 
       $("#formulario").submit(function(){
@@ -39,17 +39,6 @@
         var jDatos= JSON.parse(datos);
         $("#creditosActuales").text(jDatos.creditos);
       });
-    }
-    function cambiarAlerta(tf, txt){
-      $("#alertaTxt").text(txt);
-      if (tf) {
-        $("#alerta").addClass('alert-success');
-        $("#alerta").removeClass('alert-danger');
-      } else {
-        $("#alerta").addClass('alert-danger');
-        $("#alerta").removeClass('alert-success');
-      }
-      $("#alerta").removeClass('hidden');
     }
   </script>
 </head>
@@ -102,7 +91,7 @@
           </div>
         </div>
       </form>
-      <div class="alert col-md-8 col-md-offset-2 hidden text-center" id="alerta">
+      <div class="alert col-md-8 col-md-offset-2 hidden text-center" id="alertaForm">
         <strong id="alertaTxt"></strong>
       </div>
     </div>

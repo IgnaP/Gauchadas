@@ -51,7 +51,7 @@
           <div class="container">
             <a onclick="recuperarClave()">Recuperar clave</a>
           </div>
-          <div class="alert alert-danger alert-dismissable col-md-10 col-md-offset-1 hidden text-center" id="alertaDeClave">
+          <div class="alert alert-danger col-md-10 col-md-offset-1 hidden text-center" id="alertaDeClave">
             <strong id="alertaTxt"></strong>
           </div>
           <div class="col-sm-offset-5 col-sm-4">

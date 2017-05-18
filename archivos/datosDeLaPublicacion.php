@@ -9,7 +9,7 @@
   $catID=$row[4];
   $dueñoID=$row[8];
   $fecha=date("d/m/Y", strtotime($row[3]));
-  $sql2="SELECT `Nombre` FROM `ciudades` WHERE `ID`='$ciuID'";
+  $sql2="SELECT `localidad` FROM `localidades` WHERE `id`='$ciuID'";
   $resultado=mysqli_query($conexion,$sql2);
   $fila = mysqli_fetch_row($resultado);
   $ciu=$fila[0];

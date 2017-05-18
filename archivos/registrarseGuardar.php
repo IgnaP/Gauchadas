@@ -20,10 +20,13 @@ if (!$conexion) {
   $num_filas=mysqli_num_rows($resultado);
   if ($num_filas==0) {
 
-    # FALTA BUSCAR LA PREGUNTA EN LA BASE DE DATOS Y PASARLA A ID
+    $sql="SELECT ID FROM preguntas WHERE Pregunta='$pregunta'";
+    $result=mysqli_query($conexion,$sql);
+    $fila=mysqli_fetch_row($result);
+    $preID=$fila[0];
 
     $sql="INSERT INTO `usuarios`(`Email`, `Clave`, `Nombre`, `Apellido`, `FechaDeNacimiento`, `Telefono`, `PreguntaDeSeguridad`, `Respuesta`)
-          VALUES ('$email','$clave','$nombre','$apellido','$nac','$tel','$pregunta','$res')";
+          VALUES ('$email','$clave','$nombre','$apellido','$nac','$tel','$preID','$res')";
     $resultado=mysqli_query($conexion,$sql);
 
     if($resultado==false){

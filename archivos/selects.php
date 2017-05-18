@@ -1,22 +1,35 @@
 <?php
 require("conexionBD.php");
 conectarse($conexion);
+$arreglo= array();
 if ( isset($_GET["select"]) ) {
   if ( $_GET["select"]=="preguntas" ) {
     $sql = "SELECT `Pregunta` FROM `preguntas`";
-  }elseif ( $_GET["select"]=="ciudades" ) {
-    $sql = "SELECT `Nombre` FROM `ciudades`";
+  }elseif ( $_GET["select"]=="localidades" ) {
+    $provNombre=$_GET["prov"];
+    $sql2="SELECT `id` FROM `provincias` WHERE `provincia`='$provNombre'";
+    $resultado=mysqli_query($conexion, $sql2);
+    $fila = mysqli_fetch_row($resultado);
+    $provID=$fila[0];
+    $sql = "SELECT `localidad` FROM `localidades` WHERE `id_provincia`='$provID'";
+  }elseif ( $_GET["select"]=="provincias" ) {
+    $sql = "SELECT `provincia` FROM `provincias`";
   }else {
     $sql = "SELECT `Nombre` FROM `categorias`";
   }
   $result=mysqli_query($conexion, $sql);
-  $cont=0;
-  $arreglo= array();
-  while ($row = mysqli_fetch_row($result)) {
-    $arreglo[$cont] = $row[0];
-    $cont=$cont+1;
+  if ($result) {
+    $cont=0;
+    while ($row = mysqli_fetch_row($result)) {
+      $arreglo[$cont] = $row[0];
+      $cont=$cont+1;
+    }
+  } else {
+    $arreglo[0] ="Error SQL";
   }
-  $jDatos = json_encode($arreglo);
-  echo $jDatos;
+}else {
+  $arreglo[0] ='Error GET vacio';
 }
+$jDatos = json_encode($arreglo);
+echo $jDatos;
 ?>

@@ -11,6 +11,13 @@
         $("#alertaDeClave").addClass('hidden');
       });
 
+      $.get("selects.php?select=preguntas", function(datos){
+        var jDatos= JSON.parse(datos);
+        for (var x in jDatos) {
+          $('#preguntas').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
+        }
+      });
+
       $("#formulario").submit(function(){
         if ( $("#clave").val()!=$("#clave2").val() ) {
           $("#alertaTxt").text("Las claves no coinciden");
@@ -21,7 +28,6 @@
         }
         return false;
       });
-
       function regGuardarResp(datos){
         if (datos=="exito") {
           window.location = "sesion.php";
@@ -46,11 +52,11 @@
           <div class="row">
             <div class="col-md-4 col-md-offset-2">
               <label for="nombre" class="control-label">Nombre</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Nombre" required autofocus maxlength="20" name="nombre">
+              <input type="text" class="form-control" id="nombre" placeholder="Nombre" required autofocus maxlength="20" name="nombre" pattern="[a-zA-Z]{3,20}" title="De 3 a 20 letras">
             </div>
             <div class="col-md-4">
               <label for="apellido" class="control-label">Apellido</label>
-              <input type="text" class="form-control" id="apellido" placeholder="Apellido" required maxlength="20" name="apellido">
+              <input type="text" class="form-control" id="apellido" placeholder="Apellido" required maxlength="20" name="apellido" pattern="[a-zA-Z]{3,20}" title="De 3 a 20 letras">
             </div>
           </div>
         </div>
@@ -95,10 +101,7 @@
           <div class="row">
             <div class="col-md-4 col-md-offset-2">
                 <select class="form-control" name="preguntas" id="preguntas">
-                  <option>Pregunta 1</option>
-                  <option>Pregunta 2</option>
-                  <option>Pregunta 3</option>
-                  <option>Pregunta 4</option>
+
                 </select>
             </div>
             <div class="col-md-4">
@@ -112,7 +115,7 @@
           </div>
         </div>
       </form>
-      <div class="alert alert-danger alert-dismissable col-md-8 col-md-offset-2 hidden text-center" id="alertaDeClave">
+      <div class="alert alert-danger col-md-8 col-md-offset-2 hidden text-center" id="alertaDeClave">
         <strong id="alertaTxt"></strong>
       </div>
     </div>

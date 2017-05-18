@@ -5,26 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/miScrips.js"></script>
   <script>
     $(document).ready(function(){
       $("#publicaciones").load("publicaciones.php");
 
       $("#filtrarForm").submit(function(){
-        $("#publicaciones").load("publicaciones.php", {"tit": $("#titulo").val(), "cat": $("#categorias").val(), "ciu": $("#ciudades").val(),});
+        $("#publicaciones").load("publicaciones.php", {"tit": $("#titulo").val(), "cat": $("#categorias").val(), "prov": $("#provincias").val(), "ciu": $("#ciudades").val()});
         return false;
       });
-      $.get("selects.php?select=ciudades", function(datos){
-        var jDatos= JSON.parse(datos);
-        for (var x in jDatos) {
-          $('#ciudades').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
-        }
-      });
-      $.get("selects.php?select=categorias", function(datos){
-        var jDatos= JSON.parse(datos);
-        for (var x in jDatos) {
-          $('#categorias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
-        }
-      });
+      cargarProvincias('Todas');
+      cargarCategorias('Todas');
     });
   </script>
 </head>
@@ -36,15 +27,15 @@
           <h3>Filtros</h3>
           <form class="" action="" method="post" id="filtrarForm">
             <input type="text" class="form-control separar" placeholder="Buscar" id="titulo">
+            <label for="ciudades">Provincias</label>
+            <select class="form-control" name="provincias" id="provincias" onchange="localidadesFuncion('Todas')"></select>
             <label for="ciudades">Ciudades</label>
-            <select class="form-control" name="ciudades" id="ciudades">
-              <option>Todas</option>
+            <select class="form-control" name="ciudades" id="ciudades" disabled>
+              <option value="Todas">Todas</option>
             </select>
             <div class="separar">
               <label for="categorias">Categorias</label>
-              <select class="form-control" name="categorias" id="categorias">
-                <option>Todas</option>
-              </select>
+              <select class="form-control" name="categorias" id="categorias"></select>
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-3">

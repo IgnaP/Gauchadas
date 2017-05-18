@@ -13,21 +13,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/miScrips.js"></script>
   <script>
     $(document).ready(function(){
       creditosFuncion();
-      $.get("selects.php?select=ciudades", function(datos){
-        var jDatos= JSON.parse(datos);
-        for (var x in jDatos) {
-          $('#ciudades').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
-        }
-      });
-      $.get("selects.php?select=categorias", function(datos){
-        var jDatos= JSON.parse(datos);
-        for (var x in jDatos) {
-          $('#categorias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
-        }
-      });
+      cargarProvincias('');
+      cargarCategorias('');
 
       $(".esconderAlerta").on("click keypress", function(){
         $("#alertaForm").addClass('hidden');
@@ -40,12 +31,10 @@
       });
       function nuevaResp(datos){
         if (datos=="exito") {
-          $("#alertaTxt").text("La gauchada se ha creado satisfactoriamente");
-          cambiarAlerta(true);
+          cambiarAlerta(true, "La gauchada se ha creado satisfactoriamente");
           creditosFuncion();
         } else {
-          $("#alertaTxt").text(datos);
-          cambiarAlerta(false);
+          cambiarAlerta(false, datos);
         }
       }
     });
@@ -61,18 +50,9 @@
           $("#creditosDiv").addClass('alert-danger');
           $("#creditosDiv").removeClass('alert-success');
           $("#nuevaForm").prop("hidden",true);
+          cambiarAlerta(false, "Necesita por lo menos 1 credito");
         }
       });
-    }
-    function cambiarAlerta(tf){
-      if (tf) {
-        $("#alertaForm").addClass('alert-success');
-        $("#alertaForm").removeClass('alert-danger');
-      } else {
-        $("#alertaForm").addClass('alert-danger');
-        $("#alertaForm").removeClass('alert-success');
-      }
-      $("#alertaForm").removeClass('hidden');
     }
   </script>
 </head>
@@ -89,18 +69,28 @@
             <div class="alert col-md-10 hidden text-center" id="alertaForm">
               <strong id="alertaTxt"></strong>
             </div>
-            <form class="form-horizontal" action="" method="post" id="nuevaForm">
+            <form class="form-horizontal" action="" method="post" id="nuevaForm" hidden>
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-10">
                   <div class="form-group">
                     <label for="titulo" class="control-label">Titulo</label>
                     <input type="text" class="form-control esconderAlerta" id="titulo" placeholder="Titulo" required autofocus pattern="[A-Za-z0-9 ]{3,20}" title="De 3 a 20 letras o numeros" name="titulo">
                   </div>
                 </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="ciudades">Provincias</label>
+                    <select class="form-control esconderAlerta" name="provincias" id="provincias" onchange="localidadesFuncion('')" required></select>
+                  </div>
+                </div>
                 <div class="col-md-4 col-md-offset-1">
                   <div class="form-group">
                     <label for="ciudades">Ciudad</label>
-                    <select class="form-control esconderAlerta" name="ciudad" id="ciudades" required></select>
+                    <select class="form-control esconderAlerta" name="ciudad" id="ciudades" disabled required>
+                      <option value=""></option>
+                    </select>
                   </div>
                 </div>
               </div>

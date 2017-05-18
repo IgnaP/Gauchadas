@@ -23,7 +23,7 @@ if (!$conexion) {
     $result=mysqli_query($conexion,$sql);
     $row = mysqli_fetch_row($result);
     $usrID=$row[0];
-    $sql="SELECT `ID` FROM `ciudades` WHERE `Nombre`='$ciu'";
+    $sql="SELECT `ID` FROM `localidades` WHERE `localidad`='$ciu'";
     $result=mysqli_query($conexion,$sql);
     $row = mysqli_fetch_row($result);
     $ciuID=$row[0];

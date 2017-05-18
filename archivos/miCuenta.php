@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/miScrips.js"></script>
   <script>
   $(document).ready(function(){
     var pregunta;
@@ -61,17 +62,6 @@
       } else {
         cambiarAlerta(false, datos);
       }
-    }
-    function cambiarAlerta(tf, txt){
-      $("#alertaTxt").text(txt);
-      if (tf) {
-        $("#alertaForm").addClass('alert-success');
-        $("#alertaForm").removeClass('alert-danger');
-      } else {
-        $("#alertaForm").addClass('alert-danger');
-        $("#alertaForm").removeClass('alert-success');
-      }
-      $("#alertaForm").removeClass('hidden');
     }
   </script>
 </head>
