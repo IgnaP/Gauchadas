@@ -124,7 +124,7 @@
           <div class="col-md-3 col-md-offset-1">
             <div hidden class="delDueño">
               <button type="button" name="button" class="btn btn-default">Editar gauchada</button>
-              <button type="button" name="button" class="btn btn-default">Ver postulantes</button>
+              <button type="button" name="button" class="btn btn-default" onclick="verPostulantes()">Ver postulantes</button>
             </div>
             <div hidden class="noDueño">
               <button type="button" name="button" class="btn btn-default">Postularse</button>

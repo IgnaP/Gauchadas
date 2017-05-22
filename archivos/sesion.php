@@ -54,6 +54,9 @@
       $("li").removeClass("active");
       $("#pestComprar").addClass("active");
     }
+    function verPostulantes(){
+      $("#lacaja").load("postulantes.php?id="+pID);
+    }
   </script>
 </head>
 <body>
