@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/miScrips.js"></script>
 <script>
   var pID=<?php echo $_POST["ID"]; ?>;
   var dueño;
@@ -99,12 +100,36 @@
     var formulario=$('<form action="" method="post" id="respuestaForm"></form>').append(divA,divB,inpConID);
     $(yo).after(formulario);
   }
+  function postularseMostrar(tf){
+    if (tf) {
+      $("#postularseDiv").removeClass("hidden");
+      $("#postularseBot").prop("disabled", true);
+    } else {
+      $("#postularseDiv").addClass("hidden");
+      $("#postularseBot").prop("disabled", false);
+    }
+  }
+  $("#postularseForm").submit(function(){
+    $.post("postularse.php", {"pID": pID , "coment": $("#coment").val() }, postularseResp);
+    return false;
+  });
+  function postularseResp(datos){
+    if (datos=="exito") {
+      $("#postularseDiv").addClass("hidden");
+      cambiarAlerta(true, "Se ha postulado en esta gauchada");
+    } else {
+      cambiarAlerta(false, datos);
+    }
+  }
 </script>
 </head>
 <body>
     <div class="row">
       <div class="col-md-10 col-md-offset-1 transparente">
-        <div class="row publicacion">
+        <div class="alert col-md-10 col-md-offset-1 hidden separar text-center" id="alertaForm">
+          <strong id="alertaTxt"></strong>
+        </div>
+        <div class="row bordeAbajo">
           <div class="col-md-7 col-md-offset-1">
             <h3 id="titulo"></h3>
             <img src="css/dog-bag.jpg" style="max-width:400px;max-height:400px;" class="center-block">
@@ -123,21 +148,43 @@
           </div>
           <div class="col-md-3 col-md-offset-1">
             <div hidden class="delDueño">
-              <button type="button" name="button" class="btn btn-default">Editar gauchada</button>
+              <button type="button" name="button" class="btn btn-default" disabled>Editar gauchada</button>
               <button type="button" name="button" class="btn btn-default" onclick="verPostulantes()">Ver postulantes</button>
             </div>
             <div hidden class="noDueño">
-              <button type="button" name="button" class="btn btn-default">Postularse</button>
+              <button type="button" name="button" class="btn btn-default" onclick="postularseMostrar(true)" id="postularseBot">Postularse</button>
             </div>
           </div>
         </div>
+        <div class="row bordeAbajo hidden" id="postularseDiv">
+          <div class="col-sm-offset-1 col-sm-10">
+            <h3>Postularse</h3>
+            <form class="container-fluid" action="" method="post" id="postularseForm">
+              <div class="form-group">
+                <textarea name="coment" rows="3" class="form-control" placeholder="Escriba un comentario" required style="resize: none;" maxlength="200" id="coment"></textarea>
+              </div>
+              <div class="row">
+                <div class="col-sm-offset-4 col-sm-3">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-default">Postularse</button>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-default" onclick="postularseMostrar(false)">Cancelar</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
         <div class="row">
-          <div class="col-md-10 col-md-offset-1">
+          <div class="col-sm-10 col-sm-offset-1">
             <h3>Preguntas</h3>
             <div class="separar" id="cajaPreguntas">
 
             </div>
-            <div hidden class="noDueño">
+            <div hidden class="noDueño container-fluid">
               <form class="" action="" method="post" id="preguntaForm">
                 <div class="form-group">
                   <textarea name="inpPregunta" rows="3" class="form-control" placeholder="Escriba su pregunta" required style="resize: none;" maxlength="200" id="inpPregunta"></textarea>
