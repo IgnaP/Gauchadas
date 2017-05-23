@@ -22,6 +22,7 @@
   $fila = mysqli_fetch_row($resultado);
   $dueñoUsr=$fila[0];
 
+  $postulado=false;
   session_start();
   $owner=false;
   $logueado=false;
@@ -37,11 +38,18 @@
       $sql2="UPDATE `publicaciones` SET `Vista`='1' WHERE `usuario`='$usrID'";
     } else {
       $sql2="UPDATE `comentarios` SET `Vista`='1' WHERE `UsuarioID`='$usrID'";
+
+      $sql3="SELECT `usuarioID` FROM `postulantes` WHERE `publicacionID`='$ID' AND `usuarioID`='$usrID'";
+      $resultado=mysqli_query($conexion,$sql3);
+      if (mysqli_num_rows($resultado)>0) {
+        $postulado=true;
+      }
     }
     mysqli_query($conexion,$sql2);
   }
 
-  $arreglo = array('tit' => "$row[1]", 'cat' => "$cat", 'ciu' => "$ciu", 'desc' => "$row[5]", 'owner' => "$dueñoUsr", 'usr' => "$mail", 'logueado' => "$logueado", 'fecha' => "$fecha");
+  $arreglo = array('tit' => "$row[1]", 'cat' => "$cat", 'ciu' => "$ciu", 'desc' => "$row[5]",
+   'owner' => "$dueñoUsr", 'usr' => "$mail", 'logueado' => "$logueado", 'fecha' => "$fecha", 'postulado' => "$postulado");
 
   $jDatos = json_encode($arreglo);
   echo $jDatos;

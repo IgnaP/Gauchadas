@@ -25,6 +25,10 @@
           $(".noDueño").prop('hidden', false);
         }
       }
+      if (jDatos.postulado) {
+        $("#postularseBot").prop("disabled",true);
+        $("#postularseBot").text("Ya esta postulado");
+      }
       dueño=jDatos.owner;
       usr=jDatos.usr;
       cargarPreguntas();
@@ -116,6 +120,7 @@
   function postularseResp(datos){
     if (datos=="exito") {
       $("#postularseDiv").addClass("hidden");
+      $("#postularseBot").text("Ya esta postulado");
       cambiarAlerta(true, "Se ha postulado en esta gauchada");
     } else {
       cambiarAlerta(false, datos);

@@ -5,7 +5,7 @@
 		header("Location: sesion.php"); //si intenta ingresar a esta pagina lo manda al inicio
 	}
 		$publicacion = $_GET["id"];
-  		$sql = "SELECT usuarioID FROM postulantes WHERE publicacionID = '$publicacion'";
+  		$sql = "SELECT `usuarioID`, `comentario` FROM `postulantes` WHERE publicacionID = '$publicacion'";
   		$result = mysqli_query($conexion, $sql);
   		$num_filas=mysqli_num_rows($result);
 ?>
@@ -35,25 +35,33 @@
 				<h2 class="text-center">Postulantes</h2>
 			</div>
 			<div class="col-md-10 col-md-offset-1">
-			<table class="table table-hover">
-			<?php 
+			<table class="table fondoBlanco">
+				<tr class="info">
+					<th class="text-center">Nombre</th>
+					<th class="text-center">Comentario</th>
+					<th class="text-center">Detalle</th>
+					<th class="text-center">Seleccionar</th>
+				</tr>
+			<?php
 				if ($num_filas>0) {
 					while ( $users = mysqli_fetch_row($result) ) {
 					$sql = "SELECT Nombre FROM usuarios WHERE ID = '$users[0]'";
 					$result2 = mysqli_query($conexion, $sql);
-	  				$userName = mysqli_fetch_row($result2); 
+	  			$userName = mysqli_fetch_row($result2);
+
 			?>
-				<tr class="info">
+				<tr>
 					<td> <?php echo "$userName[0]" ?> </td>
-					<td class="text-right"><button type="button" class="btn btn-default" disabled onclick="ejemplo(<?php echo $users[0]; ?>)">Ver detalles</button></td>
-					<td class="text-right"><button type="button" class="btn btn-default" disabled onclick="ejemplo(<?php echo $users[0]; ?>)">Seleccionar postulante</button></td>
+					<td><?php echo "$users[1]" ?></td>
+					<td class="text-center"><button type="button" class="btn btn-default" disabled onclick="ejemplo(<?php echo $users[0]; ?>)">Ver detalles</button></td>
+					<td class="text-center"><button type="button" class="btn btn-default" disabled onclick="ejemplo(<?php echo $users[0]; ?>)">Seleccionar postulante</button></td>
 				</tr>
 			<?php
 					}
 				}else{
 			?>
-				<tr class="info">
-					<td class="text-center">Aún no tiene postulantes</td>
+				<tr class="warning">
+					<td colspan="4" class="text-center">Aún no tiene postulantes</td>
 				</tr>
 			<?php
 				}
@@ -64,6 +72,6 @@
 		</div>
 		</div>
 	</div>
-	
+
 </body>
 </html>

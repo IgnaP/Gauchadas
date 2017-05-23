@@ -53,9 +53,14 @@
   <link rel="stylesheet" href="css/estilos.css">
 <script>
   $(document).ready(function(){
-    $(".publicacionDiv").click(function(){
+    $(document).on('click','.publicacionDiv', function(){
       var pID= $("label:first", this).text();
       cargarPublicacion(pID);
+    });
+    $.get("estadoDeSesion.php", function (estado, status){
+      if (estado=="true") {
+        $(".marca").addClass("publicacionDiv");
+      }
     });
   });
 </script>
@@ -107,7 +112,7 @@
   ?>
     <div class="bordeAbajo">
       <div class="row">
-        <div class="col-md-10 col-md-offset-1 publicacionDiv">
+        <div class="col-md-10 col-md-offset-1 marca">
           <label hidden><?php echo $row[0]; ?></label>
           <div class="row">
             <div class="col-md-10">
