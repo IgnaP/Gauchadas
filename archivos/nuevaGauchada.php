@@ -1,10 +1,10 @@
 <?php
   require("conexionBD.php");
   conectarse($conexion);
-  $fActual=date("Y-m-d");
-  $fMax=date_create(date("Y-m-d"));
-  date_add($fMax, date_interval_create_from_date_string('30 days'));
-  $fMax=date_format($fMax, 'Y-m-d');
+#  $fActual=date("Y-m-d");
+#  $fMax=date_create(date("Y-m-d"));
+#  date_add($fMax, date_interval_create_from_date_string('30 days'));
+#  $fMax=date_format($fMax, 'Y-m-d');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +19,7 @@
       creditosFuncion();
       cargarProvincias('');
       cargarCategorias('');
+      limitarFecha();
 
       $(".esconderAlerta").on("click keypress", function(){
         $("#alertaForm").addClass('hidden');
@@ -38,6 +39,21 @@
         }
       }
     });
+    function limitarFecha(){
+      var fechaActual=new Date();
+      var dia= fechaActual.getDate();
+      if (dia<10) {
+        dia= "0"+dia;
+      }
+      var mes= fechaActual.getMonth()+1;
+      if (mes<10) {
+        mes= "0"+mes;
+      }
+      var fecha= fechaActual.getFullYear()+"-"+mes+"-"+dia;
+      $("#fecha").prop("min", fecha);
+      fecha= (fechaActual.getFullYear()+100)+"-"+mes+"-"+dia;
+      $("#fecha").prop("max", fecha);
+    }
     function creditosFuncion(){
       $.get("datosDelUsuario.php?datos=devolver", function(datos){
         var jDatos= JSON.parse(datos);
@@ -98,7 +114,7 @@
                 <div class="col-md-5">
                   <div class="form-group">
                     <label for="fecha" class="control-label">Limite</label>
-                    <input type="date" class="form-control esconderAlerta" id="fecha" min="<?php echo $fActual; ?>" max="<?php echo $fMax; ?>" required name="fecha">
+                    <input type="date" class="form-control esconderAlerta" id="fecha" required name="fecha">
                   </div>
                 </div>
                 <div class="col-md-4 col-md-offset-1">
