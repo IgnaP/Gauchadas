@@ -7,12 +7,14 @@
   <link rel="stylesheet" href="css/estilos.css">
   <script src="js/miScrips.js"></script>
   <script>
+    var fechaActual= new Date();
+    var año= fechaActual.getFullYear();
     $(document).ready(function() {
       creditosFuncion();
       for (var i = 1; i < 13; i++) {
         $('#mes').append($('<option>', {value: i, text: i}));
       };
-      for (var i = 2017; i < 2040; i++) {
+      for (var i = año; i < (año+30); i++) {
         $('#ao').append($('<option>', {value: i, text: i}));
       };
 
@@ -21,8 +23,15 @@
       });
 
       $("#formulario").submit(function(){
-        var datosFormulario= $(this).serialize();
-        $.post("creditosValidar.php", datosFormulario, compraResp);
+        var añoSeleccionado=$("#ao").val();
+        var mesSeleccionado=$("#mes").val();
+        var mesActual= fechaActual.getMonth() +1;
+        if ( (añoSeleccionado>año) | ((añoSeleccionado==año) && (mesSeleccionado>mesActual)) ) {
+          var datosFormulario= $(this).serialize();
+          $.post("creditosValidar.php", datosFormulario, compraResp);
+        } else {
+          cambiarAlerta(false, "Tarjeta vencida");
+        }
         return false;
       });
       function compraResp(datos){

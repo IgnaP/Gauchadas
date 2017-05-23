@@ -28,7 +28,7 @@
         $ciuID=$row[0];
         $sql=$sql." AND Ciudad=".$ciuID;
       }else {
-        
+
       }
     }
   }
@@ -105,7 +105,7 @@
         }
       }
   ?>
-    <div class="publicacion">
+    <div class="bordeAbajo">
       <div class="row">
         <div class="col-md-10 col-md-offset-1 publicacionDiv">
           <label hidden><?php echo $row[0]; ?></label>
