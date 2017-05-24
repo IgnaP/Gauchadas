@@ -60,6 +60,7 @@
     $.get("estadoDeSesion.php", function (estado, status){
       if (estado=="true") {
         $(".marca").addClass("publicacionDiv");
+        $(".marcaBoton").removeClass("hidden");
       }
     });
   });
@@ -136,8 +137,13 @@
               <span><?php echo $fecha; ?></span>
             </div>
           </div>
-          <div class="">
+          <div class="row">
             <p class="text-justify"><?php echo $row[5]; ?></p>
+          </div>
+          <div class="col-md-2 col-md-offset-5 hidden marcaBoton">
+            <div class="form-group">
+              <button type="button" name="button" class="btn btn-default">Ver gauchada</button>
+            </div>
           </div>
         </div>
       </div>
