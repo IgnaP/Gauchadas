@@ -1,8 +1,8 @@
 <?php
   require("conexionBD.php");
   conectarse($conexion);
-  $sql = "SELECT * FROM publicaciones LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID) WHERE ";
-  $sql2 = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC";
+  $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID)) WHERE ";
+  $sql1 = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC";
   if (isset($_POST["activa"])) {
     if ($_POST["activa"]=="false") {
       $sql=$sql."`Activa`='0'";
@@ -23,13 +23,14 @@
     if ($_POST["prov"]!="Todas") {
       if ($_POST["ciu"]!="Todas") {
         $ciu=$_POST["ciu"];
-        $sql2="SELECT `ID` FROM `localidades` WHERE `localidad`='$ciu'";
+        $sql=$sql." AND localidad='".$ciu."'";
+      }else {
+        $provincia=$_POST["prov"];
+        $sql2="SELECT `id` FROM `provincias` WHERE `provincia`='$provincia'";
         $result=mysqli_query($conexion, $sql2);
         $row = mysqli_fetch_row($result);
-        $ciuID=$row[0];
-        $sql=$sql." AND Ciudad=".$ciuID;
-      }else {
-
+        $provID=$row[0];
+        $sql=$sql." AND id_provincia=".$provID;
       }
     }
   }
@@ -43,7 +44,7 @@
       $sql=$sql." AND Categoria=".$catID;
     }
   }
-  $sql=$sql." ".$sql2;
+  $sql=$sql." ".$sql1;
   $result=mysqli_query($conexion, $sql);
 ?>
 <!DOCTYPE html>
