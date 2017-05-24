@@ -51,8 +51,8 @@
       }
       var fecha= fechaActual.getFullYear()+"-"+mes+"-"+dia;
       $("#fecha").prop("min", fecha);
-      fecha= (fechaActual.getFullYear()+100)+"-"+mes+"-"+dia;
-      $("#fecha").prop("max", fecha);
+    //  fecha= (fechaActual.getFullYear()+100)+"-"+mes+"-"+dia;
+    //  $("#fecha").prop("max", fecha);
     }
     function creditosFuncion(){
       $.get("datosDelUsuario.php?datos=devolver", function(datos){

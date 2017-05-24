@@ -26,7 +26,7 @@
         var añoSeleccionado=$("#ao").val();
         var mesSeleccionado=$("#mes").val();
         var mesActual= fechaActual.getMonth() +1;
-        if ( (añoSeleccionado>año) | ((añoSeleccionado==año) && (mesSeleccionado>mesActual)) ) {
+        if ( (añoSeleccionado>año) | ((añoSeleccionado==año) && (mesSeleccionado>=mesActual)) ) {
           var datosFormulario= $(this).serialize();
           $.post("creditosValidar.php", datosFormulario, compraResp);
         } else {
@@ -90,7 +90,7 @@
             <label id="creditosActuales" class="control-label col-sm-1 text-center letraAzul"></label>
             <label class="control-label col-sm-1 text-center">+</label>
             <div class="col-sm-8">
-              <input type="number" class="form-control esconderAlerta" id="cantCreds" placeholder="Cantidad" required name="cantCreds" min="1" max="100">
+              <input type="number" class="form-control esconderAlerta" id="cantCreds" placeholder="Cantidad" required name="cantCreds" min="1">
             </div>
           </div>
         </div>

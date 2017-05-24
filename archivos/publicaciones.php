@@ -1,7 +1,8 @@
 <?php
   require("conexionBD.php");
   conectarse($conexion);
-  $sql = "SELECT * FROM `publicaciones` WHERE ";
+  $sql = "SELECT * FROM publicaciones LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID) WHERE ";
+  $sql2 = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC";
   if (isset($_POST["activa"])) {
     if ($_POST["activa"]=="false") {
       $sql=$sql."`Activa`='0'";
@@ -42,6 +43,7 @@
       $sql=$sql." AND Categoria=".$catID;
     }
   }
+  $sql=$sql." ".$sql2;
   $result=mysqli_query($conexion, $sql);
 ?>
 <!DOCTYPE html>

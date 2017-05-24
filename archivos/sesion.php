@@ -78,8 +78,8 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span> <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li onclick="cargarPerfil()" id="pestperfil"><a class="puntero">Perfil</a></li>
-            <li onclick="miCuenta()" id="pestMiCuenta"><a class="puntero">Mi cuenta</a></li>
+            <li onclick="" id="pestperfil"><a class="puntero">Perfil</a></li>
+            <li onclick="" id="pestMiCuenta"><a class="puntero">Mi cuenta</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="cerrarSesion.php">Cerrar sesion <span class="glyphicon glyphicon-log-out"></span></a></li>
           </ul>
