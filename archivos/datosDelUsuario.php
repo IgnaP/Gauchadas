@@ -35,12 +35,17 @@
       }
     }
   }
+  #Consultar precio de los creditos
+  $sql = "SELECT `Precio` FROM `credito` WHERE `ID_credito`='1'";
+  $result=mysqli_query($conexion, $sql);
+  $row = mysqli_fetch_row($result);
+  $precioCredito=$row[0];
 
   if ( isset($_GET["datos"]) ) {
     if ( $_GET["datos"]=="devolver" ) {
       $arreglo = array('nom' => "$nom", 'ap' => "$ap", 'fn' => "$fechaN", 'tel' => "$tel",
        'pRep' => "$pRep", 'creditos' => "$creditos", 'rep' => "$rep", 'fn2' => "$fn", 'resp' => "$resp",
-        'pre' => "$pre", 'ID' => "$ID", 'email' => "$email");
+        'pre' => "$pre", 'ID' => "$ID", 'email' => "$email", 'precioCreditos' => "$precioCredito");
 
       $jDatos = json_encode($arreglo);
       echo $jDatos;
