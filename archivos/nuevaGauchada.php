@@ -53,16 +53,18 @@
     function creditosFuncion(){
       $.get("datosDelUsuario.php?datos=devolver", function(datos){
         var jDatos= JSON.parse(datos);
-        $("#creditosTxt").text("Creditos: "+jDatos.creditos);
         if (jDatos.creditos>0) {
           $("#creditosDiv").addClass('alert-success');
           $("#creditosDiv").removeClass('alert-danger');
+          $("#creditosTxt").text("Creditos: "+jDatos.creditos);
           $("#nuevaForm").prop("hidden",false);
         } else {
           $("#creditosDiv").addClass('alert-danger');
           $("#creditosDiv").removeClass('alert-success');
+          var divCreditos=$("<b></b>").text("Creditos: "+jDatos.creditos);
+          var divExplicacion=$("<div></div>").text("Necesita por lo menos 1 credito");
+          $("#creditosTxt").html(divCreditos).append(divExplicacion);
           $("#nuevaForm").prop("hidden",true);
-          cambiarAlerta(false, "Necesita por lo menos 1 credito");
         }
       });
     }

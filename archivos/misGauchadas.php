@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="css/estilos.css">
   <script>
     $(document).ready(function(){
+      marcarPestaña("#pestMG");
       $.get("datosDelUsuario.php?datos=devolver", function(datos){
         var jDatos= JSON.parse(datos);
         $("#misPublicaciones").load("publicaciones.php", {"usr": jDatos.ID});
       });
-      marcarPestaña("#pestMG");
     });
   </script>
 </head>

@@ -12,14 +12,12 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/paginasPrincipales.js"></script>
   <script>
-    $(document).ready(function(){
-      $.get("estadoDeSesion.php", function (estado, status){
-        if (estado=="true") {
-          window.location = "sesion.php";
-        } else {
-          $("#lacaja").load("gauchadas.php");
-        }
-      });
+    $.get("estadoDeSesion.php", function (estado, status){
+      if (estado=="true") {
+        window.location = "sesion.php";
+      } else {
+        $("#lacaja").load("gauchadas.php");
+      }
     });
   </script>
 </head>

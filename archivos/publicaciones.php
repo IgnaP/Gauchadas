@@ -56,10 +56,6 @@
   <link rel="stylesheet" href="css/estilos.css">
 <script>
   $(document).ready(function(){
-    $(document).on('click','.publicacionDiv', function(){
-      var pID= $("label:first", this).text();
-      cargarPublicacion(pID);
-    });
     $.get("estadoDeSesion.php", function (estado, status){
       if (estado=="true") {
         $(".marca").addClass("publicacionDiv");
