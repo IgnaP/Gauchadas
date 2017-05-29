@@ -113,6 +113,11 @@
           }
         }
       }
+      if ( is_null($row[6]) ) {
+        $rutaImagen="css/Logo UnaGauchada.png";
+      } else {
+        $rutaImagen="imagenes/".$row[6];
+      }
   ?>
     <div class="bordeAbajo">
       <div class="row">
@@ -130,7 +135,7 @@
             <?php } } ?>
             </div>
           </div>
-          <img src="css/dog-bag.jpg" style="max-width:300px;max-height:300px;" class="center-block">
+          <img src="<?php echo $rutaImagen; ?>" style="max-width:300px;max-height:300px;" class="center-block">
           <div class="row separar">
             <div class="col-md-10">
               <label class="label label-primary"><?php echo $ciu; ?></label>

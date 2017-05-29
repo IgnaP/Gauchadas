@@ -11,6 +11,7 @@
         var jDatos= JSON.parse(datos);
         $("#misPublicaciones").load("publicaciones.php", {"usr": jDatos.ID});
       });
+      marcarPestaña("#pestMG");
     });
   </script>
 </head>

@@ -8,6 +8,7 @@
 
   <script>
   $(document).ready(function() {
+    marcarPestaña("#pestIS");
     $("#loginForm").submit(function(){
       var datosFormulario= $(this).serialize();
       $.post("iniciarSesionValidar.php", datosFormulario, loginRespuesta);
@@ -49,7 +50,7 @@
             </div>
           </div>
           <div class="container">
-            <a onclick="recuperarClave()">Recuperar clave</a>
+            <a onclick="cargarPagina('recuperarClave.php')">Recuperar clave</a>
           </div>
           <div class="alert alert-danger col-md-10 col-md-offset-1 hidden text-center" id="alertaDeClave">
             <strong id="alertaTxt"></strong>

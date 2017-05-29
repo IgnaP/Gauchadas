@@ -1,6 +1,6 @@
 <?php
-  require("conexionBD.php");
-  conectarse($conexion);
+#  require("conexionBD.php");
+#  conectarse($conexion);
 #  $fActual=date("Y-m-d");
 #  $fMax=date_create(date("Y-m-d"));
 #  date_add($fMax, date_interval_create_from_date_string('30 days'));
@@ -16,28 +16,24 @@
   <script src="js/miScrips.js"></script>
   <script>
     $(document).ready(function(){
+      marcarPestaña("#pestNG");
       creditosFuncion();
       cargarProvincias('');
       cargarCategorias('');
       limitarFecha();
+      $.get("php/buscarCookie.php?nombre=respuesta", function (resultado, status){
+        if (resultado!="false") {
+          if (resultado=="exito") {
+            cambiarAlerta(true, "La gauchada se ha creado satisfactoriamente");
+          } else {
+            cambiarAlerta(false, resultado);
+          }
+        }
+      });
 
       $(".esconderAlerta").on("click keypress", function(){
         $("#alertaForm").addClass('hidden');
       });
-
-      $("#nuevaForm").submit(function(){
-        var datosFormulario= $(this).serialize();
-        $.post("nuevaGauchadaGuardar.php", datosFormulario, nuevaResp);
-        return false;
-      });
-      function nuevaResp(datos){
-        if (datos=="exito") {
-          cambiarAlerta(true, "La gauchada se ha creado satisfactoriamente");
-          creditosFuncion();
-        } else {
-          cambiarAlerta(false, datos);
-        }
-      }
     });
     function limitarFecha(){
       var fechaActual=new Date();
@@ -85,7 +81,7 @@
             <div class="alert col-md-10 hidden text-center" id="alertaForm">
               <strong id="alertaTxt"></strong>
             </div>
-            <form class="form-horizontal" action="" method="post" id="nuevaForm" hidden>
+            <form class="form-horizontal" action="nuevaGauchadaGuardar.php" method="POST" id="nuevaForm" hidden enctype="multipart/form-data">
               <div class="row">
                 <div class="col-md-10">
                   <div class="form-group">
@@ -136,7 +132,7 @@
                 <div class="col-md-10">
                   <div class="form-group">
                     <label for="imagen">Agregue una imagen (opcional)</label>
-                    <input type="file" name="imagen" accept="image/*" class="esconderAlerta">
+                    <input type="file" accept="image/jpeg,image/png,image/jpg" class="esconderAlerta" name="imagen" id="imagen">
                   </div>
                 </div>
               </div>

@@ -10,6 +10,7 @@
 
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/paginasPrincipales.js"></script>
   <script>
     $(document).ready(function(){
       $.get("estadoDeSesion.php", function (estado, status){
@@ -19,22 +20,7 @@
           $("#lacaja").load("gauchadas.php");
         }
       });
-
     });
-    function registrarse(){
-      $("#lacaja").load("registrarse.php");
-      $("li").removeClass("active");
-      $("#pestReg").addClass("active");
-    }
-    function loguearse(){
-      $("#lacaja").load("iniciarSesion.php");
-      $("li").removeClass("active");
-      $("#pestIS").addClass("active");
-    }
-    function recuperarClave(){
-      $("li").removeClass("active");
-      $("#lacaja").load("recuperarClave.php");
-    }
   </script>
 </head>
 <body>
@@ -47,12 +33,12 @@
       </div>
       <ul class="nav navbar-nav">
         <li class="borde"><strong class="navbar-text tituloDeLaNavbar">Una Gauchada</strong></li>
-        <li class="active" id="pestgauchadas"><a href="index.php">Gauchadas</a></li>
+        <li id="pestgauchadas"><a href="index.php">Gauchadas</a></li>
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li id="pestIS"><a onclick="loguearse()" class="puntero">Iniciar sesion</a></li>
-        <li id="pestReg"><a onclick="registrarse()" class="puntero">Registrarse</a></li>
+        <li id="pestIS"><a onclick="cargarPagina('iniciarSesion.php')" class="puntero">Iniciar sesion</a></li>
+        <li id="pestReg"><a onclick="cargarPagina('registrarse.php')" class="puntero">Registrarse</a></li>
       </ul>
     </div>
   </nav>

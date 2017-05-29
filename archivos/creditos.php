@@ -10,6 +10,7 @@
     var fechaActual= new Date();
     var año= fechaActual.getFullYear();
     $(document).ready(function() {
+      marcarPestaña("#pestComprar");
       creditosFuncion();
       for (var i = 1; i < 13; i++) {
         $('#mes').append($('<option>', {value: i, text: i}));

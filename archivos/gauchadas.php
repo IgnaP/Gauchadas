@@ -9,6 +9,7 @@
   <script>
     $(document).ready(function(){
       $("#publicaciones").load("publicaciones.php");
+      marcarPestaña("#pestgauchadas");
 
       $("#filtrarForm").submit(function(){
         $("#publicaciones").load("publicaciones.php", {"tit": $("#titulo").val(), "cat": $("#categorias").val(), "prov": $("#provincias").val(), "ciu": $("#ciudades").val()});

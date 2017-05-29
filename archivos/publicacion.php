@@ -18,6 +18,11 @@
       $("#categoria").text(jDatos.cat);
       $("#descripcion").text(jDatos.desc);
       $("#fecha").text(jDatos.fecha);
+      if (jDatos.imagen=="") {
+        $("#imagen").prop("src", "css/Logo UnaGauchada.png");
+      } else {
+        $("#imagen").prop("src", "imagenes/"+jDatos.imagen);
+      }
       if (jDatos.logueado) {
         if (jDatos.owner==jDatos.usr) {
           $(".delDueño").prop('hidden', false);
@@ -137,7 +142,7 @@
         <div class="row bordeAbajo">
           <div class="col-md-7 col-md-offset-1">
             <h3 id="titulo"></h3>
-            <img src="css/dog-bag.jpg" style="max-width:400px;max-height:400px;" class="center-block">
+            <img style="max-width:500px;max-height:500px;" class="center-block" id="imagen">
             <div class="row separar">
               <div class="col-md-10">
                 <label class="label label-primary" id="ciudad"></label>

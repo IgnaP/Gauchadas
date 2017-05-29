@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/estilos.css">
   <script>
     $(document).ready(function() {
+      marcarPestaña("#pestReg");
       $(".esconderAlerta").keypress(function(){
         $("#alertaDeClave").addClass('hidden');
       });
