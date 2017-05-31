@@ -28,8 +28,12 @@
         var mesSeleccionado=$("#mes").val();
         var mesActual= fechaActual.getMonth() +1;
         if ( (añoSeleccionado>año) | ((añoSeleccionado==año) && (mesSeleccionado>=mesActual)) ) {
-          var datosFormulario= $(this).serialize();
-          $.post("creditosValidar.php", datosFormulario, compraResp);
+          if ( $("#tarjeta").val()!="1111 1111 1111 1111" ) {
+            var datosFormulario= $(this).serialize();
+            $.post("creditosValidar.php", datosFormulario, compraResp);
+          } else {
+            cambiarAlerta(false, "No dispone del saldo suficiente");
+          }
         } else {
           cambiarAlerta(false, "Tarjeta vencida");
         }

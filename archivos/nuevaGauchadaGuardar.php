@@ -4,7 +4,6 @@ conectarse($conexion);
 setcookie("pagina","nuevaGauchada.php", time() + 3600, "/");
 if (!$conexion) {
   $respuesta="Fallo al conectar con el servidor";
-  exit();
 } else {
   session_start();
   $email = $_SESSION["usuario"];
@@ -13,7 +12,7 @@ if (!$conexion) {
   $fila=mysqli_fetch_row($resultado);
   $creditos=$fila[13];
   if ($creditos>0) {
-    if ( isset( $_POST["imagen"] ) ) {
+    if ( $_FILES["imagen"]["error"]==0 ) {
       require("php/funciones.php");
       $ok= subirImagen($nombre_imagen,$respuesta);
     } else {

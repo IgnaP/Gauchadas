@@ -101,7 +101,7 @@
             $pregPend=true;
           }
         }else {
-          $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`!='' AND `Publicacion`='$pID' AND `Vista`='0'";
+          $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`!='' AND `Publicacion`='$pID' AND `Vista`='0' AND `UsuarioID`='$usrID'";
           $resultado=mysqli_query($conexion,$consulta);
           $num_filas=mysqli_num_rows($resultado);
           if ($num_filas!=0) {
@@ -124,11 +124,13 @@
               <h3><?php echo $row[1]; ?></h3>
             </div>
             <div class="col-md-2 separar">
-              <?php if ($pregPend) { ?>
+  <?php         if ($pregPend) { ?>
                 <label class="label label-warning">Preguntas</label>
-            <?php  } else {if ($resPend) {   ?>
+  <?php           } else {
+                    if ($resPend) {   ?>
                 <label class="label label-warning">Respuestas</label>
-            <?php } } ?>
+  <?php             }
+                  } ?>
             </div>
           </div>
           <img src="<?php echo $rutaImagen; ?>" style="max-width:300px;max-height:300px;" class="center-block">

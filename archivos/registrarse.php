@@ -8,8 +8,13 @@
   <script>
     $(document).ready(function() {
       marcarPestaña("#pestReg");
-      $(".esconderAlerta").keypress(function(){
-        $("#alertaDeClave").addClass('hidden');
+      $.get("php/buscarCookie.php?nombre=respuesta", function (resultado, status){
+        if (resultado!="false") {
+          cambiarAlerta(false, resultado);
+        }
+      });
+      $(".esconderAlerta").change(function(){
+        $("#alertaForm").addClass('hidden');
       });
 
       $.get("selects.php?select=preguntas", function(datos){
@@ -20,24 +25,21 @@
       });
 
       $("#formulario").submit(function(){
-        if ( $("#clave").val()!=$("#clave2").val() ) {
-          $("#alertaTxt").text("Las claves no coinciden");
-          $("#alertaDeClave").removeClass('hidden');
-        }else{
-          var datosFormulario= $(this).serialize();
-          $.post("registrarseGuardar.php", datosFormulario, regGuardarResp);
+        if (! compararClaves() ) {
+          return false;
         }
-        return false;
       });
-      function regGuardarResp(datos){
-        if (datos=="exito") {
-          window.location = "sesion.php";
-        } else {
-          $("#alertaTxt").text(datos);
-          $("#alertaDeClave").removeClass('hidden');
+    });
+    function compararClaves(){
+      if ( ($("#clave").val()!="")&&($("#clave2").val()!="") ) {
+        if ( $("#clave").val()!=$("#clave2").val() ) {
+          cambiarAlerta(false,"Las claves no coinciden")
+          return false;
+        }else {
+          return true;
         }
       }
-    });
+    }
   </script>
 </head>
 <body>
@@ -48,16 +50,19 @@
           <h3 class="separar">Crear cuenta</h3>
         </div>
       </div>
-      <form class="form-horizontal" action="registrarseGuardar.php" method="post" id="formulario">
+      <div class="alert col-md-8 col-md-offset-2 hidden text-center" id="alertaForm">
+        <strong id="alertaTxt"></strong>
+      </div>
+      <form class="form-horizontal" action="registrarseGuardar.php" method="post" id="formulario" enctype="multipart/form-data">
         <div class="form-group">
           <div class="row">
             <div class="col-md-4 col-md-offset-2">
               <label for="nombre" class="control-label">Nombre</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Nombre" required autofocus maxlength="20" name="nombre" pattern="[a-zA-Z]{3,20}" title="De 3 a 20 letras">
+              <input type="text" class="form-control esconderAlerta" id="nombre" placeholder="Nombre" required autofocus maxlength="20" name="nombre" pattern="[a-zA-Z]{3,20}" title="De 3 a 20 letras">
             </div>
             <div class="col-md-4">
               <label for="apellido" class="control-label">Apellido</label>
-              <input type="text" class="form-control" id="apellido" placeholder="Apellido" required maxlength="20" name="apellido" pattern="[a-zA-Z]{3,20}" title="De 3 a 20 letras">
+              <input type="text" class="form-control esconderAlerta" id="apellido" placeholder="Apellido" required maxlength="20" name="apellido" pattern="[a-zA-Z]{3,20}" title="De 3 a 20 letras">
             </div>
           </div>
         </div>
@@ -65,11 +70,11 @@
           <div class="row">
             <div class="col-md-4 col-md-offset-2">
               <label for="fecha" class="control-label">Fecha de nacimiento</label>
-              <input type="date" class="form-control" id="fecha" placeholder="Fecha" min="1900-01-01" max="2010-12-31" required name="fecha">
+              <input type="date" class="form-control esconderAlerta" id="fecha" placeholder="Fecha" min="1900-01-01" max="2010-12-31" required name="fecha">
             </div>
             <div class="col-md-4">
               <label for="telefono" class="control-label">Telefono</label>
-              <input type="tel" class="form-control" id="telefono" placeholder="Telefono" pattern="[0-9]{7,15}" required title="De 7 a 15 numeros" name="telefono">
+              <input type="tel" class="form-control esconderAlerta" id="telefono" placeholder="Telefono" pattern="[0-9]{7,15}" required title="De 7 a 15 numeros" name="telefono">
             </div>
           </div>
         </div>
@@ -77,7 +82,7 @@
           <div class="row">
             <div class="col-md-8 col-md-offset-2">
               <label for="email" class="control-label">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="Email" required pattern="[A-Za-z0-9._+-]{1,}@[a-z]{1,}.com" title="ejemplo@mail.com" name="email">
+              <input type="email" class="form-control esconderAlerta" id="email" placeholder="Email" required pattern="[A-Za-z0-9._+-]{1,}@[a-z]{1,}.com" title="ejemplo@mail.com" name="email">
             </div>
           </div>
         </div>
@@ -89,7 +94,7 @@
             </div>
             <div class="col-md-4">
               <label for="clave2" class="control-label">Confirmar clave</label>
-              <input type="password" class="form-control" id="clave2" placeholder="Confirmar clave" required pattern="[A-Za-z0-9]{3,}" title="De 3 a 20 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="clave2">
+              <input type="password" class="form-control esconderAlerta" id="clave2" placeholder="Confirmar clave" required pattern="[A-Za-z0-9]{3,}" title="De 3 a 20 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="clave2">
             </div>
           </div>
         </div>
@@ -101,12 +106,20 @@
           </div>
           <div class="row">
             <div class="col-md-4 col-md-offset-2">
-                <select class="form-control" name="preguntas" id="preguntas">
+                <select class="form-control esconderAlerta" name="preguntas" id="preguntas">
 
                 </select>
             </div>
             <div class="col-md-4">
-              <input type="text" class="form-control" id="respuesta" placeholder="Respuesta" required pattern="[A-Za-z0-9]{3,}" title="De 3 a 20 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="respuesta">
+              <input type="text" class="form-control esconderAlerta" id="respuesta" placeholder="Respuesta" required pattern="[A-Za-z0-9]{3,}" title="De 3 a 20 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="respuesta">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-10 col-md-offset-2">
+              <label for="imagen">Agregue una imagen (opcional)</label>
+              <input type="file" accept="image/jpeg,image/png,image/jpg" class="esconderAlerta" name="imagen" id="imagen">
             </div>
           </div>
         </div>
@@ -116,9 +129,6 @@
           </div>
         </div>
       </form>
-      <div class="alert alert-danger col-md-8 col-md-offset-2 hidden text-center" id="alertaDeClave">
-        <strong id="alertaTxt"></strong>
-      </div>
     </div>
   </div>
 </body>

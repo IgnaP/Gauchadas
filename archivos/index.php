@@ -11,12 +11,19 @@
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/paginasPrincipales.js"></script>
+  <script src="js/miScrips.js"></script>
   <script>
     $.get("estadoDeSesion.php", function (estado, status){
       if (estado=="true") {
         window.location = "sesion.php";
       } else {
-        $("#lacaja").load("gauchadas.php");
+        $.get("php/buscarCookie.php?nombre=pagina", function (resultado, status){
+          if (resultado=="false") {
+            cargarPagina("gauchadas.php");
+          } else {
+            cargarPagina(resultado);
+          }
+        });
       }
     });
   </script>

@@ -15,6 +15,7 @@
   $resp=$fila[8];
   $pRep=$fila[12];
   $creditos=$fila[13];
+  $img=$fila[14];
   $fechaN=date("d/m/Y", strtotime($fn));
 
   $sql = "SELECT `Pregunta` FROM `preguntas` WHERE `ID`='$preID'";
@@ -45,7 +46,8 @@
     if ( $_GET["datos"]=="devolver" ) {
       $arreglo = array('nom' => "$nom", 'ap' => "$ap", 'fn' => "$fechaN", 'tel' => "$tel",
        'pRep' => "$pRep", 'creditos' => "$creditos", 'rep' => "$rep", 'fn2' => "$fn", 'resp' => "$resp",
-        'pre' => "$pre", 'ID' => "$ID", 'email' => "$email", 'precioCreditos' => "$precioCredito");
+        'pre' => "$pre", 'ID' => "$ID", 'email' => "$email", 'precioCreditos' => "$precioCredito",
+         'imagen' => "$img");
 
       $jDatos = json_encode($arreglo);
       echo $jDatos;

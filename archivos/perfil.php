@@ -14,6 +14,11 @@
       $("#infoFN").append(jDatos.fn);
       $("#infoTel").append(jDatos.tel);
       $("#repNom").text(jDatos.rep);
+      if (jDatos.imagen=="") {
+        $("#imagenPerfil").prop("src", "css/Logo UnaGauchada.png");
+      } else {
+        $("#imagenPerfil").prop("src", "imagenes/"+jDatos.imagen);
+      }
       barRep(jDatos.pRep);
     });
   });
@@ -51,7 +56,9 @@
     <div class="col-md-2 transparente alturaminima">
       <h3 id="nombreApellido"></h3>
       <div class="separar2">
-        <h3>IMAGEN?</h3>
+        <img style="max-width:200px;max-height:200px;" class="center-block" id="imagenPerfil">
+      </div>
+      <div class="">
         <p id="infoFN">Fecha de nacimiento: </p>
         <p id="infoTel">Telefono: </p>
       </div>

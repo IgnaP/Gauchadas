@@ -11,6 +11,7 @@
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/paginasPrincipales.js"></script>
+  <script src="js/miScrips.js"></script>
   <script>
     $(document).ready(function(){
       $.get("estadoDeSesion.php", function (estado, status){
