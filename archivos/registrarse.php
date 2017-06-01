@@ -58,11 +58,11 @@
           <div class="row">
             <div class="col-md-4 col-md-offset-2">
               <label for="nombre" class="control-label">Nombre</label>
-              <input type="text" class="form-control esconderAlerta" id="nombre" placeholder="Nombre" required autofocus maxlength="20" name="nombre" pattern="[a-zA-Z]{3,20}" title="De 3 a 20 letras">
+              <input type="text" class="form-control esconderAlerta" id="nombre" placeholder="Nombre" required autofocus maxlength="20" name="nombre" pattern="[a-zA-Záéíóú ]{3,20}" title="De 3 a 20 letras">
             </div>
             <div class="col-md-4">
               <label for="apellido" class="control-label">Apellido</label>
-              <input type="text" class="form-control esconderAlerta" id="apellido" placeholder="Apellido" required maxlength="20" name="apellido" pattern="[a-zA-Z]{3,20}" title="De 3 a 20 letras">
+              <input type="text" class="form-control esconderAlerta" id="apellido" placeholder="Apellido" required maxlength="20" name="apellido" pattern="[a-zA-Záéíóú ]{3,20}" title="De 3 a 20 letras">
             </div>
           </div>
         </div>
