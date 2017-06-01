@@ -111,7 +111,7 @@
                 </select>
             </div>
             <div class="col-md-4">
-              <input type="text" class="form-control esconderAlerta" id="respuesta" placeholder="Respuesta" required pattern="[A-Za-z0-9]{3,}" title="De 3 a 20 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="respuesta">
+              <input type="text" class="form-control esconderAlerta" id="respuesta" placeholder="Respuesta" required pattern="[A-Za-z0-9 ]{3,}" title="De 3 a 20 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="respuesta">
             </div>
           </div>
         </div>
