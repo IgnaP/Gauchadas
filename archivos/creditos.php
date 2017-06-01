@@ -68,8 +68,10 @@
       <form class="form-horizontal" action="" method="post" id="formulario">
         <div class="col-md-offset-2 col-md-8">
           <div class="form-group">
-            <label for="tipo" class="control-label col-sm-4">Metodo de pago</label>
-            <div class="col-md-8">
+            <div class="col-sm-5 text-left">
+              <label for="tipo" class="control-label">Metodo de pago</label>
+            </div>
+            <div class="col-md-7">
               <select class="form-control esconderAlerta" name="tipo" id="tipo">
                 <option>VISA</option>
                 <option>Master Card</option>
@@ -79,27 +81,33 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="tarjeta" class="control-label col-sm-5">Numero de tarjeta</label>
+            <div class="text-left col-sm-5">
+              <label for="tarjeta" class="control-label ">Numero de tarjeta</label>
+            </div>
             <div class="col-md-7">
               <input type="text" class="form-control esconderAlerta" id="tarjeta" placeholder="Tarjeta" required autofocus name="tarjeta" pattern="[0-9]{4,4} [0-9]{4,4} [0-9]{4,4} [0-9]{4,4}" title="Ejemplo: 1234 5678 9012 3456">
             </div>
           </div>
           <div class="form-group">
-            <label for="fecha" class="control-label col-sm-5">Fecha de caducidad</label>
+            <div class="col-sm-5 text-left">
+              <label for="fecha" class="control-label">Fecha de caducidad</label>
+            </div>
             <div class="col-sm-3"><select class="form-control esconderAlerta" name="mes" id="mes"></select></div>
             <div class="col-sm-4"><select class="form-control esconderAlerta" name="ao" id="ao"></select></div>
           </div>
           <div class="form-group">
-            <label for="cod" class="control-label col-sm-5">Codigo de seguridad</label>
+            <div class="col-sm-5 text-left">
+              <label for="cod" class="control-label">Codigo de seguridad</label>
+            </div>
             <div class="col-md-7">
               <input type="text" class="form-control esconderAlerta" id="cod" placeholder="Codigo" required name="cod" pattern="[0-9]{3,3}" title="Ejemplo: 074">
             </div>
           </div>
           <div class="form-group">
-            <label for="cantCreds" class="control-label col-sm-2">Creditos</label>
-            <label id="creditosActuales" class="control-label col-sm-1 text-center letraAzul"></label>
+            <label for="cantCreds" class="control-label col-sm-2">Creditos:</label>
+            <label id="creditosActuales" class="control-label col-sm-2 text-center letraAzul"></label>
             <label class="control-label col-sm-1 text-center">+</label>
-            <div class="col-sm-8">
+            <div class="col-sm-7">
               <input type="number" class="form-control esconderAlerta" id="cantCreds" placeholder="Cantidad" required name="cantCreds" min="1" onkeyup="actualizarPrecio()" onchange="actualizarPrecio()">
             </div>
           </div>
