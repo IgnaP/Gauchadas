@@ -87,7 +87,7 @@
                 <div class="col-md-10">
                   <div class="form-group">
                     <label for="titulo" class="control-label">Titulo</label>
-                    <input type="text" class="form-control esconderAlerta" id="titulo" placeholder="Titulo" required autofocus pattern="[A-Za-z0-9 ]{3,20}" title="De 3 a 20 letras o numeros" name="titulo">
+                    <input type="text" class="form-control esconderAlerta" id="titulo" placeholder="Titulo" required autofocus pattern="[A-Za-z0-9áéíóú ]{3,30}" title="De 3 a 30 letras o numeros" name="titulo">
                   </div>
                 </div>
               </div>

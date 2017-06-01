@@ -1,5 +1,6 @@
 <?php
 require("conexionBD.php");
+#ysqli_query($conexion,"SET NAMES 'utf8');
 conectarse($conexion);
 $arreglo= array();
 if ( isset($_GET["select"]) ) {
