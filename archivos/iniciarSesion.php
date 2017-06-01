@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
-
   <script>
   $(document).ready(function() {
     marcarPestaña("#pestIS");
@@ -14,17 +13,14 @@
       $.post("iniciarSesionValidar.php", datosFormulario, loginRespuesta);
       return false;
     });
-
     function loginRespuesta(datos){
       if (datos=="Usuario") {
         window.location = "sesion.php";
       } else {
         if (datos=="Admin") {
-          $("#alertaTxt").text("Lamentablemente la pagina para admins todavia no esta disponible");
-          $("#alertaDeClave").removeClass('hidden');
+          window.location = "administrador.php";
         } else {
-          $("#alertaTxt").text(datos);
-          $("#alertaDeClave").removeClass('hidden');
+          cambiarAlerta(false, datos);
         }
       }
     }
@@ -36,7 +32,7 @@
     <div class="col-md-4 col-md-offset-4 transparente">
       <div class="container-fluid">
         <h3 class="separar">Iniciar sesion</h3>
-        <form class="form-horizontal" action="sesion.php" method="post" id="loginForm">
+        <form class="form-horizontal" action="iniciarSesionValidar.php" method="post" id="loginForm">
           <div class="form-group">
             <label for="inputEmail" class="col-sm-2 col-sm-offset-1 control-label">Email</label>
             <div class="col-sm-8">
@@ -52,7 +48,7 @@
   <!--        <div class="container">
             <a onclick="cargarPagina('recuperarClave.php')">Recuperar clave</a>
           </div>                             -->
-          <div class="alert alert-danger col-md-10 col-md-offset-1 hidden text-center" id="alertaDeClave">
+          <div class="alert col-md-10 col-md-offset-1 hidden text-center" id="alertaForm">
             <strong id="alertaTxt"></strong>
           </div>
           <div class="col-sm-offset-5 col-sm-4">

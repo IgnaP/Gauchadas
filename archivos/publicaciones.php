@@ -1,36 +1,38 @@
 <?php
   require("conexionBD.php");
   conectarse($conexion);
-  $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID)) WHERE ";
-  $sql1 = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC";
+  $fechaActual=date("Y-m-d");
+  $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID))";
+  $sqlWhere ="WHERE `FechaLimite`>'$fechaActual' AND";
+  $sqlGroup = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC, `Fecha_publicacion` DESC";
   if (isset($_POST["activa"])) {
     if ($_POST["activa"]=="false") {
-      $sql=$sql."`Activa`='0'";
+      $sqlWhere=$sqlWhere."`Activa`='0'";
     } else {
-      $sql=$sql."`Activa`='1'";
+      $sqlWhere=$sqlWhere."`Activa`='1'";
     }
   }else {
-    $sql=$sql."`Activa`='1'";
+    $sqlWhere=$sqlWhere."`Activa`='1'";
   }
   if (isset($_POST["usr"])) {
     $usrID=$_POST["usr"];
-    $sql=$sql." AND usuario=".$usrID;
+    $sqlWhere=$sqlWhere." AND usuario=".$usrID;
   }
   if (isset($_POST["tit"])) {
-    $sql=$sql." AND Nombre LIKE '%".$_POST["tit"]."%'";
+    $sqlWhere=$sqlWhere." AND Nombre LIKE '%".$_POST["tit"]."%'";
   }
   if (isset($_POST["prov"])) {
     if ($_POST["prov"]!="Todas") {
       if ($_POST["ciu"]!="Todas") {
         $ciu=$_POST["ciu"];
-        $sql=$sql." AND localidad='".$ciu."'";
+        $sqlWhere=$sqlWhere." AND localidad='".$ciu."'";
       }else {
         $provincia=$_POST["prov"];
         $sql2="SELECT `id` FROM `provincias` WHERE `provincia`='$provincia'";
         $result=mysqli_query($conexion, $sql2);
         $row = mysqli_fetch_row($result);
         $provID=$row[0];
-        $sql=$sql." AND id_provincia=".$provID;
+        $sqlWhere=$sqlWhere." AND id_provincia=".$provID;
       }
     }
   }
@@ -41,10 +43,10 @@
       $result=mysqli_query($conexion, $sql2);
       $row = mysqli_fetch_row($result);
       $catID=$row[0];
-      $sql=$sql." AND Categoria=".$catID;
+      $sqlWhere=$sqlWhere." AND Categoria=".$catID;
     }
   }
-  $sql=$sql." ".$sql1;
+  $sql=$sql." ".$sqlWhere." ".$sqlGroup;
   $result=mysqli_query($conexion, $sql);
 ?>
 <!DOCTYPE html>
@@ -67,53 +69,54 @@
 </head>
 <body>
   <?php
-    session_start();
-    $logueado=false;
-    if ( isset($_SESSION['usuario']) ) {
-      $logueado=true;
-      $mail=$_SESSION['usuario'];
-      $sql2="SELECT `ID` FROM `usuarios` WHERE `Email`='$mail'";
-      $resultado=mysqli_query($conexion,$sql2);
-      $fila = mysqli_fetch_row($resultado);
-      $usrID=$fila[0];
-    }
-    while ($row = mysqli_fetch_row($result)) {
-      $pID=$row[0];
-      $ciuID=$row[2];
-      $catID=$row[4];
-      $fecha=date("d/m/Y", strtotime($row[3]));
-      $sql2="SELECT `localidad` FROM `localidades` WHERE `id`='$ciuID'";
-      $resultado=mysqli_query($conexion,$sql2);
-      $fila = mysqli_fetch_row($resultado);
-      $ciu=$fila[0];
-      $sql2="SELECT `Nombre` FROM `categorias` WHERE `ID`='$catID'";
-      $resultado=mysqli_query($conexion,$sql2);
-      $fila = mysqli_fetch_row($resultado);
-      $cat=$fila[0];
-      $pregPend=false;
-      $resPend=false;
-      if ($logueado) {
-        if ($usrID==$row[8]) {
-          $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`='' AND `Publicacion`='$pID'";
-          $resultado=mysqli_query($conexion,$consulta);
-          $num_filas=mysqli_num_rows($resultado);
-          if ($num_filas!=0) {
-            $pregPend=true;
-          }
-        }else {
-          $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`!='' AND `Publicacion`='$pID' AND `Vista`='0' AND `UsuarioID`='$usrID'";
-          $resultado=mysqli_query($conexion,$consulta);
-          $num_filas=mysqli_num_rows($resultado);
-          if ($num_filas!=0) {
-            $resPend=true;
+    if (mysqli_num_rows($result)>0) {
+      session_start();
+      $logueado=false;
+      if ( isset($_SESSION['usuario']) ) {
+        $logueado=true;
+        $mail=$_SESSION['usuario'];
+        $sql2="SELECT `ID` FROM `usuarios` WHERE `Email`='$mail'";
+        $resultado=mysqli_query($conexion,$sql2);
+        $fila = mysqli_fetch_row($resultado);
+        $usrID=$fila[0];
+      }
+      while ($row = mysqli_fetch_row($result)) {
+        $pID=$row[0];
+        $ciuID=$row[2];
+        $catID=$row[4];
+        $fecha=date("d/m/Y", strtotime($row[3]));
+        $sql2="SELECT `localidad` FROM `localidades` WHERE `id`='$ciuID'";
+        $resultado=mysqli_query($conexion,$sql2);
+        $fila = mysqli_fetch_row($resultado);
+        $ciu=$fila[0];
+        $sql2="SELECT `Nombre` FROM `categorias` WHERE `ID`='$catID'";
+        $resultado=mysqli_query($conexion,$sql2);
+        $fila = mysqli_fetch_row($resultado);
+        $cat=$fila[0];
+        $pregPend=false;
+        $resPend=false;
+        if ($logueado) {
+          if ($usrID==$row[8]) {
+            $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`='' AND `Publicacion`='$pID'";
+            $resultado=mysqli_query($conexion,$consulta);
+            $num_filas=mysqli_num_rows($resultado);
+            if ($num_filas!=0) {
+              $pregPend=true;
+            }
+          }else {
+            $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`!='' AND `Publicacion`='$pID' AND `Vista`='0' AND `UsuarioID`='$usrID'";
+            $resultado=mysqli_query($conexion,$consulta);
+            $num_filas=mysqli_num_rows($resultado);
+            if ($num_filas!=0) {
+              $resPend=true;
+            }
           }
         }
-      }
-      if ( is_null($row[6]) ) {
-        $rutaImagen="css/Logo UnaGauchada.png";
-      } else {
-        $rutaImagen="imagenes/".$row[6];
-      }
+        if ( is_null($row[6]) ) {
+          $rutaImagen="css/Logo UnaGauchada.png";
+        } else {
+          $rutaImagen="imagenes/".$row[6];
+        }
   ?>
     <div class="bordeAbajo">
       <div class="row">
@@ -154,6 +157,13 @@
         </div>
       </div>
     </div>
+  <?php
+      }
+    }else {
+  ?>
+      <div class="jumbotron text-center">
+        <b style="font-size:20px">No se encontraron gauchadas</b>
+      </div>
   <?php
     }
   ?>

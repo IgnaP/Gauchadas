@@ -1,7 +1,4 @@
 <?php
-#  require("conexionBD.php");
-#  conectarse($conexion);
-#  $fActual=date("Y-m-d");
 #  $fMax=date_create(date("Y-m-d"));
 #  date_add($fMax, date_interval_create_from_date_string('30 days'));
 #  $fMax=date_format($fMax, 'Y-m-d');

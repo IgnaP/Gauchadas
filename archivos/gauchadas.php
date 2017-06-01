@@ -26,7 +26,10 @@
         <div class="col-md-10 col-md-offset-1">
           <h3>Filtros</h3>
           <form class="" action="" method="post" id="filtrarForm">
-            <input type="text" class="form-control separar" placeholder="Buscar" id="titulo">
+            <div class="separar">
+              <label for="titulo">Titulo</label>
+              <input type="text" class="form-control" placeholder="Buscar" id="titulo">
+            </div>
             <label for="ciudades">Provincias</label>
             <select class="form-control" name="provincias" id="provincias" onchange="localidadesFuncion('Todas')"></select>
             <label for="ciudades">Ciudades</label>
