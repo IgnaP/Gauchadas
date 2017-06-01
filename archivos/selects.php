@@ -1,7 +1,10 @@
 <?php
 require("conexionBD.php");
+
 conectarse($conexion);
+mysqli_query($conexion,"SET NAMES 'utf8'");
 $arreglo= array();
+
 if ( isset($_GET["select"]) ) {
   if ( $_GET["select"]=="preguntas" ) {
     $sql = "SELECT `Pregunta` FROM `preguntas`";
@@ -14,12 +17,15 @@ if ( isset($_GET["select"]) ) {
     $sql = "SELECT `localidad` FROM `localidades` WHERE `id_provincia`='$provID'";
   }elseif ( $_GET["select"]=="provincias" ) {
     $sql = "SELECT `provincia` FROM `provincias`";
+
   }else {
     $sql = "SELECT `Nombre` FROM `categorias`";
   }
   $result=mysqli_query($conexion, $sql);
+
   if ($result) {
     $cont=0;
+
     while ($row = mysqli_fetch_row($result)) {
       $arreglo[$cont] = $row[0];
       $cont=$cont+1;
@@ -30,6 +36,7 @@ if ( isset($_GET["select"]) ) {
 }else {
   $arreglo[0] ='Error GET vacio';
 }
+
 $jDatos = json_encode($arreglo);
 echo $jDatos;
 ?>
