@@ -100,15 +100,18 @@
             <label id="creditosActuales" class="control-label col-sm-1 text-center letraAzul"></label>
             <label class="control-label col-sm-1 text-center">+</label>
             <div class="col-sm-8">
-              <input type="number" class="form-control esconderAlerta" id="cantCreds" placeholder="Cantidad" required name="cantCreds" min="1" onkeyup="actualizarPrecio()">
+              <input type="number" class="form-control esconderAlerta" id="cantCreds" placeholder="Cantidad" required name="cantCreds" min="1" onkeyup="actualizarPrecio()" onchange="actualizarPrecio()">
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2">Precio:</label>
-            <label id="precioC-u" class="control-label col-sm-1"></label>
-            <label class="control-label col-sm-1">c/u</label>
-            <label class="control-label col-sm-offset-2 col-sm-2">Total:</label>
-            <label id="precioTotal" class="control-label col-sm-2 text-center letraRoja">0</label>
+            <div class="col-sm-3">
+              <label class="control-label">$</label>
+              <label id="precioC-u" class="control-label"></label>
+              <label class="control-label">c/u</label>
+            </div>
+            <label class="control-label col-sm-offset-1 col-sm-2">Total:</label>
+            <label id="precioTotal" class="control-label col-sm-1 text-left letraRoja">0</label>
           </div>
         </div>
         <div class="form-group">
