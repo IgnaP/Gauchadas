@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-05-2017 a las 04:43:40
+-- Tiempo de generación: 04-06-2017 a las 15:18:27
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -31,7 +31,7 @@ CREATE TABLE `calificaciones` (
   `ID_usuario` int(11) NOT NULL,
   `ID_publicacion` int(11) NOT NULL,
   `calificacion` smallint(3) DEFAULT NULL,
-  `comentario` text,
+  `comentario` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -52,7 +52,9 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`ID`, `Nombre`, `vigente`) VALUES
-(1, 'Mascotas', 1);
+(1, 'Mascotas', 1),
+(2, 'Reparaciones', 1),
+(3, 'Alojamiento', 1);
 
 -- --------------------------------------------------------
 
@@ -74,7 +76,10 @@ CREATE TABLE `comentarios` (
 --
 
 INSERT INTO `comentarios` (`ID`, `Pregunta`, `Respuesta`, `Publicacion`, `UsuarioID`, `Vista`) VALUES
-(1, 'Verguenza un vagamente arrogante declaraba abundaban sr peligrosa. Contrariar despertaba fue amabilidad orgullosos ese hoy doy. Crespo era ensayo sin dio fijeza region???', 'De confeso negarle cayeron le. Olvidado volviera probable monotono ma sollozos il. Permite miraban pasados de caseras oh.', 1, 2, 1);
+(1, 'Verguenza un vagamente arrogante declaraba abundaban sr peligrosa. Contrariar despertaba fue amabilidad orgullosos ese hoy doy. Crespo era ensayo sin dio fijeza region???', 'De confeso negarle cayeron le. Olvidado volviera probable monotono ma sollozos il. Permite miraban pasados de caseras oh.', 1, 2, 1),
+(2, 'Este es un comentario', 'Respuesta', 1, 2, 1),
+(3, 'erfg', 'Respuesta', 1, 5, 1),
+(4, 'Fulana no muchas de percal yo antojo. Zaga uno fija aca pano ama hoy. Cosen ma liras ch mitad si quien honra yo punos. Liras nos telon venir dio mis nueva clero doy adulo. Historias aburrirse????', 'Hoy repasaban mil animacion sol caballero doy elementos. Opaca ahi apego dante rusia los. Sucedia oir escapar condujo modales nos. Reconocian fue asi intervalos etc expresivas silencioso abofeteado.', 3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -100,6 +105,13 @@ CREATE TABLE `credito` (
   `Precio` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `credito`
+--
+
+INSERT INTO `credito` (`ID_credito`, `Precio`) VALUES
+(1, 20);
+
 -- --------------------------------------------------------
 
 --
@@ -109,7 +121,7 @@ CREATE TABLE `credito` (
 CREATE TABLE `localidades` (
   `id` int(11) NOT NULL,
   `id_provincia` int(11) NOT NULL,
-  `localidad` text COLLATE utf8_spanish_ci NOT NULL
+  `localidad` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -2516,6 +2528,22 @@ CREATE TABLE `postulantes` (
   `comentario` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `postulantes`
+--
+
+INSERT INTO `postulantes` (`ID_postulacion`, `publicacionID`, `usuarioID`, `seleccionado`, `vigente`, `comentario`) VALUES
+(1, 3, 1, 0, 0, 'Este es un texto de prueba'),
+(2, 1, 4, 0, 0, 'Comentario de la postulacion'),
+(3, 2, 4, 0, 0, 'Me quiero postular'),
+(4, 1, 2, 0, 0, 'Comentario de prueba para postularse.'),
+(5, 3, 4, 0, 0, 'Esa doy sensibles ton uniendose prestadas que. Operas los cumple verdad fuesen son cuales vivido. Uno eso acto han cama ojos ese. Sr cristiano estodecia ni miserable el. Ni ve espalda tendida fingian.'),
+(6, 3, 5, 0, 0, 'hola'),
+(7, 1, 5, 0, 0, 'ads'),
+(8, 3, 9, 0, 0, 'Me quiero postular a la gauchada'),
+(9, 1, 9, 0, 0, 'Me encantaria ayudarte a cumplir tu favor.'),
+(10, 7, 2, 0, 0, 'este es un comentario');
+
 -- --------------------------------------------------------
 
 --
@@ -2533,7 +2561,9 @@ CREATE TABLE `preguntas` (
 
 INSERT INTO `preguntas` (`ID`, `Pregunta`) VALUES
 (1, 'Nombre de mi mascota?'),
-(2, 'Lugar de primeras vacaciones?');
+(2, 'Lugar de primeras vacaciones?'),
+(3, 'Primera escuela?'),
+(4, 'Primer trabajo?');
 
 -- --------------------------------------------------------
 
@@ -2543,7 +2573,7 @@ INSERT INTO `preguntas` (`ID`, `Pregunta`) VALUES
 
 CREATE TABLE `provincias` (
   `id` int(11) NOT NULL,
-  `provincia` text COLLATE utf8_spanish_ci NOT NULL
+  `provincia` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -2557,17 +2587,17 @@ INSERT INTO `provincias` (`id`, `provincia`) VALUES
 (4, 'Catamarca'),
 (5, 'Chaco'),
 (6, 'Chubut'),
-(7, 'C?rdoba'),
+(7, 'Cordoba'),
 (8, 'Corrientes'),
-(9, 'Entre R?os'),
+(9, 'Entre Rios'),
 (10, 'Formosa'),
 (11, 'Jujuy'),
 (12, 'La Pampa'),
 (13, 'La Rioja'),
 (14, 'Mendoza'),
 (15, 'Misiones'),
-(16, 'Neuqu?n'),
-(17, 'R?o Negro'),
+(16, 'Neuquen'),
+(17, 'Rio Negro'),
 (18, 'Salta'),
 (19, 'San Juan'),
 (20, 'San Luis'),
@@ -2575,7 +2605,7 @@ INSERT INTO `provincias` (`id`, `provincia`) VALUES
 (22, 'Santa Fe'),
 (23, 'Santiago del Estero'),
 (24, 'Tierra del Fuego'),
-(25, 'Tucum?n');
+(25, 'Tucuman');
 
 -- --------------------------------------------------------
 
@@ -2585,27 +2615,32 @@ INSERT INTO `provincias` (`id`, `provincia`) VALUES
 
 CREATE TABLE `publicaciones` (
   `ID` int(11) NOT NULL,
-  `Nombre` text COLLATE utf8_spanish_ci NOT NULL,
+  `Nombre` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `Ciudad` int(11) NOT NULL,
   `FechaLimite` date NOT NULL,
   `Categoria` int(11) NOT NULL,
-  `Descripcion` text COLLATE utf8_spanish_ci NOT NULL,
-  `Imagen` text COLLATE utf8_spanish_ci,
+  `Descripcion` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `Imagen` text COLLATE utf8_bin,
   `Activa` tinyint(1) NOT NULL DEFAULT '1',
   `usuario` int(11) NOT NULL,
   `Vista` tinyint(1) NOT NULL DEFAULT '1',
   `Fecha_publicacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 --
 -- Volcado de datos para la tabla `publicaciones`
 --
 
 INSERT INTO `publicaciones` (`ID`, `Nombre`, `Ciudad`, `FechaLimite`, `Categoria`, `Descripcion`, `Imagen`, `Activa`, `usuario`, `Vista`, `Fecha_publicacion`) VALUES
-(1, 'La gran Gauchada', 9, '2017-05-26', 1, 'Descripcion de la gran Gauchada', NULL, 1, 1, 1, '2017-05-17 14:38:40'),
-(2, 'Ayudaaa', 14, '2017-05-28', 1, 'Necesito ayuda ya', NULL, 1, 1, 1, '2017-05-17 14:42:06'),
-(3, 'Mi gauchada', 90, '2017-05-30', 1, 'Necesitamos ayuda', NULL, 1, 2, 1, '2017-05-17 15:07:30'),
-(7, 'Gauchada de prueba', 439, '2017-05-20', 1, 'Bien juan fin tan cuyo eran etc iba. La racional acogiera so hospital eh italiana no energico superior. Dogma poeta media lo ya final redor subia. Unica esa una cinco media. Ve entonces da ya suspiros escapado pegollos heredera. Venia justa apuro so se. Es ofenderle consistia importuno el maniobras he no extremada vagamente. Su il guapa daban ir mitad gesto no.', NULL, 1, 1, 1, '2017-05-17 23:10:18');
+(1, 'La gran Gauchada', 9, '2017-05-26', 1, 'Si emprender sonadores idealismo el va si atreveria. Un puerta quiera ay huesos viendo sucede empezo. Apego amaba estar ukase sus cerca paz corte van. Prosaico te familiar muestras ah si permitia capricho inferior.', 'dog-bag.jpg', 1, 1, 1, '2017-05-17 14:38:40'),
+(2, 'Ayudaaa', 14, '2017-06-28', 2, 'Modestia en aquellas delibero perpetua el il singular no. Ahi una esa cuidados trovador apuntado heroismo. Conducian voz disimulos felicidad uno periodico luz preparaba demostrar. Quijotesco del triunfante candilejas con mia esparcidos ese. Fortuna labrado ventaja pre non capitan feo pastoso. Ajenas juicio seguro dia oyo siendo ese don.', 'puerta.jpg', 1, 1, 1, '2017-05-17 14:42:06'),
+(3, 'Mi gauchada', 90, '2017-06-30', 2, 'Ultimos miradas al va brotaba cortada. Adusto fe ir la en cuanto pegado alarde casado. Entusiasmo misterioso ha quehaceres no enmendaban medianeria ni la vagabundos. Andaba opacas ni de habana amados tantos. Diego nunca varon en gordo no redor no. Agencio ser los esa costaba saberlo publico mar. Supo oh veia sano ma aqui te paro vaga no. Esfuerzo ley causaban parecian ola. ', 'mesa.jpg', 1, 2, 1, '2017-05-17 15:07:30'),
+(7, 'Gauchada de prueba', 439, '2017-06-20', 2, 'Bien juan fin tan cuyo eran etc iba. La racional acogiera so hospital eh italiana no energico superior. Dogma poeta media lo ya final redor subia. Unica esa una cinco media. Ve entonces da ya suspiros escapado pegollos heredera. Venia justa apuro so se. Es ofenderle consistia importuno el maniobras he no extremada vagamente. Su il guapa daban ir mitad gesto no.', 'auto.jpg', 1, 1, 1, '2017-05-17 23:10:18'),
+(12, 'Techo', 945, '2017-06-27', 2, 'Se ti ha repartia analisis aterraba brillado testigos aplicado en. Desdenara moralidad proscenio es decretado un emperador el. Dama juan tres fijo suo doy gris como asi. Si fe apoplejia recuerdan extraneza en.', 'techo.jpg', 1, 1, 1, '2017-05-28 17:23:31'),
+(14, 'Gauchada sin imagen', 1687, '2017-06-30', 1, 'Capa crei una muy cura dos solo tras eso. Ya cundio pasara quicio un faltar questo vahido. Tu fulana mi durmio si amable evitar guerra la. Varios muchas de bajado al bienes. Se contado tocador no quejaba eh un socorro tampoco dejarse. Fantastica agradecida propositos me su eh semejantes exclamaron la bastidores. Atreveria se reconocio el ni siguiente. ', NULL, 1, 2, 1, '2017-05-28 21:57:45'),
+(16, 'Prueba', 1, '2017-06-28', 1, 'Vinieran fue recorria bonachon etc coristas guitarra. Mucho apuro eso asi error. Gr colchon publico energia varonil decidio la antigua me va. Fija un de sois ya cura alta aire yo olia. Vehemencia un holocausto arriesgada ceremonial doscientas cigarrillo ch.', 'dog-bag.jpg', 1, 14, 1, '2017-05-31 16:50:47'),
+(17, 'Una gauchada', 1470, '2017-06-16', 1, '1', NULL, 1, 1, 1, '2017-06-01 11:29:02'),
+(18, 'algo', 1551, '2017-06-23', 2, 'asd', 'patio.jpg', 1, 1, 1, '2017-06-01 11:30:08');
 
 -- --------------------------------------------------------
 
@@ -2654,16 +2689,25 @@ CREATE TABLE `usuarios` (
   `Bloqueada` tinyint(1) NOT NULL DEFAULT '0',
   `Borrada` tinyint(1) NOT NULL DEFAULT '0',
   `Reputacion` int(11) NOT NULL DEFAULT '0',
-  `Creditos` int(11) NOT NULL DEFAULT '1'
+  `Creditos` int(11) NOT NULL DEFAULT '1',
+  `Imagen` text CHARACTER SET utf8 COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=COMPACT;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`ID`, `Email`, `Clave`, `Nombre`, `Apellido`, `FechaDeNacimiento`, `Telefono`, `PreguntaDeSeguridad`, `Respuesta`, `Administrador`, `Bloqueada`, `Borrada`, `Reputacion`, `Creditos`) VALUES
-(1, 'homero@mail.com', 'asd', 'Homero', 'Simpson', '1950-11-05', 1234567, 1, 'asd', 0, 0, 0, 0, 20),
-(2, 'marge@mail.com', 'asd', 'Marge', 'Simpson', '1960-03-10', 4567890, 2, 'asd', 0, 0, 0, 0, 0);
+INSERT INTO `usuarios` (`ID`, `Email`, `Clave`, `Nombre`, `Apellido`, `FechaDeNacimiento`, `Telefono`, `PreguntaDeSeguridad`, `Respuesta`, `Administrador`, `Bloqueada`, `Borrada`, `Reputacion`, `Creditos`, `Imagen`) VALUES
+(1, 'homero@mail.com', 'asd', 'Homero', 'Simpson', '1950-11-05', 1234567, 1, 'asd', 0, 0, 0, 0, 43, 'dog-bag.jpg'),
+(2, 'marge@mail.com', 'asd', 'Marge', 'Simpson', '1960-03-10', 4567890, 2, 'asd', 0, 0, 0, 0, 0, NULL),
+(3, 'e@e.com', '1234', 'emanuel', 'nucilli', '2010-12-02', 2147483647, 1, 'pepe', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
+(4, 'bart@mail.com', 'asd', 'Bart', 'Simpson', '1999-07-14', 1234567, 1, 'asd', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
+(5, 'Nombre@mail.com', 'asd', 'nombre', 'apellido', '2010-12-08', 1234567, 1, 'asd', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
+(8, 'algo@mail.com', 'asd', 'prueba', 'apellido', '1940-12-23', 4567890, 2, 'asd', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
+(9, 'Lisa@mail.com', 'asd', 'Lisa', 'Simpson', '2010-12-23', 4567890, 2, 'asd', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
+(13, 'Test@mail.com', 'asd', 'Test', 'Apellido', '2010-12-09', 2147483647, 2, 'asd', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
+(14, 'testB@mail.com', 'asd', 'TestB', 'TestB', '2010-12-02', 4567890, 1, 'asd', 0, 0, 0, 0, 0, 'dog-bag.jpg'),
+(15, 'qweaf@asd.com', 'asd', 'juan', 'pedro', '2010-12-16', 2147483647, 3, 'algo', 0, 0, 0, 0, 1, 'lenny.jpg');
 
 --
 -- Índices para tablas volcadas
@@ -2770,12 +2814,12 @@ ALTER TABLE `calificaciones`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `compra_creditos`
 --
@@ -2785,7 +2829,7 @@ ALTER TABLE `compra_creditos`
 -- AUTO_INCREMENT de la tabla `credito`
 --
 ALTER TABLE `credito`
-  MODIFY `ID_credito` mediumint(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_credito` mediumint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `localidades`
 --
@@ -2795,12 +2839,12 @@ ALTER TABLE `localidades`
 -- AUTO_INCREMENT de la tabla `postulantes`
 --
 ALTER TABLE `postulantes`
-  MODIFY `ID_postulacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_postulacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `provincias`
 --
@@ -2810,7 +2854,7 @@ ALTER TABLE `provincias`
 -- AUTO_INCREMENT de la tabla `publicaciones`
 --
 ALTER TABLE `publicaciones`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT de la tabla `reputacion`
 --
@@ -2820,7 +2864,7 @@ ALTER TABLE `reputacion`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- Restricciones para tablas volcadas
 --
