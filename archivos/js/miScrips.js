@@ -1,6 +1,6 @@
 function cargarProvincias(porDefecto){
   $('#provincias').html( $('<option>', {value: porDefecto, text: porDefecto}) );
-  $.get("selects.php?select=provincias", function(datos){
+  $.get("selects.php?select=provincias", function(datos,status){
     var jDatos= JSON.parse(datos);
     for (var x in jDatos) {
       $('#provincias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
