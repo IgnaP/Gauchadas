@@ -13,24 +13,31 @@
   <script>
     $(document).ready(function(){
       marcarPestaña("#pestNG");
-      creditosFuncion();
-      cargarProvincias('');
-      cargarCategorias('');
-      limitarFecha();
-      $.get("php/buscarCookie.php?nombre=respuesta", function (resultado, status){
-        if (resultado!="false") {
-          if (resultado=="exito") {
-            cambiarAlerta(true, "La gauchada se ha creado satisfactoriamente");
-          } else {
-            cambiarAlerta(false, resultado);
-          }
-        }
-      });
+      inicializar();
 
       $(".esconderAlerta").on("click keypress", function(){
         $("#alertaForm").addClass('hidden');
       });
     });
+    function inicializar(){
+      if ( creditosFuncion() && noDebeCalificacion() ) {
+        cargarProvincias('');
+        cargarCategorias('');
+        limitarFecha();
+        $.get("php/buscarCookie.php?nombre=respuesta", function (resultado, status){
+          if (resultado!="false") {
+            if (resultado=="exito") {
+              cambiarAlerta(true, "La gauchada se ha creado satisfactoriamente");
+            } else {
+              cambiarAlerta(false, resultado);
+            }
+          }
+        });
+        $("#nuevaForm").prop("hidden",false);
+      } else {
+        $("#nuevaForm").prop("hidden",true);
+      }
+    }
     function limitarFecha(){
       var fechaActual=new Date();
       var dia= fechaActual.getDate();
@@ -47,22 +54,30 @@
     //  $("#fecha").prop("max", fecha);
     }
     function creditosFuncion(){
-      $.get("datosDelUsuario.php?datos=devolver", function(datos){
-        var jDatos= JSON.parse(datos);
-        if (jDatos.creditos>0) {
-          $("#creditosDiv").addClass('alert-success');
-          $("#creditosDiv").removeClass('alert-danger');
-          $("#creditosTxt").text("Creditos: "+jDatos.creditos);
-          $("#nuevaForm").prop("hidden",false);
-        } else {
-          $("#creditosDiv").addClass('alert-danger');
-          $("#creditosDiv").removeClass('alert-success');
-          var divCreditos=$("<b></b>").text("Creditos: "+jDatos.creditos);
-          var divExplicacion=$("<div></div>").text("Necesita por lo menos 1 credito");
-          $("#creditosTxt").html(divCreditos).append(divExplicacion);
-          $("#nuevaForm").prop("hidden",true);
-        }
-      });
+       var result = false;
+       $.ajax({ url: "php/datosDelUsuario.php?datos=devolver", type: 'get',
+          dataType: 'html',
+          async: false,
+          success: function(datos) {
+            var jDatos= JSON.parse(datos);
+            if (jDatos.creditos>0) {
+              $("#creditosDiv").addClass('alert-success');
+              $("#creditosDiv").removeClass('alert-danger');
+              $("#creditosTxt").text("Creditos: "+jDatos.creditos);
+              result= true;
+            } else {
+              $("#creditosDiv").addClass('alert-danger');
+              $("#creditosDiv").removeClass('alert-success');
+              var divCreditos=$("<b></b>").text("Creditos: "+jDatos.creditos);
+              var divExplicacion=$("<div></div>").text("Necesita por lo menos 1 credito");
+              $("#creditosTxt").html(divCreditos).append(divExplicacion);
+            }
+          }
+       });
+       return result;
+    }
+    function noDebeCalificacion(){
+      return true;
     }
   </script>
 </head>
@@ -79,7 +94,7 @@
             <div class="alert col-md-10 hidden text-center" id="alertaForm">
               <strong id="alertaTxt"></strong>
             </div>
-            <form class="form-horizontal" action="nuevaGauchadaGuardar.php" method="POST" id="nuevaForm" hidden enctype="multipart/form-data">
+            <form class="form-horizontal" action="php/nuevaGauchadaGuardar.php" method="POST" id="nuevaForm" hidden enctype="multipart/form-data">
               <div class="row">
                 <div class="col-md-10">
                   <div class="form-group">

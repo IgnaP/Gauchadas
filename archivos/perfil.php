@@ -8,7 +8,7 @@
   <script>
   $(document).ready(function(){
     $("#historialDiv").load("publicaciones.php", {"activa": "false"});
-    $.get("datosDelUsuario.php?datos=devolver", function(datos){
+    $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
       var jDatos= JSON.parse(datos);
       $("#nombreApellido").text(jDatos.nom+" "+jDatos.ap);
       $("#infoFN").append(jDatos.fn);

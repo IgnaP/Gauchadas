@@ -1,5 +1,5 @@
 <?php
-  require("conexionBD.php");
+  require("php/conexionBD.php");
   conectarse($conexion);
   $fechaActual=date("Y-m-d");
   $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID))";
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="css/estilos.css">
 <script>
   $(document).ready(function(){
-    $.get("estadoDeSesion.php", function (estado, status){
+    $.get("php/estadoDeSesion.php", function (estado, status){
       if (estado=="true") {
         $(".marca").addClass("publicacionDiv");
         $(".marcaBoton").removeClass("hidden");

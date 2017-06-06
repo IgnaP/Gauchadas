@@ -8,7 +8,7 @@
   <script>
     $(document).ready(function(){
       marcarPestaña("#pestMG");
-      $.get("datosDelUsuario.php?datos=devolver", function(datos){
+      $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
         var jDatos= JSON.parse(datos);
         $("#misPublicaciones").load("publicaciones.php", {"usr": jDatos.ID});
       });

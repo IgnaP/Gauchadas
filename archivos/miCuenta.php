@@ -8,7 +8,7 @@
   <script>
   $(document).ready(function(){
     var pregunta;
-    $.get("datosDelUsuario.php?datos=devolver", function(datos){
+    $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
       var jDatos= JSON.parse(datos);
       $("#nMail").val(jDatos.email);
       $("#nombre").val(jDatos.nom);
@@ -17,7 +17,7 @@
       $("#telefono").val(jDatos.tel);
       $("#respuesta").val(jDatos.resp);
       pregunta=jDatos.pre;
-      $.get("selects.php?select=preguntas", function(datos){
+      $.get("php/selects.php?select=preguntas", function(datos){
         var jDatos= JSON.parse(datos);
         for (var x in jDatos) {
           if (jDatos[x]==pregunta) {
@@ -37,7 +37,7 @@
     });
     $("#cambiarDatosForm").submit(function(){
       var datosFormulario= $(this).serialize();
-      $.post("cambiarDatos.php", datosFormulario, cambiarDatosResp);
+      $.post("php/cambiarDatos.php", datosFormulario, cambiarDatosResp);
       return false;
     });
     function cambiarDatosResp(datos){
@@ -52,7 +52,7 @@
 
     $("#borrarCForm").submit(function(){
       var datosFormulario= $(this).serialize();
-      $.post("borrarCuenta.php", datosFormulario, borrarResp);
+      $.post("php/borrarCuenta.php", datosFormulario, borrarResp);
       return false;
     });
     function borrarResp(datos){

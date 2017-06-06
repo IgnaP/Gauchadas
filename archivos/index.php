@@ -10,10 +10,9 @@
 
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/paginasPrincipales.js"></script>
   <script src="js/miScrips.js"></script>
   <script>
-    $.get("estadoDeSesion.php", function (estado, status){
+    $.get("php/estadoDeSesion.php", function (estado, status){
       if (estado=="true") {
         window.location = "sesion.php";
       } else {

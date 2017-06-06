@@ -29,7 +29,7 @@
         if ( (añoSeleccionado>año) | ((añoSeleccionado==año) && (mesSeleccionado>=mesActual)) ) {
           if ( $("#tarjeta").val()!="1111 1111 1111 1111" ) {
             var datosFormulario= $(this).serialize();
-            $.post("creditosValidar.php", datosFormulario, compraResp);
+            $.post("php/creditosValidar.php", datosFormulario, compraResp);
           } else {
             cambiarAlerta(false, "No dispone del saldo suficiente");
           }
@@ -48,7 +48,7 @@
       }
     });
     function creditosFuncion(){
-      $.get("datosDelUsuario.php?datos=devolver", function(datos){
+      $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
         var jDatos= JSON.parse(datos);
         $("#creditosActuales").text(jDatos.creditos);
         $("#precioC-u").text(jDatos.precioCreditos);

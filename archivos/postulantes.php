@@ -1,5 +1,5 @@
 <?php
-	require("conexionBD.php");
+	require("php/conexionBD.php");
   	conectarse($conexion);
 	if (!isset( $_GET["id"] )){
 		header("Location: sesion.php"); //si intenta ingresar a esta pagina lo manda al inicio

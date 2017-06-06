@@ -10,7 +10,7 @@
   var dueño;
   var usr;
   $(document).ready(function(){
-    $.get("datosDeLaPublicacion.php?ID="+pID, function(datos){
+    $.get("php/datosDeLaPublicacion.php?ID="+pID, function(datos){
       var jDatos= JSON.parse(datos);
       $("#titulo").text(jDatos.tit);
       $("#ciudad").text(jDatos.ciu);
@@ -40,7 +40,7 @@
   });
   $("#preguntaForm").submit(function(){
     var datosFormulario= $(this).serialize();
-    $.post("publicacionValidar.php?pregunta="+pID, datosFormulario, publPregResp);
+    $.post("php/publicacionValidar.php?pregunta="+pID, datosFormulario, publPregResp);
     return false;
   });
   function publPregResp(datos){
@@ -54,7 +54,7 @@
   }
   $(document).on('submit','#respuestaForm', function(){
     var datosFormulario= $(this).serialize();
-    $.post("publicacionValidar.php?respuesta=resp", datosFormulario, publResp);
+    $.post("php/publicacionValidar.php?respuesta=resp", datosFormulario, publResp);
     return false;
   });
   function publResp(datos){
@@ -66,7 +66,7 @@
     }
   }
   function cargarPreguntas(){
-    $.get("publicacionValidar.php?cargar="+pID, function(datos){
+    $.get("php/publicacionValidar.php?cargar="+pID, function(datos){
       var jDatos= JSON.parse(datos);
       for (var x in jDatos) {
         var user= $("<b></b>").append(jDatos[x][3]+" - ");

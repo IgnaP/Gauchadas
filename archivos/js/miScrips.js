@@ -1,6 +1,13 @@
+function cargarPagina(pag){
+  $("li").removeClass("active");
+  $("#lacaja").load(pag);
+}
+function marcarPestaña(pest){
+  $(pest).addClass("active");
+}
 function cargarProvincias(porDefecto){
   $('#provincias').html( $('<option>', {value: porDefecto, text: porDefecto}) );
-  $.get("selects.php?select=provincias", function(datos,status){
+  $.get("php/selects.php?select=provincias", function(datos){
     var jDatos= JSON.parse(datos);
     for (var x in jDatos) {
       $('#provincias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
@@ -12,7 +19,7 @@ function localidadesFuncion(porDefecto){
   var seleccionado= $("#provincias").val();
   if ( (seleccionado!="Todas") && (seleccionado!='') ) {
     $("#ciudades").prop("disabled",false);
-    $.get("selects.php?select=localidades&prov="+seleccionado, function(datos){
+    $.get("php/selects.php?select=localidades&prov="+seleccionado, function(datos){
       var jDatos= JSON.parse(datos);
       for (var x in jDatos) {
         $('#ciudades').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
@@ -24,7 +31,7 @@ function localidadesFuncion(porDefecto){
 }
 function cargarCategorias(porDefecto){
   $('#categorias').html( $('<option>', {value: porDefecto, text: porDefecto}) );
-  $.get("selects.php?select=categorias", function(datos){
+  $.get("php/selects.php?select=categorias", function(datos){
     var jDatos= JSON.parse(datos);
     for (var x in jDatos) {
       $('#categorias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));

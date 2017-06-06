@@ -29,7 +29,7 @@ body {
 .puntero{
   cursor: pointer;
 }
-.publicacion{
+.bordeAbajo{
   border-bottom-style: groove;
   padding-top: 15px;
   padding-bottom: 15px;

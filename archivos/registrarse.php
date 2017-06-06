@@ -17,7 +17,7 @@
         $("#alertaForm").addClass('hidden');
       });
 
-      $.get("selects.php?select=preguntas", function(datos){
+      $.get("php/selects.php?select=preguntas", function(datos){
         var jDatos= JSON.parse(datos);
         for (var x in jDatos) {
           $('#preguntas').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
@@ -53,7 +53,7 @@
       <div class="alert col-md-8 col-md-offset-2 hidden text-center" id="alertaForm">
         <strong id="alertaTxt"></strong>
       </div>
-      <form class="form-horizontal" action="registrarseGuardar.php" method="post" id="formulario" enctype="multipart/form-data">
+      <form class="form-horizontal" action="php/registrarseGuardar.php" method="post" id="formulario" enctype="multipart/form-data">
         <div class="form-group">
           <div class="row">
             <div class="col-md-4 col-md-offset-2">

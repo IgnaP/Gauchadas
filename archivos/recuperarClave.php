@@ -9,12 +9,12 @@
   $(document).ready(function() {
     $("#mailForm").submit(function(){
       var datosFormulario= $(this).serialize();
-      $.post("recuperarClaveValidar.php", datosFormulario, mailRespuesta);
+      $.post("php/recuperarClaveValidar.php", datosFormulario, mailRespuesta);
       return false;
     });
     $("#recuperarForm").submit(function(){
       var datosFormulario= {email:$("#inputEmail").val(), clave:$("#inputPassword").val(), resp:$("#respuesta").val()};
-      $.post("recuperarClaveValidar.php", datosFormulario, validarRespuesta);
+      $.post("php/recuperarClaveValidar.php", datosFormulario, validarRespuesta);
       return false;
     });
     function mailRespuesta(datos){

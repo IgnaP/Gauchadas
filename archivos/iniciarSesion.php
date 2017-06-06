@@ -10,7 +10,7 @@
     marcarPestaña("#pestIS");
     $("#loginForm").submit(function(){
       var datosFormulario= $(this).serialize();
-      $.post("iniciarSesionValidar.php", datosFormulario, loginRespuesta);
+      $.post("php/iniciarSesionValidar.php", datosFormulario, loginRespuesta);
       return false;
     });
     function loginRespuesta(datos){

@@ -10,11 +10,10 @@
 
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/paginasPrincipales.js"></script>
   <script src="js/miScrips.js"></script>
   <script>
     $(document).ready(function(){
-      $.get("estadoDeSesion.php", function (estado, status){
+      $.get("php/estadoDeSesion.php", function (estado, status){
         if (estado=="false") {
           window.location = "index.php";
         } else {
@@ -30,7 +29,7 @@
       });
     });
     function nombreDelUsuario(){
-      $.get("datosDelUsuario.php?datos=devolver", function(datos){
+      $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
         var jDatos= JSON.parse(datos);
         $("#nombreUsuario").text(jDatos.email);
       });
