@@ -13,7 +13,7 @@ if (!$conexion) {
   $pregunta = $_POST["preguntas"];
   $res = $_POST["respuesta"];
   if ( $_FILES["imagen"]["error"]==0 ) {
-    require("php/funciones.php");
+    require("funciones.php");
     $ok= subirImagen($nombre_imagen,$respuesta);
   } else {
     $ok= true;

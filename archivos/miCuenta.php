@@ -7,6 +7,16 @@
   <link rel="stylesheet" href="css/estilos.css">
   <script>
   $(document).ready(function(){
+    $.get("php/buscarCookie.php?nombre=respuesta", function (resultado, status){
+      if (resultado!="false") {
+        if (resultado=="exito") {
+          nombreDelUsuario();
+          cambiarAlerta(true, "Los datos de la cuenta se han modificado con exito");
+        } else {
+          cambiarAlerta(false, resultado);
+        }
+      }
+    });
     var pregunta;
     $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
       var jDatos= JSON.parse(datos);
@@ -35,20 +45,6 @@
     $(".inps").change(function(){
       $("#botonCambiar").prop("disabled", false);
     });
-    $("#cambiarDatosForm").submit(function(){
-      var datosFormulario= $(this).serialize();
-      $.post("php/cambiarDatos.php", datosFormulario, cambiarDatosResp);
-      return false;
-    });
-    function cambiarDatosResp(datos){
-      if (datos=="exito") {
-        nombreDelUsuario();
-        $("#botonCambiar").prop("disabled", true);
-        cambiarAlerta(true, "Los datos de la cuenta se han modificado con exito");
-      } else {
-        cambiarAlerta(false, datos);
-      }
-    }
 
     $("#borrarCForm").submit(function(){
       var datosFormulario= $(this).serialize();
@@ -80,7 +76,7 @@
           </div>
           <div class="container-fluid fondoBlanco">
             <div class="container-fluid separar">
-              <form class="" action="" method="post" id="cambiarDatosForm">
+              <form class="" action="php/cambiarDatos.php" method="post" id="cambiarDatosForm" enctype="multipart/form-data">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
@@ -142,6 +138,14 @@
                     <div class="form-group">
                       <label for="respuesta" class="control-label">Respuesta de seguridad</label>
                       <input type="text" class="form-control inps" id="respuesta" placeholder="Respuesta" required pattern="[A-Za-z0-9]{3,}" title="De 3 a 20 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="respuesta">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="form-group">
+                      <label for="imagen">Cambiar imagen</label>
+                      <input type="file" accept="image/jpeg,image/png,image/jpg" class="inps" name="imagen" id="imagen">
                     </div>
                   </div>
                 </div>
