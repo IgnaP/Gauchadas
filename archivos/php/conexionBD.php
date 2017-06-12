@@ -6,5 +6,6 @@ function conectarse(&$conexion){
   $db_clave="";          //<- contraseña de la base datos. Por defecto esta vacia
   $conexion=mysqli_connect($db_host,$db_usuario,$db_clave,$db_nombre);
   mysqli_set_charset($conexion,"utf8_bin");
+  mysqli_query($conexion,"SET NAMES 'utf8'");
 }
 ?>

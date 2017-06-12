@@ -51,10 +51,10 @@ if (!$conexion) {
   }
 }
 if ($respuesta=="exito") {
-  header("Location: sesion.php");
+  header("Location: ../sesion.php");
 } else {
   setcookie("pagina","registrarse.php", time() + 3600, "/");
   setcookie("respuesta", $respuesta, time() + 3600, "/");
-  header("Location: index.php");
+  header("Location: ../index.php");
 }
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-06-2017 a las 00:26:47
+-- Tiempo de generación: 12-06-2017 a las 16:05:10
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -31,9 +31,18 @@ CREATE TABLE `calificaciones` (
   `ID_usuario` int(11) NOT NULL,
   `ID_publicacion` int(11) NOT NULL,
   `calificacion` smallint(3) DEFAULT NULL,
-  `comentario` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `comentario` text COLLATE utf8_spanish_ci,
   `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `calificaciones`
+--
+
+INSERT INTO `calificaciones` (`ID_calificacion`, `ID_usuario`, `ID_publicacion`, `calificacion`, `comentario`, `fecha`) VALUES
+(1, 2, 7, 1, 'Muy mal hecho.', '2017-06-07 18:06:34'),
+(2, 2, 1, NULL, NULL, '2017-06-07 18:08:52'),
+(3, 3, 14, 3, 'Trabajador', '2017-06-07 18:43:07');
 
 -- --------------------------------------------------------
 
@@ -92,7 +101,7 @@ CREATE TABLE `compra_creditos` (
   `ID_usuario` int(11) NOT NULL,
   `ID_credito` mediumint(11) NOT NULL,
   `Fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -103,7 +112,7 @@ CREATE TABLE `compra_creditos` (
 CREATE TABLE `credito` (
   `ID_credito` mediumint(11) NOT NULL,
   `Precio` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=COMPACT;
 
 --
 -- Volcado de datos para la tabla `credito`
@@ -121,7 +130,7 @@ INSERT INTO `credito` (`ID_credito`, `Precio`) VALUES
 CREATE TABLE `localidades` (
   `id` int(11) NOT NULL,
   `id_provincia` int(11) NOT NULL,
-  `localidad` varchar(255) CHARACTER SET latin1 NOT NULL
+  `localidad` varchar(255) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -2542,7 +2551,8 @@ INSERT INTO `postulantes` (`ID_postulacion`, `publicacionID`, `usuarioID`, `sele
 (7, 1, 5, 0, 0, 'ads'),
 (8, 3, 9, 0, 0, 'Me quiero postular a la gauchada'),
 (9, 1, 9, 0, 0, 'Me encantaria ayudarte a cumplir tu favor.'),
-(10, 7, 2, 0, 0, 'este es un comentario');
+(10, 7, 2, 0, 0, 'este es un comentario'),
+(11, 14, 1, 0, 0, 'Hola, quiisera que me selecciones para cumplir con tu favor.');
 
 -- --------------------------------------------------------
 
@@ -2573,7 +2583,7 @@ INSERT INTO `preguntas` (`ID`, `Pregunta`) VALUES
 
 CREATE TABLE `provincias` (
   `id` int(11) NOT NULL,
-  `provincia` varchar(255) CHARACTER SET latin1 NOT NULL
+  `provincia` varchar(255) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -2639,8 +2649,8 @@ INSERT INTO `publicaciones` (`ID`, `Nombre`, `Ciudad`, `FechaLimite`, `Categoria
 (12, 'Techo', 945, '2017-06-27', 2, 'Se ti ha repartia analisis aterraba brillado testigos aplicado en. Desdenara moralidad proscenio es decretado un emperador el. Dama juan tres fijo suo doy gris como asi. Si fe apoplejia recuerdan extraneza en.', 'techo.jpg', 1, 1, 1, '2017-05-28 17:23:31'),
 (14, 'Gauchada sin imagen', 1687, '2017-06-30', 1, 'Capa crei una muy cura dos solo tras eso. Ya cundio pasara quicio un faltar questo vahido. Tu fulana mi durmio si amable evitar guerra la. Varios muchas de bajado al bienes. Se contado tocador no quejaba eh un socorro tampoco dejarse. Fantastica agradecida propositos me su eh semejantes exclamaron la bastidores. Atreveria se reconocio el ni siguiente. ', NULL, 1, 2, 1, '2017-05-28 21:57:45'),
 (16, 'Prueba', 1, '2017-06-28', 1, 'Vinieran fue recorria bonachon etc coristas guitarra. Mucho apuro eso asi error. Gr colchon publico energia varonil decidio la antigua me va. Fija un de sois ya cura alta aire yo olia. Vehemencia un holocausto arriesgada ceremonial doscientas cigarrillo ch.', 'dog-bag.jpg', 1, 14, 1, '2017-05-31 16:50:47'),
-(17, 'Una gauchada', 1470, '2017-06-16', 1, '1', NULL, 1, 1, 1, '2017-06-01 11:29:02'),
-(18, 'algo', 1551, '2017-06-23', 2, 'asd', 'patio.jpg', 1, 1, 1, '2017-06-01 11:30:08');
+(19, 'Se me perdio mi koala', 370, '2017-06-10', 1, 'Hola, se me perdio mi koala. Quisiera que me ayuden a buscarlo.\r\nDesde ya, gracias.', 'Koala.jpg', 1, 1, 1, '2017-06-05 19:46:13'),
+(38, 'Deseo comprar estas flóres', 17, '2017-06-30', 3, 'Hola, necesito 1000 de estas rosas.', 'Hydrangeas.jpg', 1, 17, 1, '2017-06-12 10:45:02');
 
 -- --------------------------------------------------------
 
@@ -2698,16 +2708,16 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`ID`, `Email`, `Clave`, `Nombre`, `Apellido`, `FechaDeNacimiento`, `Telefono`, `PreguntaDeSeguridad`, `Respuesta`, `Administrador`, `Bloqueada`, `Borrada`, `Reputacion`, `Creditos`, `Imagen`) VALUES
-(1, 'homero@mail.com', 'asd', 'Homero', 'Simpson', '1950-11-05', 1234567, 1, 'asd', 0, 0, 0, 0, 43, 'dog-bag.jpg'),
+(1, 'homero@mail.com', 'asd', 'Homero', 'Simpson', '1950-11-05', 1234567, 1, 'asd', 0, 0, 0, 0, 39, 'dog-bag.jpg'),
 (2, 'marge@mail.com', 'asd', 'Marge', 'Simpson', '1960-03-10', 4567890, 2, 'asd', 0, 0, 0, 0, 0, NULL),
 (3, 'e@e.com', '1234', 'emanuel', 'nucilli', '2010-12-02', 2147483647, 1, 'pepe', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
-(4, 'bart@mail.com', 'asd', 'Bart', 'Simpson', '1999-07-14', 1234567, 1, 'asd', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
+(4, 'bart@mail.com', 'asd', 'Bart', 'Simpson', '1999-07-14', 1234567, 1, 'asd', 0, 0, 0, 0, 20, 'dog-bag.jpg'),
 (5, 'Nombre@mail.com', 'asd', 'nombre', 'apellido', '2010-12-08', 1234567, 1, 'asd', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
-(8, 'algo@mail.com', 'asd', 'prueba', 'apellido', '1940-12-23', 4567890, 2, 'asd', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
-(9, 'Lisa@mail.com', 'asd', 'Lisa', 'Simpson', '2010-12-23', 4567890, 2, 'asd', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
-(13, 'Test@mail.com', 'asd', 'Test', 'Apellido', '2010-12-09', 2147483647, 2, 'asd', 0, 0, 0, 0, 1, 'dog-bag.jpg'),
+(9, 'Lisa@mail.com', 'asd', 'Lisa', 'Simpson', '2010-12-23', 4567890, 2, 'asd', 0, 0, 0, 0, 0, 'dog-bag.jpg'),
 (14, 'testB@mail.com', 'asd', 'TestB', 'TestB', '2010-12-02', 4567890, 1, 'asd', 0, 0, 0, 0, 0, 'dog-bag.jpg'),
-(15, 'qweaf@asd.com', 'asd', 'juan', 'pedro', '2010-12-16', 2147483647, 3, 'algo', 0, 0, 0, 0, 1, 'lenny.jpg');
+(15, 'qweaf@asd.com', 'asd', 'juan', 'pedro', '2010-12-16', 2147483647, 3, 'algo', 0, 0, 0, 0, 1, 'lenny.jpg'),
+(16, 'admin@gmail.com', 'asd', 'Emanuel', 'Nucilli', '1980-06-21', 116083375, 1, 'Nikita', 1, 0, 0, 0, 1, NULL),
+(17, 'ivana@gmail.com', 'ivana', 'Ivana', 'Micaela', '1996-06-21', 2147483647, 2, 'Mar del Tuyu', 0, 0, 0, 0, 3, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -2809,7 +2819,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  MODIFY `ID_calificacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `categorias`
 --
@@ -2839,7 +2849,7 @@ ALTER TABLE `localidades`
 -- AUTO_INCREMENT de la tabla `postulantes`
 --
 ALTER TABLE `postulantes`
-  MODIFY `ID_postulacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID_postulacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
@@ -2854,7 +2864,7 @@ ALTER TABLE `provincias`
 -- AUTO_INCREMENT de la tabla `publicaciones`
 --
 ALTER TABLE `publicaciones`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT de la tabla `reputacion`
 --
@@ -2864,7 +2874,7 @@ ALTER TABLE `reputacion`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- Restricciones para tablas volcadas
 --

@@ -13,7 +13,7 @@ if (!$conexion) {
   $creditos=$fila[13];
   if ($creditos>0) {
     if ( $_FILES["imagen"]["error"]==0 ) {
-      require("php/funciones.php");
+      require("funciones.php");
       $ok= subirImagen($nombre_imagen,$respuesta);
     } else {
       $ok= true;
@@ -31,7 +31,7 @@ if (!$conexion) {
       $usrID=$row[0];
       $sql="SELECT `ID` FROM `localidades` WHERE `localidad`='$ciu'";
       $result=mysqli_query($conexion,$sql);
-      $row = mysqli_fetch_row($result);
+      $row1 = mysqli_fetch_row($result);
       $ciuID=$row[0];
       $sql="SELECT `ID` FROM `categorias` WHERE `Nombre`='$cat'";
       $result=mysqli_query($conexion,$sql);

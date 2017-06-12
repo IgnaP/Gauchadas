@@ -18,6 +18,17 @@
   $img=$fila[14];
   $fechaN=date("d/m/Y", strtotime($fn));
 
+  #Verifico si el usuario debe calificacion.
+  $sql= "SELECT * FROM `publicaciones`,`calificaciones` WHERE `publicaciones`.`ID` =`calificaciones`.`ID_publicacion`
+  AND `calificaciones`.`calificacion` IS NULL AND `publicaciones`.`usuario`=$ID";
+  $result=mysqli_query($conexion, $sql);
+  $cant=mysqli_num_rows($result);
+  if($cant>1)
+    $debe=true;
+    else {
+  $debe=false;
+}
+
   $sql = "SELECT `Pregunta` FROM `preguntas` WHERE `ID`='$preID'";
   $result=mysqli_query($conexion, $sql);
   $row = mysqli_fetch_row($result);
@@ -47,7 +58,7 @@
       $arreglo = array('nom' => "$nom", 'ap' => "$ap", 'fn' => "$fechaN", 'tel' => "$tel",
        'pRep' => "$pRep", 'creditos' => "$creditos", 'rep' => "$rep", 'fn2' => "$fn", 'resp' => "$resp",
         'pre' => "$pre", 'ID' => "$ID", 'email' => "$email", 'precioCreditos' => "$precioCredito",
-         'imagen' => "$img");
+         'imagen' => "$img", 'caliPendiente'=> "$debe");
 
       $jDatos = json_encode($arreglo);
       echo $jDatos;
