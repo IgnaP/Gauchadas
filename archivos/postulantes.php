@@ -53,7 +53,7 @@
 				<tr>
 					<td> <?php echo "$userName[0]" ?> </td>
 					<td><?php echo "$users[1]" ?></td>
-					<td class="text-center"><button type="button" class="btn btn-default" disabled onclick="ejemplo(<?php echo $users[0]; ?>)">Ver detalles</button></td>
+					<td class="text-center"><button type="button" class="btn btn-default" onclick="verDetallesPostulante(<?php echo $users[0]; ?>)">Ver detalles</button></td>
 					<td class="text-center"><button type="button" class="btn btn-default" disabled onclick="ejemplo(<?php echo $users[0]; ?>)">Seleccionar postulante</button></td>
 				</tr>
 			<?php

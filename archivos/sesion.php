@@ -41,6 +41,9 @@
     function verPostulantes(){
       $("#lacaja").load("postulantes.php?id="+pID);
     }
+    function verDetallesPostulante(uID){
+     $("#lacaja").load("detallesPostulante.php?id="+uID);
+    }
     $(document).on('click','.publicacionDiv', function(){
       var pID= $("label:first", this).text();
       cargarPublicacion(pID);
