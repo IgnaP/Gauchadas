@@ -62,17 +62,15 @@
 </head>
 <body>
   <div class="row">
-    <div class="col-md-6 col-md-offset-3 transparente">
-      <h3>Mi cuenta</h3>
-      <div class="container-fluid separar">
+    <div class="col-md-6 col-md-offset-3">
         <div class="row">
           <div class="alert col-md-10 col-md-offset-1 hidden text-center" id="alertaForm">
             <strong id="alertaTxt"></strong>
           </div>
         </div>
-        <div class="bordeDiv separar">
+        <div class="bordeDiv">
           <div class="container-fluid fondoGris">
-            <h4>Cambiar datos</h4>
+            <h4>Cambiar mis datos</h4>
           </div>
           <div class="container-fluid fondoBlanco">
             <div class="container-fluid separar">
@@ -158,7 +156,7 @@
             </div>
           </div>
         </div>
-        <div class="bordeDiv">
+        <div class="bordeDiv" hidden>
           <div class="container-fluid fondoRojo">
             <h4 class="letraBlanca">Borrar cuenta</h4>
           </div>
@@ -176,7 +174,6 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
 </body>

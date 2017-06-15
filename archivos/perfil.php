@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="css/estilos.css">
   <script>
   $(document).ready(function(){
-    $("#historialDiv").load("publicaciones.php", {"activa": "false"});
     $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
       var jDatos= JSON.parse(datos);
       $("#nombreApellido").text(jDatos.nom+" "+jDatos.ap);
@@ -71,10 +70,12 @@
           <div class="progress-bar" role="progressbar" aria-valuemin="10" aria-valuemax="100" id="barRep"></div>
         </div>
       </div>
-
+      <div class="col-sm-12">
+        <button type="button" name="button" class="btn btn-default center-block" onclick="cargarPagina('miCuenta.php')">Editar perfil</button>
+      </div>
     </div>
     <div class="col-md-7 col-md-offset-1 transparente alturaminima">
-      <h3 class="text-center">Historial</h3>
+      <h3 class="text-center">Links</h3>
       <div class="" id="historialDiv">
 
       </div>
