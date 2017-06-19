@@ -2,51 +2,51 @@
   require("php/conexionBD.php");
   conectarse($conexion);
   $fechaActual=date("Y-m-d");
-  $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID))";
-  $sqlWhere ="WHERE `FechaLimite`>'$fechaActual' AND";
-  $sqlGroup = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC, `Fecha_publicacion` DESC";
-  if (isset($_POST["activa"])) {
-    if ($_POST["activa"]=="false") {
-      $sqlWhere=$sqlWhere."`Activa`='0'";
-    } else {
-      $sqlWhere=$sqlWhere."`Activa`='1'";
-    }
-  }else {
-    $sqlWhere=$sqlWhere."`Activa`='1'";
-  }
-  if (isset($_POST["usr"])) {
+  $sql="UPDATE `publicaciones` SET `Activa`='0' WHERE `FechaLimite`<'$fechaActual'";
+  mysqli_query($conexion, $sql);
+
+  if ( isset( $_POST["usr"] ) ) {
+//  GAUCHADAS DE UN USUARIO (MIS GAUCHADAS)
     $usrID=$_POST["usr"];
-    $sqlWhere=$sqlWhere." AND usuario=".$usrID;
-  }
-  if (isset($_POST["tit"])) {
-    $sqlWhere=$sqlWhere." AND Nombre LIKE '%".$_POST["tit"]."%'";
-  }
-  if (isset($_POST["prov"])) {
-    if ($_POST["prov"]!="Todas") {
-      if ($_POST["ciu"]!="Todas") {
-        $ciu=$_POST["ciu"];
-        $sqlWhere=$sqlWhere." AND localidad='".$ciu."'";
-      }else {
-        $provincia=$_POST["prov"];
-        $sql2="SELECT `id` FROM `provincias` WHERE `provincia`='$provincia'";
-        $result=mysqli_query($conexion, $sql2);
-        $row = mysqli_fetch_row($result);
-        $provID=$row[0];
-        $sqlWhere=$sqlWhere." AND id_provincia=".$provID;
+    $sql = "SELECT * FROM publicaciones WHERE usuario=$usrID
+    GROUP BY `Activa`
+    ORDER BY `Activa` DESC, `Fecha_publicacion` DESC";
+  } else {
+//  TODAS LAS GAUCHADAS ACTIVAS
+    $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID))";
+    $sqlWhere ="WHERE `Activa`='1'";
+    $sqlGroup = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC, `Fecha_publicacion` DESC";
+
+    if (isset($_POST["tit"])) {
+      $sqlWhere=$sqlWhere." AND Nombre LIKE '%".$_POST["tit"]."%'";
+    }
+    if (isset($_POST["prov"])) {
+      if ($_POST["prov"]!="Todas") {
+        if ($_POST["ciu"]!="Todas") {
+          $ciu=$_POST["ciu"];
+          $sqlWhere=$sqlWhere." AND localidad='".$ciu."'";
+        }else {
+          $provincia=$_POST["prov"];
+          $sql2="SELECT `id` FROM `provincias` WHERE `provincia`='$provincia'";
+          $result=mysqli_query($conexion, $sql2);
+          $row = mysqli_fetch_row($result);
+          $provID=$row[0];
+          $sqlWhere=$sqlWhere." AND id_provincia=".$provID;
+        }
       }
     }
-  }
-  if (isset($_POST["cat"])) {
-    if ($_POST["cat"]!="Todas") {
-      $cat=$_POST["cat"];
-      $sql2="SELECT `ID` FROM `categorias` WHERE `Nombre`='$cat'";
-      $result=mysqli_query($conexion, $sql2);
-      $row = mysqli_fetch_row($result);
-      $catID=$row[0];
-      $sqlWhere=$sqlWhere." AND Categoria=".$catID;
+    if (isset($_POST["cat"])) {
+      if ($_POST["cat"]!="Todas") {
+        $cat=$_POST["cat"];
+        $sql2="SELECT `ID` FROM `categorias` WHERE `Nombre`='$cat'";
+        $result=mysqli_query($conexion, $sql2);
+        $row = mysqli_fetch_row($result);
+        $catID=$row[0];
+        $sqlWhere=$sqlWhere." AND Categoria=".$catID;
+      }
     }
+    $sql=$sql." ".$sqlWhere." ".$sqlGroup;
   }
-  $sql=$sql." ".$sqlWhere." ".$sqlGroup;
   $result=mysqli_query($conexion, $sql);
 ?>
 <!DOCTYPE html>
@@ -127,13 +127,16 @@
               <h3><?php echo $row[1]; ?></h3>
             </div>
             <div class="col-md-2 separar">
+  <?php         if ( $row[7]=='0' ) { ?>
+                <label class="label label-danger">No vigente</label>
+  <?php         } ?>
   <?php         if ($pregPend) { ?>
                 <label class="label label-warning">Preguntas</label>
-  <?php           } else {
+  <?php         } else {
                     if ($resPend) {   ?>
                 <label class="label label-warning">Respuestas</label>
   <?php             }
-                  } ?>
+                } ?>
             </div>
           </div>
           <img src="<?php echo $rutaImagen; ?>" style="max-width:300px;max-height:300px;" class="center-block">
