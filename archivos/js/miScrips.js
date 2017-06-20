@@ -49,3 +49,42 @@ function cambiarAlerta(tf, txt){
   }
   $("#alertaForm").removeClass('hidden');
 }
+
+function obtenerDatosConID(pID, usrID, usrN){
+  obtener(pID, usrID, usrN, seleccionarPostulante);
+}
+
+function obtener(pID, usrID, usrN, seleccionarPostulante){
+  $.get("obtenerPostulantes.php",{pID: pID, uID: usrID}, function(datos){
+  var datosJ = JSON.parse(datos);
+  $.confirm({
+    title: 'Confirmación de postulante seleccionado',
+    content: 'Está por seleccionar a <strong>'+usrN+'</strong> y rechazar a los siguientes postulantes: '+'<br/>'+'<br/>'+datosJ.join('<br/>'),
+    buttons: {
+        Aceptar: function () {
+            seleccionarPostulante(usrN, pID, usrID);
+        },
+        cancelar: function () {    
+      }
+   }
+  });
+  });
+}
+
+function seleccionarPostulante(usrN, pID, usrID){
+  $.get("php/datosDelUsuario.php?datos=devolver", function(datosU){
+    var jDatos = JSON.parse(datosU);
+    $.alert({
+      title:'Envio de datos al postulante',
+      content: 'Seleccionó al postulante <strong>'+usrN+'</strong> y se le enviará un correo con los siguientes datos personales: '+'<br/><br/>'
+                +'Nombre: '+jDatos.nom+'<br/>'+'Email: '+jDatos.email,
+    });
+  $.get("modificarPorSeleccionado.php",{pID: pID, usrACalificar: usrID});
+  // cargarPublicacion(pID);
+  });
+}
+
+ function cargarPublicacion(pID){
+     // $("li").removeClass("active");
+     // $("#lacaja").load("publicacion.php",{"ID":pID});
+    }

@@ -17,9 +17,26 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
   <script>
-  	function ejemplo(usrID){
-  		alert(usrID);
-  	}
+  //$(document).ready(function(){
+  //	$("#botoncito").on('click',function(){
+  //		alert("hola!!");
+ // 		$(this).remove();
+  //	})
+ // });
+// $(document).ready(function(){
+// 	$("#botoncito").on("click",probandojquery);
+// });
+
+ // $(document).ready(function(){
+  //	$("#botoncito").on('click',function(){
+  //		$.get()
+  //	})
+
+  //});
+//   $(document).ready(function(){
+// 	$("#botoncito").on("click",obtenerDatosConID("$publicacion", $userName[0]));
+// });
+
   </script>
 </head>
 <body>
@@ -53,8 +70,9 @@
 				<tr>
 					<td> <?php echo "$userName[0]" ?> </td>
 					<td><?php echo "$users[1]" ?></td>
-					<td class="text-center"><button type="button" class="btn btn-default" onclick="verDetallesPostulante(<?php echo $users[0]; ?>)">Ver detalles</button></td>
-					<td class="text-center"><button type="button" class="btn btn-default" disabled onclick="ejemplo(<?php echo $users[0]; ?>)">Seleccionar postulante</button></td>
+					<?php $u = $users[0]; ?>
+					<td class="text-center"><button type="button" class="btn btn-default" onclick="verDetallesPostulante(<?php echo $users[0]; ?>, <?php echo"'".$publicacion."'" ?>)">Ver detalles</button></td>
+					<td class="text-center"><button type="button" class="btn btn-default" id="botoncito" onclick="obtenerDatosConID(<?php echo "'".$publicacion."'"?>, <?php echo "'".$users[0]."'" ?>, <?php echo "'".$userName[0]."'" ?>)">Seleccionar postulante</button></td>
 				</tr>
 			<?php
 					}

@@ -5,6 +5,7 @@
 		header("Location: sesion.php");
 	}
 		$uID = $_GET["id"];
+		$pID = $_GET["pID"];
 	  	$sql = "SELECT `Nombre`,`Reputacion`, `Imagen` FROM `usuarios` WHERE `ID` = $uID";
 	  	$result = mysqli_query($conexion, $sql);
   		$datos = mysqli_fetch_row($result);
@@ -22,19 +23,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
+  <script>
+    function ejemplos(usrID){
+  		alert(usrID);
+	}
+  </script>
 </head>
 <body>
 	<div class="container">
+		<div class="text-left">
+				<button type="button" class="btn btn-default" onclick="verPostulantes()">Volver a postulantes</button>
+		</div>
 		<div class="row separar text-center transparente">
 			<div class="col-md-5 separar">
+				<div>
 				<?php 
 					if(!(is_null($datos[2]))){
-						echo "<img src='/Gauchadas/imagenes/".$datos[2]."'>";
+
+						echo "<img src='/Gauchadas/imagenes/".$datos[2]."'class='img-circle center-block' style='max-height: 300px'>";
 					}
 				?>
+				</div>
 				<h3><?php echo "$datos[0]" ?></h3>
 				<h5><?php echo "$reputacion[0]" ?></h5>
-				<button type="button" class="btn btn-default" disabled onclick="ejemplo(<?php echo $users[0]; ?>)">Seleccionar postulante</button>
+				<?php $datosjson = json_encode($datos);?>
+				<button type="button" class="btn btn-default" onclick="obtenerDatosConID(<?php echo "'".$pID."'"?>, <?php echo "'".$uID."'" ?>, <?php echo "'".$datos[0]."'" ?>)">Seleccionar postulante</button>
 			</div>
 			<div class="col-md-7">
 				<div class="text-align-left">
@@ -44,8 +57,8 @@
 		<?php 
 			if($num_filas>0){	
 		?>
-			<div class="info col-md-2"> Puntaje </div>
-			<div class="info col-md-4"> Comentario </div>
+			<div class="col-md-2"> <strong> Puntaje </strong></div>
+			<div class="col-md-4"> <strong> Comentario </strong></div>
 			<?php
 				while ($calificaciones = mysqli_fetch_row($result2)){
 					$c = $calificaciones;	

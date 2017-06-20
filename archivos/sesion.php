@@ -4,12 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/jquery-confirm.min.css" rel="stylesheet">
+  <link href="css/jquery-confirm.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
   <link rel="icon" href="css/Logo UnaGauchada.png">
   <title>Una Gauchada</title>
 
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery-confirm.min.js"></script>
   <script src="js/miScrips.js"></script>
   <script>
     $(document).ready(function(){
@@ -41,8 +44,8 @@
     function verPostulantes(){
       $("#lacaja").load("postulantes.php?id="+pID);
     }
-    function verDetallesPostulante(uID){
-     $("#lacaja").load("detallesPostulante.php?id="+uID);
+    function verDetallesPostulante(uID, pID){
+     $("#lacaja").load("detallesPostulante.php?id="+uID+"&pID="+pID);
     }
     $(document).on('click','.publicacionDiv', function(){
       var pID= $("label:first", this).text();
