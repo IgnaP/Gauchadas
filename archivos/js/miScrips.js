@@ -74,17 +74,21 @@ function obtener(pID, usrID, usrN, seleccionarPostulante){
 function seleccionarPostulante(usrN, pID, usrID){
   $.get("php/datosDelUsuario.php?datos=devolver", function(datosU){
     var jDatos = JSON.parse(datosU);
-    $.alert({
-      title:'Envio de datos al postulante',
+    $.confirm({
+      title: 'Envio de datos al postulante',
       content: 'Seleccionó al postulante <strong>'+usrN+'</strong> y se le enviará un correo con los siguientes datos personales: '+'<br/><br/>'
                 +'Nombre: '+jDatos.nom+'<br/>'+'Email: '+jDatos.email,
+      buttons: {
+        Aceptar: function () {
+            $.get("modificarPorSeleccionado.php",{pID: pID, usrACalificar: usrID});
+            volverAPublicacion(pID);
+        }
+      }
     });
-  $.get("modificarPorSeleccionado.php",{pID: pID, usrACalificar: usrID});
-  // cargarPublicacion(pID);
   });
 }
 
- function cargarPublicacion(pID){
-     // $("li").removeClass("active");
-     // $("#lacaja").load("publicacion.php",{"ID":pID});
-    }
+function volverAPublicacion(pID){
+  $("li").removeClass("active");
+  $("#lacaja").load("publicacion.php",{"ID":pID});
+}

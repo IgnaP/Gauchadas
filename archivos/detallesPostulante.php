@@ -58,7 +58,7 @@
 			if($num_filas>0){	
 		?>
 			<div class="col-md-2"> <strong> Puntaje </strong></div>
-			<div class="col-md-4"> <strong> Comentario </strong></div>
+			<div class="col-md-5"> <strong> Comentario </strong></div>
 			<?php
 				while ($calificaciones = mysqli_fetch_row($result2)){
 					$c = $calificaciones;	
@@ -67,7 +67,7 @@
 		<?php echo "$c[0]"; 
 		?>
 				</div>
-				<div class="col-md-4 fondoBlanco">
+				<div class="col-md-5 fondoBlanco">
 		<?php echo "$c[1]"; 
 		?>
 				</div>
@@ -75,7 +75,7 @@
 			}
 		}else{
 		?>
-			<div class="warning"> sin calificaciones </div>
+			<div class="warning col-md-7 fondoBlanco"> sin calificaciones </div>
 		<?php
 			} 
 		?>
