@@ -25,7 +25,7 @@
       if (jDatos.logueado) {
         if (jDatos.owner==jDatos.usr) {
           $(".delDueño").prop('hidden', false);
-          $.get("obtenerPostulanteSeleccionado.php",{pID: pID}, function(seleccionado){ 
+          $.get("obtenerPostulanteSeleccionado.php",{pID: pID}, function(seleccionado){
             var jSeleccionado = JSON.parse(seleccionado);
             if(jSeleccionado != null){
               $(".delDueño #botonPostulantes").prop('disabled',true);
@@ -138,6 +138,9 @@
       cambiarAlerta(false, datos);
     }
   }
+  $("#botonModificar").on("click", function(){
+    modificarPublicacion(pID);
+  });
 </script>
 </head>
 <body>
@@ -165,7 +168,7 @@
           </div>
           <div class="col-md-3 col-md-offset-1">
             <div hidden class="delDueño">
-              <button type="button" name="button" class="btn btn-default" disabled>Editar gauchada</button>
+              <button type="button" name="button" class="btn btn-default" id="botonModificar">Modificar gauchada</button>
               <button type="button" name="button" class="btn btn-default" id="botonPostulantes" onclick="verPostulantes()">Ver postulantes</button>
               <button type="button" name="button" class="btn btn-default" id="calificar" onclick="calificarPostulante()">Calificar postulante seleccionado</button>
             </div>

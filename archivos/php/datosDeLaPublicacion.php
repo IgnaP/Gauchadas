@@ -6,10 +6,11 @@
   $result=mysqli_query($conexion, $sql);
   $row = mysqli_fetch_row($result);
   $ciuID=$row[2];
+  $fechaOriginal=$row[3];
   $catID=$row[4];
   $imagen=$row[6];
   $dueñoID=$row[8];
-  $fecha=date("d/m/Y", strtotime($row[3]));
+  $fecha=date("d/m/Y", strtotime($fechaOriginal) );
   $sql2="SELECT `localidad` FROM `localidades` WHERE `id`='$ciuID'";
   $resultado=mysqli_query($conexion,$sql2);
   $fila = mysqli_fetch_row($resultado);
@@ -51,7 +52,7 @@
 
   $arreglo = array('tit' => "$row[1]", 'cat' => "$cat", 'ciu' => "$ciu", 'desc' => "$row[5]",
    'owner' => "$dueñoUsr", 'usr' => "$mail", 'logueado' => "$logueado", 'fecha' => "$fecha",
-    'postulado' => "$postulado", 'imagen' => "$imagen");
+    'postulado' => "$postulado", 'imagen' => "$imagen", 'fechaOriginal' => "$fechaOriginal");
 
   $jDatos = json_encode($arreglo);
   echo $jDatos;

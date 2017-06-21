@@ -41,6 +41,9 @@
       $("li").removeClass("active");
       $("#lacaja").load("publicacion.php",{"ID":pID});
     }
+    function modificarPublicacion(pID){
+      $("#lacaja").load("modificarGauchada.php",{"ID":pID});
+    }
     function verPostulantes(){
       $("#lacaja").load("postulantes.php?id="+pID);
     }
