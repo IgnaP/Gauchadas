@@ -9,7 +9,6 @@
 //  GAUCHADAS DE UN USUARIO (MIS GAUCHADAS)
     $usrID=$_POST["usr"];
     $sql = "SELECT * FROM publicaciones WHERE usuario=$usrID
-    GROUP BY `Activa`
     ORDER BY `Activa` DESC, `Fecha_publicacion` DESC";
   } else {
 //  TODAS LAS GAUCHADAS ACTIVAS
