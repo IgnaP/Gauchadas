@@ -54,6 +54,9 @@
       var pID= $("label:first", this).text();
       cargarPublicacion(pID);
     });
+    function calificarPostulante(){
+      calificar(pID);
+    }
   </script>
 </head>
 <body>

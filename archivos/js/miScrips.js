@@ -110,3 +110,58 @@ function volverAPublicacion(pID){
   $("li").removeClass("active");
   $("#lacaja").load("publicacion.php",{"ID":pID});
 }
+
+function calificar(pID){
+  $.get('obtenerPostulanteSeleccionado.php',{pID: pID}, function(datos){
+    var usr = JSON.parse(datos);
+  $.confirm({
+    title: 'Calificación para '+usr.nombre,
+    content: '' +
+    '<form action="calificar.php" class="formulario" method="post">' +
+    '<div class="form-group">' +
+    '<label>Puntaje</label></br>' +
+    '<input type="radio" name="puntaje" value="-1"> Negativo </br>'+
+    '<input type="radio" name="puntaje" value="0"> Neutro </br>'+
+    '<input type="radio" name="puntaje" value="1"> Positivo </br>' +
+    '</div>' +
+    '<div class="form-group">' +
+    '<label>Comentario</label>' +
+    '<textarea name="comentario" class="comentario" rows = "4" cols ="43" placeholder="Escriba su comentario" maxlength="150" >' +
+    '</textarea>' +
+    '</div>'+
+    '</form>',
+    buttons: {
+        formSubmit: {
+            text: 'Calificar',
+            btnClass: 'btn-blue',
+            action: function () {
+                var puntaje = this.$content.find('input:radio[name="puntaje"]:checked').val();
+                var comentario = this.$content.find('.comentario').val();
+                if(!puntaje){
+                  $.alert('Debe seleccionar un puntaje');
+                  return false;
+                } else {
+                    if(!comentario){
+                    $.alert('Debe seleccionar un comentario');
+                    return false;
+                  } else {
+                      $.get('guardarCalificacion.php',{puntaje: puntaje, comentario: comentario, uID: usr.id, pID: pID});
+                      $.confirm({
+                        title: ' ',
+                        content: 'Calificado' ,
+                       buttons: {
+                         Aceptar: function () {
+                            volverAPublicacion(pID);
+                          }
+                        }
+                      });
+                  }
+                }
+            }
+        },
+        cancelar: function () {
+        },
+    },
+  });
+});
+}

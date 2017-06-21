@@ -27,10 +27,12 @@
           $(".delDueño").prop('hidden', false);
           $.get("obtenerPostulanteSeleccionado.php",{pID: pID}, function(seleccionado){
             var jSeleccionado = JSON.parse(seleccionado);
-            if(jSeleccionado != null){
+            if(jSeleccionado != null | (jDatos.activa == 0)){
               $(".delDueño #botonPostulantes").prop('disabled',true);
             } else {
-              $(".delDueño #calificar").hide();
+              if(jSeleccionado == null){
+                $(".delDueño #calificar").hide();
+              }
             }
           });
         } else {
