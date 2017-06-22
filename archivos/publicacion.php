@@ -25,12 +25,15 @@
       if (jDatos.logueado) {
         if (jDatos.owner==jDatos.usr) {
           $(".delDueño").prop('hidden', false);
-          $.get("obtenerPostulanteSeleccionado.php",{pID: pID}, function(seleccionado){
-            var jSeleccionado = JSON.parse(seleccionado);
-            if(jSeleccionado != null | (jDatos.activa == 0)){
+          $.get("debeCalificacionEnPublicacion.php",{pID: pID}, function(debe){
+            var jdebe = JSON.parse(debe);
+            if (jDatos.activa == 0){
+            	 $(".delDueño #botonPostulantes").prop('disabled',true);
+            }
+            if(jdebe){
               $(".delDueño #botonPostulantes").prop('disabled',true);
             } else {
-              if(jSeleccionado == null){
+              if(!jdebe){
                 $(".delDueño #calificar").hide();
               }
             }
