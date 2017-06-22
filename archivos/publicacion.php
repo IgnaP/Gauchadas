@@ -26,12 +26,17 @@
       if (jDatos.logueado) {
         if (jDatos.owner==jDatos.usr) {
           $(".delDueño").prop('hidden', false);
-          $.get("obtenerPostulanteSeleccionado.php",{pID: pID}, function(seleccionado){
-            var jSeleccionado = JSON.parse(seleccionado);
-            if(jSeleccionado != null){
+          $.get("debeCalificacionEnPublicacion.php",{pID: pID}, function(debe){
+            var jdebe = JSON.parse(debe);
+            if (jDatos.activa == 0){
+            	 $(".delDueño #botonPostulantes").prop('disabled',true);
+            }
+            if(jdebe){
               $(".delDueño #botonPostulantes").prop('disabled',true);
             } else {
-              $(".delDueño #calificar").hide();
+              if(!jdebe){
+                $(".delDueño #calificar").hide();
+              }
             }
           });
         } else {

@@ -1,5 +1,5 @@
 <?php
-require("conexionBD.php");
+require("php/conexionBD.php");
 conectarse($conexion);
 if (!$conexion) {
   echo "Fallo al conectar con el servidor";

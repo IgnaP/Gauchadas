@@ -12,7 +12,7 @@
   		$sql = "SELECT `Nombre` FROM `reputacion` WHERE `Puntos` = $datos[1]";
   		$result3 = mysqli_query($conexion,$sql);
   		$reputacion = mysqli_fetch_row($result3);
-		$sql2 = "SELECT `calificacion`, `comentario`, `fecha` FROM `calificaciones` WHERE `ID_usuario` = $uID";
+		$sql2 = "SELECT `calificacion`, `comentario`, `fecha` FROM `calificaciones` WHERE `ID_usuario` = $uID AND `calificacion` IS NOT NULL";
 	  	$result2 = mysqli_query($conexion, $sql2);
   		$num_filas=mysqli_num_rows($result2);
 ?>
@@ -64,7 +64,16 @@
 					$c = $calificaciones;	
 			?>
 				<div class="col-md-2 fondoBlanco">
-		<?php echo "$c[0]"; 
+		<?php
+			if($c[0] == -1){
+				echo "Negativo";
+			} else {
+				if($c[0] == 1){
+					echo "Positivo";
+				} else {
+					echo "Neutro";
+				}
+			}
 		?>
 				</div>
 				<div class="col-md-5 fondoBlanco">
