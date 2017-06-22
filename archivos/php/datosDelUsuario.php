@@ -20,14 +20,10 @@
 
   #Verifico si el usuario debe calificacion.
   $sql= "SELECT * FROM `publicaciones`,`calificaciones` WHERE `publicaciones`.`ID` =`calificaciones`.`ID_publicacion`
-  AND `calificaciones`.`calificacion` IS NULL AND `publicaciones`.`usuario`=$ID";
+  AND (`calificaciones`.`calificacion` IS NULL OR `calificaciones`.`comentario` IS NULL)
+  AND `publicaciones`.`usuario` = '$ID' ";
   $result=mysqli_query($conexion, $sql);
-  $cant=mysqli_num_rows($result);
-  if($cant>1)
-    $debe=true;
-    else {
-  $debe=false;
-}
+  $debeC=mysqli_num_rows($result);
 
   $sql = "SELECT `Pregunta` FROM `preguntas` WHERE `ID`='$preID'";
   $result=mysqli_query($conexion, $sql);
@@ -58,7 +54,7 @@
       $arreglo = array('nom' => "$nom", 'ap' => "$ap", 'fn' => "$fechaN", 'tel' => "$tel",
        'pRep' => "$pRep", 'creditos' => "$creditos", 'rep' => "$rep", 'fn2' => "$fn", 'resp' => "$resp",
         'pre' => "$pre", 'ID' => "$ID", 'email' => "$email", 'precioCreditos' => "$precioCredito",
-         'imagen' => "$img", 'caliPendiente'=> "$debe");
+         'imagen' => "$img", 'caliPendiente' => "$debeC" );
 
       $jDatos = json_encode($arreglo);
       echo $jDatos;
