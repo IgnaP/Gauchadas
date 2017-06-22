@@ -58,11 +58,7 @@
 
   $arreglo = array('tit' => "$row[1]", 'cat' => "$cat", 'ciu' => "$ciu", 'desc' => "$row[5]",
    'owner' => "$dueñoUsr", 'usr' => "$mail", 'logueado' => "$logueado", 'fecha' => "$fecha",
-<<<<<<< HEAD
-    'postulado' => "$postulado", 'imagen' => "$imagen", 'fechaOriginal' => "$fechaOriginal", 'prov' => "$prov");
-=======
-    'postulado' => "$postulado", 'imagen' => "$imagen", 'fechaOriginal' => "$fechaOriginal", 'activa' => "$activa");
->>>>>>> 89606801dc2c382ac493cfe6fa65a74e40a93572
+    'postulado' => "$postulado", 'imagen' => "$imagen", 'fechaOriginal' => "$fechaOriginal", 'prov' => "$prov", 'activa' => "$activa");
 
   $jDatos = json_encode($arreglo);
   echo $jDatos;
