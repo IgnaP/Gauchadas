@@ -29,10 +29,10 @@
           $.get("debeCalificacionEnPublicacion.php",{pID: pID}, function(debe){
             var jdebe = JSON.parse(debe);
             if (jDatos.activa == 0){
-            	 $(".delDueño #botonPostulantes").prop('disabled',true);
+            	 $(".delDueño #botonPostulantes, #botonDespublicar, #botonModificar").prop('disabled',true);
             }
             if(jdebe){
-              $(".delDueño #botonPostulantes").prop('disabled',true);
+              $(".delDueño #botonPostulantes, #botonDespublicar, #botonModificar").prop('disabled',true);
             } else {
               if(!jdebe){
                 $(".delDueño #calificar").hide();
@@ -147,6 +147,11 @@
   $("#botonModificar").on("click", function(){
     modificarPublicacion(pID);
   });
+
+  $("#botonDespublicar").on("click", function(){
+    despublicarGauchada(pID);
+  });
+
 </script>
 </head>
 <body>
@@ -161,7 +166,6 @@
             <img style="max-width:500px;max-height:500px;" class="center-block" id="imagen">
             <div class="row separar">
               <div class="col-md-10">
-                <label class="label label-primary" id="provincia"></label>
                 <label class="label label-primary" id="ciudad"></label>
                 <label class="label label-info" id="categoria"></label>
               </div>
@@ -176,6 +180,7 @@
           <div class="col-md-3 col-md-offset-1">
             <div hidden class="delDueño">
               <button type="button" name="button" class="btn btn-default" id="botonModificar">Modificar gauchada</button>
+              <button type="button" name="button" class="btn btn-default" id="botonDespublicar">Despublicar gauchada</button>
               <button type="button" name="button" class="btn btn-default" id="botonPostulantes" onclick="verPostulantes()">Ver postulantes</button>
               <button type="button" name="button" class="btn btn-default" id="calificar" onclick="calificarPostulante()">Calificar postulante seleccionado</button>
             </div>
