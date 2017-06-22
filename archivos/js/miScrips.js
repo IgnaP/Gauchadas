@@ -118,17 +118,19 @@ function calificar(pID){
     title: 'Calificación para '+usr.nombre,
     content: '' +
     '<form action="calificar.php" class="formulario" method="post">' +
-    '<div class="form-group">' +
+    '<div class="puntaje">' +
     '<label>Puntaje</label></br>' +
     '<input type="radio" name="puntaje" value="-1"> Negativo </br>'+
     '<input type="radio" name="puntaje" value="0"> Neutro </br>'+
     '<input type="radio" name="puntaje" value="1"> Positivo </br>' +
     '</div>' +
+    '<div class="errorPuntaje letraRoja"> </div>' +
     '<div class="form-group">' +
     '<label>Comentario</label>' +
     '<textarea name="comentario" class="comentario" rows = "4" cols ="43" placeholder="Escriba su comentario" maxlength="150" >' +
     '</textarea>' +
     '</div>'+
+    '<div class="errorComentario letraRoja"> </div>'+
     '</form>',
     buttons: {
         formSubmit: {
@@ -137,14 +139,19 @@ function calificar(pID){
             action: function () {
                 var puntaje = this.$content.find('input:radio[name="puntaje"]:checked').val();
                 var comentario = this.$content.find('.comentario').val();
+                var errorPuntaje = this.$content.find(".errorPuntaje");
+                var errorComentario = this.$content.find(".errorComentario");
                 if(!puntaje){
-                  $.alert('Debe seleccionar un puntaje');
+                  errorPuntaje.html('Debe seleccionar un puntaje').slideDown(200);
                   return false;
                 } else {
+                    errorPuntaje.hide();
                     if(!comentario){
-                    $.alert('Debe seleccionar un comentario');
+                      errorComentario.html('Debe escribir un comentario').slideDown(200);
                     return false;
                   } else {
+                      errorComentario.hide();
+                      errorPuntaje.hide();
                       $.get('guardarCalificacion.php',{puntaje: puntaje, comentario: comentario, uID: usr.id, pID: pID});
                       $.confirm({
                         title: ' ',
