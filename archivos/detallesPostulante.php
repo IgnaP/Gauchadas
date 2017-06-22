@@ -64,7 +64,16 @@
 					$c = $calificaciones;	
 			?>
 				<div class="col-md-2 fondoBlanco">
-		<?php echo "$c[0]"; 
+		<?php
+			if($c[0] == -1){
+				echo "Negativo";
+			} else {
+				if($c[0] == 1){
+					echo "Positivo";
+				} else {
+					echo "Neutro";
+				}
+			}
 		?>
 				</div>
 				<div class="col-md-5 fondoBlanco">
