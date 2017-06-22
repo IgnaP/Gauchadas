@@ -75,6 +75,9 @@ function obtenerDatosConID(pID, usrID, usrN){
 function obtener(pID, usrID, usrN, seleccionarPostulante){
   $.get("obtenerPostulantes.php",{pID: pID, uID: usrID}, function(datos){
   var datosJ = JSON.parse(datos);
+  if(datosJ == ""){
+    datosJ[0]="(No tiene más postulantes)";
+  }
   $.confirm({
     title: 'Confirmación de postulante seleccionado',
     content: 'Está por seleccionar a <strong>'+usrN+'</strong> y rechazar a los siguientes postulantes: '+'<br/>'+'<br/>'+datosJ.join('<br/>'),
@@ -95,7 +98,7 @@ function seleccionarPostulante(usrN, pID, usrID){
     $.confirm({
       title: 'Envio de datos al postulante',
       content: 'Seleccionó al postulante <strong>'+usrN+'</strong> y se le enviará un correo con los siguientes datos personales: '+'<br/><br/>'
-                +'Nombre: '+jDatos.nom+'<br/>'+'Email: '+jDatos.email,
+                +'Nombre: '+jDatos.nom+'<br/>'+'Email: '+jDatos.email + '</br> Teléfono: '+jDatos.tel,
       buttons: {
         Aceptar: function () {
             $.get("modificarPorSeleccionado.php",{pID: pID, usrACalificar: usrID});
