@@ -11,10 +11,15 @@
   $imagen=$row[6];
   $dueñoID=$row[8];
   $fecha=date("d/m/Y", strtotime($fechaOriginal) );
-  $sql2="SELECT `localidad` FROM `localidades` WHERE `id`='$ciuID'";
+  $sql2="SELECT * FROM `localidades` WHERE `id`='$ciuID'";
   $resultado=mysqli_query($conexion,$sql2);
   $fila = mysqli_fetch_row($resultado);
-  $ciu=$fila[0];
+  $ciu=$fila[2];
+  $provID=$fila[1];
+  $sql2="SELECT `provincia` FROM `provincias` WHERE `id`='$provID'";
+  $resultado=mysqli_query($conexion,$sql2);
+  $fila = mysqli_fetch_row($resultado);
+  $prov=$fila[0];
   $sql2="SELECT `Nombre` FROM `categorias` WHERE `ID`='$catID'";
   $resultado=mysqli_query($conexion,$sql2);
   $fila = mysqli_fetch_row($resultado);
@@ -52,7 +57,7 @@
 
   $arreglo = array('tit' => "$row[1]", 'cat' => "$cat", 'ciu' => "$ciu", 'desc' => "$row[5]",
    'owner' => "$dueñoUsr", 'usr' => "$mail", 'logueado' => "$logueado", 'fecha' => "$fecha",
-    'postulado' => "$postulado", 'imagen' => "$imagen", 'fechaOriginal' => "$fechaOriginal");
+    'postulado' => "$postulado", 'imagen' => "$imagen", 'fechaOriginal' => "$fechaOriginal", 'prov' => "$prov");
 
   $jDatos = json_encode($arreglo);
   echo $jDatos;

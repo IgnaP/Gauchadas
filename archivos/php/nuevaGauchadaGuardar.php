@@ -20,6 +20,7 @@ if (!$conexion) {
     }
     if ($ok) {
       $tit = $_POST["titulo"];
+      $prov = $_POST["provincias"];
       $ciu = $_POST["ciudad"];
       $fec = $_POST["fecha"];
       $cat = $_POST["categoria"];
@@ -29,9 +30,9 @@ if (!$conexion) {
       $result=mysqli_query($conexion,$sql);
       $row = mysqli_fetch_row($result);
       $usrID=$row[0];
-      $sql="SELECT `ID` FROM `localidades` WHERE `localidad`='$ciu'";
+      $sql="SELECT localidades.id FROM (localidades INNER JOIN provincias ON (provincias.id=localidades.id_provincia)) WHERE `localidad`='$ciu' AND provincia='$prov'";
       $result=mysqli_query($conexion,$sql);
-      $row1 = mysqli_fetch_row($result);
+      $row = mysqli_fetch_row($result);
       $ciuID=$row[0];
       $sql="SELECT `ID` FROM `categorias` WHERE `Nombre`='$cat'";
       $result=mysqli_query($conexion,$sql);

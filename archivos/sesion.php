@@ -42,7 +42,8 @@
       $("#lacaja").load("publicacion.php",{"ID":pID});
     }
     function modificarPublicacion(pID){
-      $("#lacaja").load("modificarGauchada.php",{"ID":pID});
+      $.post("php/guardarCookie.php?nombre=modificarGauchada&valor="+pID);
+      $("#lacaja").load("modificarGauchada.php");
     }
     function verPostulantes(){
       $("#lacaja").load("postulantes.php?id="+pID);

@@ -29,24 +29,6 @@ function localidadesFuncion(porDefecto){
     $("#ciudades").prop("disabled",true);
   }
 }
-function cargarCiudad(elegida){
-  $('#provincias').html("");
-  $('#ciudades').html("");
-  $.get("php/selects.php?select=provincias", function(datos){
-    var jDatos= JSON.parse(datos);
-    for (var x in jDatos) {
-      $('#provincias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
-    }
-  });
-  $.get("php/selects.php?select=ciudad&ciu="+elegida, function(datos){
-    var jDatos= JSON.parse(datos);
-    $("#provincias").val( jDatos[0] );
-    for (var x=1 ; x<jDatos.length ; x++ ) {
-      $('#ciudades').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
-    }
-  });
-  $("#ciudades").val(elegida);
-}
 function cargarCategorias(porDefecto){
   $('#categorias').html( $('<option>', {value: porDefecto, text: porDefecto}) );
   $.get("php/selects.php?select=categorias", function(datos){

@@ -6,7 +6,14 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
   <script>
-    var pID=<?php echo $_POST["ID"]; ?>;
+    var pID;
+    $.ajax({ url: "php/buscarCookie.php?nombre=modificarGauchada", type: 'get',
+       dataType: 'html',
+       async: false,
+       success: function(resultado) {
+         pID=resultado;
+       }
+    });
     $(document).ready(function(){
       inicializar();
 
@@ -15,6 +22,7 @@
       });
     });
     function inicializar(){
+      $.post("php/guardarCookie.php?nombre=modificarGauchada&valor="+pID);
       cargarCategorias('');
       limitarFecha();
       $.get("php/datosDeLaPublicacion.php?ID="+pID, function(datos){
@@ -23,7 +31,8 @@
         $("#categorias").val(jDatos.cat);
         $("#descripcion").val(jDatos.desc);
         $("#fecha").val(jDatos.fechaOriginal);
-        cargarCiudad(jDatos.ciu);
+        cargarProvincias("");
+        $("#provincias").val(jDatos.prov);
       });
       $.get("php/buscarCookie.php?nombre=respuesta", function (resultado, status){
         if (resultado!="false") {
@@ -60,7 +69,7 @@
             <div class="alert col-md-10 hidden text-center" id="alertaForm">
               <strong id="alertaTxt"></strong>
             </div>
-            <form class="form-horizontal" action="" method="POST" id="nuevaForm" enctype="multipart/form-data">
+            <form class="form-horizontal" action="php/modificarPublicacion.php" method="POST" id="nuevaForm" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-md-10">
                   <div class="form-group">
@@ -118,7 +127,7 @@
               <div class="row">
                 <div class="col-sm-offset-5 col-sm-3">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-default" disabled>Confirmar</button>
+                    <button type="submit" class="btn btn-default">Confirmar</button>
                   </div>
                 </div>
               </div>

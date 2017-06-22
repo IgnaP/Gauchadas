@@ -19,7 +19,9 @@
         $("#imagenPerfil").prop("src", "imagenes/"+jDatos.imagen);
       }
       barRep(jDatos.pRep);
+      funcionCreditos(jDatos.creditos);
     });
+    funcionInformacion();
   });
   function barRep(rep){
     $("#barRep").text(rep);
@@ -48,6 +50,31 @@
       $("#barRep").prop({"aria-valuenow": "9", "style":"width: 9%"});
     }
   };
+  function funcionCreditos(creditos){
+    $("#infoCreditos").text(creditos);
+    if (creditos>0) {
+      $("#infoCreditos").addClass("text-success");
+    } else {
+      $("#infoCreditos").addClass("text-danger");
+    }
+  }
+  function funcionInformacion(){
+    $(".contenido").text("Contenido");
+    
+  }
+  function funcionCalificacionesDadas(){
+    cambiarPanel("calificacionesDadas");
+  }
+  function funcionCalificacionesRecividas(){
+    cambiarPanel("calificacionesRecividas");
+  }
+  function funcionMisPostulaciones(){
+    cambiarPanel("misPostulaciones");
+  }
+  function cambiarPanel(panel){
+    $(".contenido").prop("hidden",true);
+    $("#"+panel).prop("hidden",false);
+  }
   </script>
 </head>
 <body>
@@ -70,13 +97,48 @@
           <div class="progress-bar" role="progressbar" aria-valuemin="10" aria-valuemax="100" id="barRep"></div>
         </div>
       </div>
+      <div class="separar">
+        <div class="row">
+          <b class="col-sm-4">Creditos: </b>
+          <div class="col-sm-8"><p id="infoCreditos" class="text-left"></p></div>
+        </div>
+      </div>
       <div class="col-sm-12">
-        <button type="button" name="button" class="btn btn-default center-block" onclick="cargarPagina('miCuenta.php')">Editar perfil</button>
+        <div class="form-group">
+          <button type="button" name="button" class="btn btn-default center-block" onclick="cargarPagina('miCuenta.php')">Editar perfil</button>
+        </div>
       </div>
     </div>
     <div class="col-md-7 col-md-offset-1 transparente alturaminima">
-      <h3 class="text-center">Links</h3>
-      <div class="" id="historialDiv">
+      <h3 class="text-center separar2">Informacion</h3>
+      <div class="conteiner-fluid" id="historialDiv">
+        <div class="panel panel-primary" onclick="funcionCalificacionesDadas()">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-sm-11"><b>Calificaciones dadas</b></div>
+              <div class="col-sm-1"><span class="caret"></span></div>
+            </div>
+          </div>
+          <div class="panel-body contenido" hidden id="calificacionesDadas"></div>
+        </div>
+        <div class="panel panel-primary" onclick="funcionCalificacionesRecividas()">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-sm-11"><b>Calificaciones recibidas</b></div>
+              <div class="col-sm-1"><span class="caret"></span></div>
+            </div>
+          </div>
+          <div class="panel-body contenido" hidden id="calificacionesRecividas"></div>
+        </div>
+        <div class="panel panel-primary" onclick="funcionMisPostulaciones()">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-sm-11"><b>Mis postulaciones</b></div>
+              <div class="col-sm-1"><span class="caret"></span></div>
+            </div>
+          </div>
+          <div class="panel-body contenido" hidden id="misPostulaciones"></div>
+        </div>
 
       </div>
     </div>
