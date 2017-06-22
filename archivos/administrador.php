@@ -10,8 +10,95 @@
 
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/miScrips.js"></script>
+  <script>
+    $(document).ready(function(){
+      marcarPestaña("#pestgauchadas");
+      $("#publicaciones").load("publicaciones.php");
+
+      $("#filtrarForm").submit(function(){
+        $("#lacaja").load("publicaciones.php", {"tit": $("#titulo").val(), "cat": $("#categorias").val(), "prov": $("#provincias").val(), "ciu": $("#ciudades").val()});
+        return false;
+      });
+      cargarProvincias('Todas');
+      cargarCategorias('Todas');
+    });
+  </script>
 </head>
 <body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand">
+          <img src="css/Logo UnaGauchada.png" alt="Brand" style="height:50px">
+        </a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="borde"><strong class="navbar-text tituloDeLaNavbar">Una Gauchada</strong></li>
+        <li id="pestgauchadas"><a href="administrador.php">Gauchadas</a></li>
+        <!--<li id="pestMG"><a onclick="cargarPagina('misGauchadas.php')" class="puntero">Informe ganancias</a></li>
+        <li id="pestNG"><a onclick="cargarPagina('nuevaGauchada.php')" class="puntero">Informe usuarios</a></li>
+        <li id="pestComprar"><a onclick="cargarPagina('creditos.php')" class="puntero">Categorias</a></li> -->
+        <li id="pestComprar"><a onclick="cargarPagina('reputaciones.php')" class="puntero">Reputaciones</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li onclick="" id="pestperfil"><a class="puntero">Perfil</a></li>
+            <li onclick="" id="pestMiCuenta"><a class="puntero">Mi cuenta</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="php/cerrarSesion.php">Cerrar sesion <span class="glyphicon glyphicon-log-out"></span></a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="row">
+    <div class="col-md-2 filtros alturaminima" id="lado">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <h3>Filtros</h3>
+          <form class="" action="" method="post" id="filtrarForm">
+            <div class="separar">
+              <label for="titulo">Titulo</label>
+              <input type="text" class="form-control" placeholder="Buscar" id="titulo">
+            </div>
+            <label for="ciudades">Provincias</label>
+            <select class="form-control" name="provincias" id="provincias" onchange="localidadesFuncion('Todas')"></select>
+            <label for="ciudades">Ciudades</label>
+            <select class="form-control" name="ciudades" id="ciudades" disabled>
+              <option value="Todas">Todas</option>
+            </select>
+            <div class="separar">
+              <label for="categorias">Categorias</label>
+              <select class="form-control" name="categorias" id="categorias"></select>
+            </div>
+            <div class="row separar">
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <button type="submit" class="btn btn-default" style="width:130px">Filtrar</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-3">
+                  <button type="reset" class="btn btn-default">Reset</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7 col-md-offset-1 transparente alturaminima" id="lacaja">
+      <h3 class="text-center">Gauchadas</h3>
+      <div class="container-fluid" id="publicaciones">
+
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

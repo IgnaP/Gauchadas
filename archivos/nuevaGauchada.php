@@ -60,7 +60,7 @@
           async: false,
           success: function(datos) {
             var jDatos= JSON.parse(datos);
-            if (jDatos.creditos>0) {
+            if (jDatos.creditos > 0) {
               $("#creditosDiv").addClass('alert-success');
               $("#creditosDiv").removeClass('alert-danger');
               $("#creditosTxt").text("Creditos: "+jDatos.creditos);
@@ -77,8 +77,26 @@
        return result;
     }
     function noDebeCalificacion(){
-      return true;
-    }
+      var result = false;
+      $.ajax({ url: "php/datosDelUsuario.php?datos=devolver", type: 'get',
+         dataType: 'html',
+         async: false,
+         success: function(datos) {
+           var jDatos= JSON.parse(datos);
+           if (jDatos.caliPendiente<1) {
+             $("#creditosDiv").addClass('alert-success');
+             $("#creditosDiv").removeClass('alert-danger');
+             $("#creditosTxt").text("Creditos: "+jDatos.creditos);
+             result= true;
+           } else {
+             $("#creditosDiv").addClass('alert-danger');
+             $("#creditosDiv").removeClass('alert-success');
+             $("#creditosTxt").text("Debe la calificacion de un usuario");
+           }
+         }
+       });
+       return result;
+     }
   </script>
 </head>
 <body>
