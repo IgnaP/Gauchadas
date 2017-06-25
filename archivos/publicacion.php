@@ -82,30 +82,34 @@
   function cargarPreguntas(){
     $.get("php/publicacionValidar.php?cargar="+pID, function(datos){
       var jDatos= JSON.parse(datos);
-      for (var x in jDatos) {
-        var user= $("<b></b>").append(jDatos[x][3]+" - ");
-        if (jDatos[x][3]==usr) {
-          var color= $("<span></span>").text(jDatos[x][3]).addClass("letraAzul");
-          user= $("<b></b>").append(color," - ");
-        }
-        var crearPreg= $("<p></p>").append(user,jDatos[x][1]);
-        var crearResp= "";
-        if (jDatos[x][2]=="") {
-          if (dueño==usr) {
-            crearResp= $("<a></a>").addClass("puntero botonResp").text("Responder").attr("onclick","eventoResponder(this,"+jDatos[x][0]+")");
+      if (jDatos=="") {
+        $("#cajaPreguntas").html("<div></div>").addClass("jumbotron").append("<b>No hay preguntas</b>").addClass("text-center");
+      } else {
+        for (var x in jDatos) {
+          var user= $("<b></b>").append(jDatos[x][3]+" - ");
+          if (jDatos[x][3]==usr) {
+            var color= $("<span></span>").text(jDatos[x][3]).addClass("letraAzul");
+            user= $("<b></b>").append(color," - ");
           }
-        } else {
-          var negrita= $("<b></b>").append(dueño+" - ");
-          if (dueño==usr) {
-            var color= $("<span></span>").text(dueño).addClass("letraAzul");
-            negrita= $("<b></b>").append(color," - ");
+          var crearPreg= $("<p></p>").append(user,jDatos[x][1]);
+          var crearResp= "";
+          if (jDatos[x][2]=="") {
+            if (dueño==usr) {
+              crearResp= $("<a></a>").addClass("puntero botonResp").text("Responder").attr("onclick","eventoResponder(this,"+jDatos[x][0]+")");
+            }
+          } else {
+            var negrita= $("<b></b>").append(dueño+" - ");
+            if (dueño==usr) {
+              var color= $("<span></span>").text(dueño).addClass("letraAzul");
+              negrita= $("<b></b>").append(color," - ");
+            }
+            crearResp= $("<p></p>").append(negrita,jDatos[x][2]);
           }
-          crearResp= $("<p></p>").append(negrita,jDatos[x][2]);
+          var crearB= $("<div class='col-md-11 col-md-offset-1'></div>").append(crearResp);
+          var crearA= $("<div class='row'></div>").append(crearB);
+          var crearDiv= $("<div class='separar comentDiv'></div>").append(crearPreg,crearA);
+          $("#cajaPreguntas").append(crearDiv);
         }
-        var crearB= $("<div class='col-md-11 col-md-offset-1'></div>").append(crearResp);
-        var crearA= $("<div class='row'></div>").append(crearB);
-        var crearDiv= $("<div class='separar comentDiv'></div>").append(crearPreg,crearA);
-        $("#cajaPreguntas").append(crearDiv);
       }
     });
   }

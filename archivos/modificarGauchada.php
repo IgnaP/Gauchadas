@@ -33,6 +33,12 @@
         $("#fecha").val(jDatos.fechaOriginal);
         cargarProvincias("");
         $("#provincias").val(jDatos.prov);
+
+        if (jDatos.imagen=="") {
+          $("#imagen").prop("src", "css/Logo UnaGauchada.png");
+        } else {
+          $("#imagen").prop("src", "imagenes/"+jDatos.imagen);
+        }
       });
       $.get("php/buscarCookie.php?nombre=respuesta", function (resultado, status){
         if (resultado!="false") {
@@ -119,8 +125,16 @@
               <div class="row">
                 <div class="col-md-10">
                   <div class="form-group">
-                    <label for="imagen">Agregue una imagen (opcional)</label>
-                    <input type="file" accept="image/jpeg,image/png,image/jpg" class="esconderAlerta" name="imagen" id="imagen">
+                    <label for="imagen">Cambiar imagen</label>
+                    <p class="text-center">Actual</p>
+                    <img style="max-width:300px;max-height:300px;" class="center-block" id="imagen">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-10">
+                  <div class="form-group">
+                    <input type="file" accept="image/jpeg,image/png,image/jpg" class="esconderAlerta center-block" name="imagen" id="imagen">
                   </div>
                 </div>
               </div>
