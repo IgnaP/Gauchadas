@@ -170,6 +170,7 @@
             <img style="max-width:500px;max-height:500px;" class="center-block" id="imagen">
             <div class="row separar">
               <div class="col-md-10">
+                <label class="label label-primary" id="provincia"></label>
                 <label class="label label-primary" id="ciudad"></label>
                 <label class="label label-info" id="categoria"></label>
               </div>
