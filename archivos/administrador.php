@@ -14,12 +14,14 @@
   <script>
     $(document).ready(function(){
       marcarPestaña("#pestgauchadas");
-      $("#publicaciones").load("publicaciones.php");
-
-      $("#filtrarForm").submit(function(){
-        $("#lacaja").load("publicaciones.php", {"tit": $("#titulo").val(), "cat": $("#categorias").val(), "prov": $("#provincias").val(), "ciu": $("#ciudades").val()});
+      $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
+        var jDatos= JSON.parse(datos);
+      	$("#publicaciones").load("publicaciones.php",{"adm": true});
+     	$("#filtrarForm").submit(function(){
+        $("#lacaja").load("publicaciones.php", {"adm": true, "tit": $("#titulo").val(), "cat": $("#categorias").val(), "prov": $("#provincias").val(), "ciu": $("#ciudades").val()});
         return false;
       });
+  	  });
       cargarProvincias('Todas');
       cargarCategorias('Todas');
     });

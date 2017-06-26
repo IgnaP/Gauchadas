@@ -12,10 +12,15 @@
     ORDER BY `Activa` DESC, `Fecha_publicacion` DESC";
   } else {
 //  TODAS LAS GAUCHADAS ACTIVAS
-    $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID))";
-    $sqlWhere ="WHERE `Activa`='1'";
-    $sqlGroup = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC, `Fecha_publicacion` DESC";
-
+    if( isset($_POST["adm"])){ // SI ES ADMIN MUESTRA TODAS
+      $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID))";
+      $sqlWhere ="WHERE (`Activa` ='1' OR `Activa` ='0') ";
+      $sqlGroup = "GROUP BY publicaciones.ID ORDER BY `Activa` DESC, `Fecha_publicacion` DESC";
+    } else{
+        $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID))";
+        $sqlWhere ="WHERE `Activa`='1'";
+        $sqlGroup = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC, `Fecha_publicacion` DESC";  
+    }
     if (isset($_POST["tit"])) {
       $sqlWhere=$sqlWhere." AND Nombre LIKE '%".$_POST["tit"]."%'";
     }
@@ -84,21 +89,17 @@
         $ciuID=$row[2];
         $catID=$row[4];
         $fecha=date("d/m/Y", strtotime($row[3]));
-        $sql2="SELECT * FROM `localidades` WHERE `id`='$ciuID'";
+        $sql2="SELECT `localidad` FROM `localidades` WHERE `id`='$ciuID'";
         $resultado=mysqli_query($conexion,$sql2);
         $fila = mysqli_fetch_row($resultado);
-        $ciu=$fila[2];
-        $provID=$fila[1];
-        $sql2="SELECT `provincia` FROM `provincias` WHERE `id`='$provID'";
-        $resultado=mysqli_query($conexion,$sql2);
-        $fila = mysqli_fetch_row($resultado);
-        $prov=$fila[0];
+        $ciu=$fila[0];
         $sql2="SELECT `Nombre` FROM `categorias` WHERE `ID`='$catID'";
         $resultado=mysqli_query($conexion,$sql2);
         $fila = mysqli_fetch_row($resultado);
         $cat=$fila[0];
         $pregPend=false;
         $resPend=false;
+        $debe=false;
         if ($logueado) {
           if ($usrID==$row[8]) {
             $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`='' AND `Publicacion`='$pID'";
@@ -106,6 +107,16 @@
             $num_filas=mysqli_num_rows($resultado);
             if ($num_filas!=0) {
               $pregPend=true;
+            }
+            //ver si debe una calificacion en publicación
+            $sql = "SELECT `comentario` FROM `calificaciones` WHERE `ID_publicacion` = '$pID'";
+            $result1 = mysqli_query($conexion,$sql);
+            $cant_filas = mysqli_num_rows($result1);
+            if($cant_filas > 0){
+              $datos = mysqli_fetch_row($result1);
+              if(is_null($datos[0])){
+                $debe = true;
+              }
             }
           }else {
             $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`!='' AND `Publicacion`='$pID' AND `Vista`='0' AND `UsuarioID`='$usrID'";
@@ -141,12 +152,14 @@
                 <label class="label label-warning">Respuestas</label>
   <?php             }
                 } ?>
+  <?php         if($debe){  ?>
+                <label class="label label-success">Calificación pendiente</label>
+  <?php         } ?>
             </div>
           </div>
           <img src="<?php echo $rutaImagen; ?>" style="max-width:300px;max-height:300px;" class="center-block">
           <div class="row separar">
             <div class="col-md-10">
-              <label class="label label-primary"><?php echo $prov; ?></label>
               <label class="label label-primary"><?php echo $ciu; ?></label>
               <label class="label label-info"><?php echo $cat; ?></label>
             </div>
