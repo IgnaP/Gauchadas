@@ -14,7 +14,14 @@
   <script>
     $.get("php/estadoDeSesion.php", function (estado, status){
       if (estado=="true") {
-        window.location = "sesion.php";
+        $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
+          var jDatos= JSON.parse(datos);
+          if(jDatos.admin == 1){
+            window.location = "administrador.php";
+          } else {
+            window.location = "sesion.php";
+          }
+        });
       } else {
         $.get("php/buscarCookie.php?nombre=pagina", function (resultado, status){
           if (resultado=="false") {
