@@ -40,7 +40,17 @@
             }
           });
         } else {
-          $(".noDueño").prop('hidden', false);
+          $.get("php/datosDelUsuario.php?datos=devolver", function(datoss){
+          var jDatosAdm= JSON.parse(datoss);
+          if(jDatosAdm.admin == 1){
+            $(".admin").prop('hidden',false);
+            if(jDatos.activa == 0){
+              $(".admin #botonDespublicaradm").prop('disabled',true);
+            }
+          } else {
+            $(".noDueño").prop('hidden', false);
+          }
+        });
         }
       }
       if (jDatos.postulado) {
@@ -155,6 +165,9 @@
   $("#botonDespublicar").on("click", function(){
     despublicarGauchada(pID);
   });
+  $("#botonDespublicaradm").on("click", function(){
+    despublicarGauchadaAdm(pID);
+  });
 
 </script>
 </head>
@@ -191,6 +204,9 @@
             </div>
             <div hidden class="noDueño">
               <button type="button" name="button" class="btn btn-default" onclick="postularseMostrar(true)" id="postularseBot">Postularse</button>
+            </div>
+            <div hidden class="admin">
+              <button type="button" name="button" class="btn btn-default" id="botonDespublicaradm">Despublicar gauchada</button>
             </div>
           </div>
         </div>

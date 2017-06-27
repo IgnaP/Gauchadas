@@ -188,3 +188,17 @@ function despublicarGauchada(pID){
     }
   });
 }
+
+function despublicarGauchadaAdm(pID){
+      var postulantes = 1;
+      $.confirm({
+      title: '',
+      content: 'La gauchada ha sido despublicada',
+      buttons: {
+        Aceptar: function () {
+            $.get("despublicarGauchada.php",{pID: pID, tiene: postulantes});
+            volverAPublicacion(pID);
+        }
+      }
+      });
+}
