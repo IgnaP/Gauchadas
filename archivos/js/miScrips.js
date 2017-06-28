@@ -159,32 +159,68 @@ function calificar(pID){
 }
 
 function despublicarGauchada(pID){
-  $.get("tienePostulantes.php",{pID: pID}, function(datos){
-    var postulantes;
-    if(!datos){
-      postulantes = 0;
+  $.confirm({
+      title: 'Confirmación despublicar',
+      content: 'La gauchada será despublicada',
+      buttons: {
+        Aceptar: function () {
+          $.get("tienePostulantes.php",{pID: pID}, function(datos){
+            var postulantes;
+            if(!datos){
+            postulantes = 0;
+            $.confirm({
+              title: 'Gauchada despublicada',
+              content: 'Su gauchada ha sido despublicada. </br> Se le devolverá el crédito de la publicación',
+              buttons: {
+                Aceptar: function () {
+                  $.get("despublicarGauchada.php",{pID: pID, tiene: postulantes});
+                  volverAPublicacion(pID);
+                }
+              }
+            });
+            } else {
+              postulantes = 1;
+              $.confirm({
+                title: 'Gauchada despublicada',
+                content: 'Su gauchada ha sido despublicada. </br> <strong>No</strong> se le devolverá el crédito de la publicación',
+                buttons: {
+                  Aceptar: function () {
+                    $.get("despublicarGauchada.php",{pID: pID, tiene: postulantes});
+                    volverAPublicacion(pID);
+                  }
+                }
+              });
+            }
+          });
+        },
+        Cancelar: function(){}
+      }
+      });
+}
+
+function despublicarGauchadaAdm(pID){
+      var postulantes = 1;
       $.confirm({
-      title: 'Gauchada despublicada',
-      content: 'Su gauchada ha sido despublicada. </br> Se le devolverá el crédito de la publicación',
+      title: 'Confirmación despublicar',
+      content: 'La gauchada será despublicada',
       buttons: {
         Aceptar: function () {
             $.get("despublicarGauchada.php",{pID: pID, tiene: postulantes});
-            volverAPublicacion(pID);
-        }
+            cartelDespublicar(pID);
+        },
+        Cancelar: function(){}
       }
       });
-    } else {
-      postulantes = 1;
-      $.confirm({
-      title: 'Gauchada despublicada',
-      content: 'Su gauchada ha sido despublicada. </br> <strong>No</strong> se le devolverá el crédito de la publicación',
-      buttons: {
-        Aceptar: function () {
-            $.get("despublicarGauchada.php",{pID: pID, tiene: postulantes});
-            volverAPublicacion(pID);
-        }
-      }
-      });
-    }
-  });
+}
+
+function cartelDespublicar(pID){
+  $.confirm({
+              title: '',
+              content: 'La gauchada ha sido despublicada',
+              buttons: {
+                Aceptar: function () {
+                  volverAPublicacion(pID);
+                }
+              }
+            });
 }

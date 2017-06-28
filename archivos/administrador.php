@@ -27,7 +27,29 @@
   	  });
       cargarProvincias('Todas');
       cargarCategorias('Todas');
+      $.get("php/estadoDeSesion.php", function (estado, status){
+        if (estado=="false") {
+          window.location = "index.php";
+        } else {
+          nombreDelUsuario();
+         	$.get("php/buscarCookie.php?nombre=pagina", function (resultado, status){
+            if (resultado=="false") {
+              cargarPagina("administrador.php");
+            } else {
+              cargarPagina(resultado);
+            }
+          });
+        }
+      });
     });
+    $(document).on('click','.publicacionDiv', function(){
+     var pID= $("label:first", this).text();
+     cargarPublicacion(pID);
+    });
+    function cargarPublicacion(pID){
+     $("li").removeClass("active");
+     $("#lacaja").load("publicacion.php",{"ID":pID});
+    }
   </script>
 </head>
 <body>
@@ -48,10 +70,10 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span> <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span> Admin <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li onclick="" id="pestperfil"><a class="puntero">Perfil</a></li>
-            <li onclick="" id="pestMiCuenta"><a class="puntero">Mi cuenta</a></li>
+            <!--<li onclick="" id="pestperfil"><a class="puntero">Perfil</a></li>
+            <li onclick="" id="pestMiCuenta"><a class="puntero">Mi cuenta</a></li>-->
             <li role="separator" class="divider"></li>
             <li><a href="php/cerrarSesion.php">Cerrar sesion <span class="glyphicon glyphicon-log-out"></span></a></li>
           </ul>
