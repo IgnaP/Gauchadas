@@ -24,6 +24,7 @@
     function inicializar(){
       $.post("php/guardarCookie.php?nombre=modificarGauchada&valor="+pID);
       cargarCategorias('');
+      cargarProvincias("");
       limitarFecha();
       $.get("php/datosDeLaPublicacion.php?ID="+pID, function(datos){
         var jDatos= JSON.parse(datos);
@@ -31,9 +32,9 @@
         $("#categorias").val(jDatos.cat);
         $("#descripcion").val(jDatos.desc);
         $("#fecha").val(jDatos.fechaOriginal);
-        cargarProvincias("");
         $("#provincias").val(jDatos.prov);
-
+        localidadesFuncion("");
+        $("#ciudades").val(jDatos.ciu);
         if (jDatos.imagen=="") {
           $("#imagen").prop("src", "css/Logo UnaGauchada.png");
         } else {
@@ -94,9 +95,7 @@
                 <div class="col-md-4 col-md-offset-1">
                   <div class="form-group">
                     <label for="ciudades">Ciudad</label>
-                    <select class="form-control esconderAlerta" name="ciudad" id="ciudades" required>
-                      <option value=""></option>
-                    </select>
+                    <select class="form-control esconderAlerta" name="ciudad" id="ciudades" required></select>
                   </div>
                 </div>
               </div>

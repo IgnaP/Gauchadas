@@ -1,12 +1,3 @@
-<?php
-require("php/conexionBD.php");
-conectarse($conexion);
-$sql="SELECT * FROM `reputacion` WHERE `vigente`=0 ORDER BY `Puntos`";
-$resultado=mysqli_query($conexion,$sql);
-if(!$resultado){
-  echo 'No se pudo realizar la consulta:'.mysql_error();
-};
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,61 +5,67 @@ if(!$resultado){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
-  <link href="css/jquery-confirm.min.css" rel="stylesheet">
-  <link href="css/jquery-confirm.css" rel="stylesheet">
-  <script src="js/miScrips.js"></script>
-  <script src="js/jquery.js"></script>
-  <script src="js/jquery-confirm.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
 </head>
 <script>
-function cambiarAlertaRepu(tf, txt){
-  cargarPagina("reputaciones.php");
-  cambiarAlerta(tf,txt);
+$(document).ready(function(){
+  $.get("php/buscarCookie.php?nombre=respuestaEli", function (resultado, status){
+    if (resultado!="false") {
+      if (resultado == 't') {
+        cambiarAlerta(true, "La reputacion se ha borrado correctamente.");
+      } else {
+        cambiarAlerta(false, resultado);
+      }
+    }
+  });
+  $.get("php/buscarCookie.php?nombre=respuestaAlta", function (resultado, status){
+    if (resultado!="false") {
+      if (resultado == 't') {
+        cambiarAlerta(true, "La reputacion se ha creado correctamente.");
+      } else {
+        cambiarAlerta(false, resultado);
+      }
+    }
+  });
+  $.get("php/buscarCookie.php?nombre=respuestaModi", function (resultado, status){
+    if (resultado!="false") {
+      if (resultado == 't') {
+        cambiarAlerta(true, "La reputacion se ha modificado correctamente.");
+      } else {
+        cambiarAlerta(false, resultado);
+      }
+    }
+  });
+})
 
-}
 function confirmarEliminacion(nombreRepu){
-  var funcion='eliminar';
   $.confirm({
     title: 'Eliminacion de reputaciones',
     content: 'Usted eliminara la reputacion '+nombreRepu,
     buttons: {
         Aceptar: function () {
-              $.get("abm_reputaciones.php",{nombreRepu,funcion}, function(datos){
-                var datosJ= JSON.parse(datos);
-                if(datosJ.borrado=='t'){
-                  cambiarAlertaRepu(true, "Se ha eliminado la reputacion correctamente");
-                } else {
-                    cambiarAlerta(false, "No se ha podido realizar la eliminacion debido a que la reputacion seleccionada no se encuentra en los extremos");
-              }
+            $.post("abm_reputaciones.php" , {nombreRepu: nombreRepu , funcion: 'eliminar'},function functionName() {
+                cargarPagina('reputaciones.php');
             });
-  },
-        cancelar: function () {
 
-      },
-    },
+  },
+        cancelar: function () {    },
+    }
   });
 }
 
-function confirmarModificacion(nombreRepu){
-  var funcion='modificar';
+function confirmarModificacion(nombreRepu,puntajeRepu){
   $.confirm({
     title: 'Modificacion de la reputacion '+ nombreRepu,
     content: '' +
     '<form action="calificar.php" class="formulario" method="post">' +
     '<div class="form-group">' +
     '<label>Nuevo nombre:</label></br>' +
-    '<textarea name="nombre" class="nombre" rows = "1" cols ="30" maxlength="50">' +
-    '</textarea>' +
+    '<input type= "text" name="nombre" class="nombre" id="nombre" required autofocus pattern="[a-zA-Záéíóú ]{3,20}" title="De 3 a 30 letras o numeros" placeholder=' + nombreRepu + '>'+
     '</div>' +
     '<div class="form-group">' +
-    '<label>Nuevo rango de puntaje:</label></br>' +
-    '<label> Desde: &nbsp;</label>'+
-    '<textarea name="puntaje1" class="puntaje1" rows = "1" cols ="10" maxlength="10">'+
-    '</textarea></br>'+
-    '<label> hasta: &nbsp; </label>'+
-    '<textarea name="puntaje2" class="puntaje2" rows = "1" cols ="10" maxlength="10">' +
-    '</textarea>' +
+    '<label> A partir de: &nbsp;</label>'+
+    '<input type="number" name="puntaje1" class="puntaje1" id="puntaje1" maxlength="10" placeholder='+ puntajeRepu +'>'+
+    '</br>'+
     '</div>'+
     '</form>',
     buttons: {
@@ -78,20 +75,23 @@ function confirmarModificacion(nombreRepu){
         action: function() {
           var nombre=this.$content.find('.nombre').val();
           var puntaje1= this.$content.find('.puntaje1').val();
-          var puntaje2= this.$content.find('.puntaje2').val();
-          if(!puntaje1 && !nombre && !puntaje2){
+          if(!puntaje1 && !nombre){
             $.alert('Debe realizar alguna modificacion.');
             return false;
-          }
-      }
-    },
-    cancelar: function(){}
-  },
+          }else{
+            $.post("abm_reputaciones.php",{nombre:nombre , puntaje1: puntaje1 , funcion: 'modificar',nombreRepu: nombreRepu, puntajeRepu: puntajeRepu},function functionName() {
+              cargarPagina('reputaciones.php');
+          });
+        }
+    }
+      },
+    cancelar: function(){    },
+
+  }
 });
 }
 
 function creacion(){
-  var funcion='crear';
   $.confirm({
     title: 'Crear una nueva reputacion',
     content: '' +
@@ -112,22 +112,15 @@ function creacion(){
         text: 'Crear',
         btnClass: 'btn-blue',
         action: function() {
-          var nombre=this.$content.find('.nombre').val();
-          var puntaje1= this.$content.find('.puntaje1').val();
-          if(!puntaje1 | !nombre){
+          var nombreRepu=this.$content.find('.nombre').val();
+          var puntaje= this.$content.find('.puntaje1').val();
+          if(!puntaje | !nombreRepu){
             $.alert('Debe completar todos los campos.');
             return false;
           } else{
-            $.get("abm_reputaciones.php",{nombre,puntaje1,funcion}, function(datos){
-              var datosJ= JSON.parse(datos);
-                if (datosJ.Existe > 0) {
-                  cambiarAlertaRepu(false, "El nombre ingresado ya pertenece a una reputacion actual.");
-                }else if(datosJ.p1Valido=='f') {
-                  cambiarAlerta(false, "El puntaje ingresado se encuentra en medio de las reputaciones existentes.");
-                }else{
-                  cambiarAlerta(true, "Se ha agregado la reputacion exitosamente.");
-                }
-  });
+            $.post("abm_reputaciones.php",{nombre:nombreRepu , puntaje1: puntaje , funcion: 'crear'},function functionName() {
+                cargarPagina('reputaciones.php');
+            });
           }
       }
     },
@@ -156,6 +149,10 @@ function creacion(){
       <th class="text-center" colspan="4"> Opciones </th>
     </tr>
    <?php
+   require("php/conexionBD.php");
+   conectarse($conexion);
+   $sql="SELECT * FROM `reputacion` WHERE `vigente`= 0 ORDER BY `Puntos`";
+   $resultado=mysqli_query($conexion,$sql);
       while($datos=mysqli_fetch_row($resultado)){?>
       <tr class= "text-center" >
         <td> <?php echo $datos[1]; ?> </td>
@@ -165,7 +162,7 @@ function creacion(){
                     else {
                       echo '+', $datos[2];
                     }?>  </td>
-                    <td class="text-center" ><button type="button" class="btn btn-default" onclick="confirmarModificacion(<?php echo "'".$datos[1]."'"?>)"> Modificar</td>
+                    <td class="text-center" ><button type="button" class="btn btn-default" onclick="confirmarModificacion(<?php echo "'".$datos[1]."'"?>,<?php echo "'".$datos[2]."'"?>)"> Modificar</td>
                     <td class="text-center " ><button type="button" class="btn btn-default" onclick="confirmarEliminacion(<?php echo "'".$datos[1]."'"?>)">  Eliminar </td>
                   </tr>
 <?php } ?>
