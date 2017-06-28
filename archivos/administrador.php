@@ -15,41 +15,16 @@
   <script src="js/jquery-confirm.min.js"></script>
   <script src="js/miScrips.js"></script>
   <script>
-    $(document).ready(function(){
-      marcarPestaña("#pestgauchadas");
-      $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
-        var jDatos= JSON.parse(datos);
-      	$("#publicaciones").load("publicaciones.php",{"adm": true});
-     	$("#filtrarForm").submit(function(){
-        $("#lacaja").load("publicaciones.php", {"adm": true, "tit": $("#titulo").val(), "cat": $("#categorias").val(), "prov": $("#provincias").val(), "ciu": $("#ciudades").val()});
-        return false;
-      });
-  	  });
-      cargarProvincias('Todas');
-      cargarCategorias('Todas');
-      $.get("php/estadoDeSesion.php", function (estado, status){
-        if (estado=="false") {
-          window.location = "index.php";
-        } else {
-          nombreDelUsuario();
-         	$.get("php/buscarCookie.php?nombre=pagina", function (resultado, status){
-            if (resultado=="false") {
-              cargarPagina("administrador.php");
-            } else {
-              cargarPagina(resultado);
+  $(document).ready(function(){
+    $.get("php/estadoDeSesion.php", function (estado, status){
+      if (estado=="false") {
+        window.location = "index.php";
+      } else {
+              cargarPagina('gauchadas.php');
             }
-          });
-        }
-      });
+      
     });
-    $(document).on('click','.publicacionDiv', function(){
-     var pID= $("label:first", this).text();
-     cargarPublicacion(pID);
-    });
-    function cargarPublicacion(pID){
-     $("li").removeClass("active");
-     $("#lacaja").load("publicacion.php",{"ID":pID});
-    }
+  });
   </script>
 </head>
 <body>
@@ -81,50 +56,8 @@
       </ul>
     </div>
   </nav>
-  <div class="row">
-    <div class="col-md-2 filtros alturaminima" id="lado">
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-          <h3>Filtros</h3>
-          <form class="" action="" method="post" id="filtrarForm">
-            <div class="separar">
-              <label for="titulo">Titulo</label>
-              <input type="text" class="form-control" placeholder="Buscar" id="titulo">
-            </div>
-            <label for="ciudades">Provincias</label>
-            <select class="form-control" name="provincias" id="provincias" onchange="localidadesFuncion('Todas')"></select>
-            <label for="ciudades">Ciudades</label>
-            <select class="form-control" name="ciudades" id="ciudades" disabled>
-              <option value="Todas">Todas</option>
-            </select>
-            <div class="separar">
-              <label for="categorias">Categorias</label>
-              <select class="form-control" name="categorias" id="categorias"></select>
-            </div>
-            <div class="row separar">
-              <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                  <button type="submit" class="btn btn-default" style="width:130px">Filtrar</button>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-3">
-                  <button type="reset" class="btn btn-default">Reset</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-7 col-md-offset-1 transparente alturaminima" id="lacaja">
-      <h3 class="text-center">Gauchadas</h3>
-      <div class="container-fluid" id="publicaciones">
+  <div class="container-fluid" id="lacaja">
 
-      </div>
-    </div>
   </div>
 
 </body>
