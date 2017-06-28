@@ -5,6 +5,22 @@ function cargarPagina(pag){
 function marcarPestaña(pest){
   $(pest).addClass("active");
 }
+function nombreDelUsuario(){
+  $.get("../php/datosDelUsuario.php?datos=devolver", function(datos){
+    var jDatos= JSON.parse(datos);
+    $("#nombreUsuario").text(jDatos.email);
+  });
+}
+function cargarPublicacion(pID){
+  $("li").removeClass("active");
+  $("#lacaja").load("publicacion.php",{"ID":pID});
+}
+
+$(document).on('click','.publicacionDiv', function(){
+  var pID= $("label:first", this).text();
+  cargarPublicacion(pID);
+});
+
 function cargarProvincias(porDefecto){
   $('#provincias').html( $('<option>', {value: porDefecto, text: porDefecto}) );
   $.get("php/selects.php?select=provincias", function(datos){

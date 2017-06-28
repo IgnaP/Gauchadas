@@ -20,27 +20,21 @@
         if (estado=="false") {
           window.location = "index.php";
         } else {
-          nombreDelUsuario();
-          $.get("php/buscarCookie.php?nombre=pagina", function (resultado, status){
-            if (resultado=="false") {
-              cargarPagina("gauchadas.php");
-            } else {
-              cargarPagina(resultado);
-            }
-          });
+          if(estado=="Admin"){
+            window.location = "administrador.php";
+          }else{
+            nombreDelUsuario();
+            $.get("php/buscarCookie.php?nombre=pagina", function (resultado, status){
+              if (resultado=="false") {
+                cargarPagina("gauchadas.php");
+              } else {
+                cargarPagina(resultado);
+              }
+            });
+          }
         }
       });
     });
-    function nombreDelUsuario(){
-      $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
-        var jDatos= JSON.parse(datos);
-        $("#nombreUsuario").text(jDatos.email);
-      });
-    }
-    function cargarPublicacion(pID){
-      $("li").removeClass("active");
-      $("#lacaja").load("publicacion.php",{"ID":pID});
-    }
     function modificarPublicacion(pID){
       $.post("php/guardarCookie.php?nombre=modificarGauchada&valor="+pID);
       $("#lacaja").load("modificarGauchada.php");
@@ -51,10 +45,6 @@
     function verDetallesPostulante(uID, pID){
      $("#lacaja").load("detallesPostulante.php?id="+uID+"&pID="+pID);
     }
-    $(document).on('click','.publicacionDiv', function(){
-      var pID= $("label:first", this).text();
-      cargarPublicacion(pID);
-    });
     function calificarPostulante(){
       calificar(pID);
     }

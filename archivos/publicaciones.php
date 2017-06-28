@@ -5,6 +5,17 @@
   $sql="UPDATE `publicaciones` SET `Activa`='0' WHERE `FechaLimite`<'$fechaActual'";
   mysqli_query($conexion, $sql);
 
+  session_start();
+  $logueado=false;
+  if ( isset($_SESSION['usuario']) ) {
+    $logueado=true;
+    $mail=$_SESSION['usuario'];
+    $sql2="SELECT `ID` FROM `usuarios` WHERE `Email`='$mail'";
+    $resultado=mysqli_query($conexion,$sql2);
+    $fila = mysqli_fetch_row($resultado);
+    $usrID=$fila[0];
+  }
+
   if ( isset( $_POST["usr"] ) ) {
 //  GAUCHADAS DE UN USUARIO (MIS GAUCHADAS)
     $usrID=$_POST["usr"];
@@ -12,14 +23,14 @@
     ORDER BY `Activa` DESC, `Fecha_publicacion` DESC";
   } else {
 //  TODAS LAS GAUCHADAS ACTIVAS
-    if( isset($_POST["adm"])){ // SI ES ADMIN MUESTRA TODAS
+    if( isset($_SESSION["tipo"]) && ($_SESSION["tipo"]=='Admin') ){ // SI ES ADMIN MUESTRA TODAS
       $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID))";
       $sqlWhere ="WHERE (`Activa` ='1' OR `Activa` ='0') ";
       $sqlGroup = "GROUP BY publicaciones.ID ORDER BY `Activa` DESC, `Fecha_publicacion` DESC";
     } else{
         $sql = "SELECT * FROM ((publicaciones INNER JOIN localidades ON (publicaciones.Ciudad=localidades.id)) LEFT JOIN postulantes ON (publicaciones.ID=postulantes.publicacionID))";
         $sqlWhere ="WHERE `Activa`='1'";
-        $sqlGroup = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC, `Fecha_publicacion` DESC";  
+        $sqlGroup = "GROUP BY publicaciones.ID ORDER BY COUNT(postulantes.ID_postulacion) ASC, `Fecha_publicacion` DESC";
     }
     if (isset($_POST["tit"])) {
       $sqlWhere=$sqlWhere." AND Nombre LIKE '%".$_POST["tit"]."%'";
@@ -63,7 +74,7 @@
 <script>
   $(document).ready(function(){
     $.get("php/estadoDeSesion.php", function (estado, status){
-      if (estado=="true") {
+      if (estado!="false") {
         $(".marca").addClass("publicacionDiv");
         $(".marcaBoton").removeClass("hidden");
       }
@@ -74,16 +85,6 @@
 <body>
   <?php
     if (mysqli_num_rows($result)>0) {
-      session_start();
-      $logueado=false;
-      if ( isset($_SESSION['usuario']) ) {
-        $logueado=true;
-        $mail=$_SESSION['usuario'];
-        $sql2="SELECT `ID` FROM `usuarios` WHERE `Email`='$mail'";
-        $resultado=mysqli_query($conexion,$sql2);
-        $fila = mysqli_fetch_row($resultado);
-        $usrID=$fila[0];
-      }
       while ($row = mysqli_fetch_row($result)) {
         $pID=$row[0];
         $ciuID=$row[2];

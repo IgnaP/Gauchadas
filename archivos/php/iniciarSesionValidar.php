@@ -18,8 +18,10 @@ if (!$conexion) {
           $_SESSION["usuario"]=$email;
           if($fila[9]=="1"){
             echo "Admin";
+            $_SESSION["tipo"]='Admin';
           } else {
             echo "Usuario";
+            $_SESSION["tipo"]='Usuario';
           }
         } else {
           echo "La cuenta ha sido BORRADA";

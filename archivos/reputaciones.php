@@ -132,7 +132,7 @@ function creacion(){
 </script>
 <body>
   <div class="row">
-<div class="container-fluid">
+<div class="transparente col-md-6 col-md-offset-3">
     <div>
       <h2 class="text-center">Reputaciones</h2>
     </div>
