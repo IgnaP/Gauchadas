@@ -103,8 +103,8 @@ function creacion(){
     '</div>' +
     '<div class="form-group">' +
     '<label> A partir de: &nbsp;</label>'+
-    '<textarea name="puntaje1" class="puntaje1" rows = "1" cols ="10" maxlength="10">'+
-    '</textarea></br>'+
+    '<input type="number" name="puntaje1" id="puntaje1" class="puntaje1" maxlength="10" >'+
+    '</br>'+
     '</div>'+
     '</form>',
     buttons: {
