@@ -22,7 +22,7 @@
       } else {
               cargarPagina('gauchadas.php');
             }
-      
+    nombreDelUsuario();
     });
   });
   </script>
@@ -45,7 +45,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span> Admin <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span>  <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <!--<li onclick="" id="pestperfil"><a class="puntero">Perfil</a></li>
             <li onclick="" id="pestMiCuenta"><a class="puntero">Mi cuenta</a></li>-->
