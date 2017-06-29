@@ -29,6 +29,15 @@
   $resultado=mysqli_query($conexion,$sql2);
   $fila = mysqli_fetch_row($resultado);
   $dueñoUsr=$fila[0];
+  //ver si la publicacion tiene postulantes
+  $sql4 = "SELECT `usuarioID` FROM `postulantes` WHERE publicacionID = '$ID'";
+  $result4 = mysqli_query($conexion, $sql4);
+  $cantFilas= mysqli_num_rows($result4);
+  if($cantFilas >0){
+    $tienePostulantes = true;
+  } else {
+    $tienePostulantes = false;
+  }
 
   $postulado=false;
   session_start();
@@ -58,7 +67,7 @@
 
   $arreglo = array('tit' => "$row[1]", 'cat' => "$cat", 'ciu' => "$ciu", 'desc' => "$row[5]",
    'owner' => "$dueñoUsr", 'usr' => "$mail", 'logueado' => "$logueado", 'fecha' => "$fecha",
-    'postulado' => "$postulado", 'imagen' => "$imagen", 'fechaOriginal' => "$fechaOriginal", 'prov' => "$prov", 'activa' => "$activa");
+    'postulado' => "$postulado", 'imagen' => "$imagen", 'fechaOriginal' => "$fechaOriginal", 'prov' => "$prov", 'activa' => "$activa", 'tienePostulantes' => "$tienePostulantes");
 
   $jDatos = json_encode($arreglo);
   echo $jDatos;
