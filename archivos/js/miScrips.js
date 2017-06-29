@@ -6,7 +6,7 @@ function marcarPestaña(pest){
   $(pest).addClass("active");
 }
 function nombreDelUsuario(){
-  $.get("../php/datosDelUsuario.php?datos=devolver", function(datos){
+  $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
     var jDatos= JSON.parse(datos);
     $("#nombreUsuario").text(jDatos.email);
   });

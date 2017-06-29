@@ -90,10 +90,15 @@
         $ciuID=$row[2];
         $catID=$row[4];
         $fecha=date("d/m/Y", strtotime($row[3]));
-        $sql2="SELECT `localidad` FROM `localidades` WHERE `id`='$ciuID'";
+        $sql2="SELECT * FROM `localidades` WHERE `id`='$ciuID'";
         $resultado=mysqli_query($conexion,$sql2);
         $fila = mysqli_fetch_row($resultado);
-        $ciu=$fila[0];
+        $ciu=$fila[2];
+        $provID=$fila[1];
+        $sql2="SELECT `provincia` FROM `provincias` WHERE `id`='$provID'";
+        $resultado=mysqli_query($conexion,$sql2);
+        $fila = mysqli_fetch_row($resultado);
+        $prov=$fila[0];
         $sql2="SELECT `Nombre` FROM `categorias` WHERE `ID`='$catID'";
         $resultado=mysqli_query($conexion,$sql2);
         $fila = mysqli_fetch_row($resultado);
@@ -161,6 +166,7 @@
           <img src="<?php echo $rutaImagen; ?>" style="max-width:300px;max-height:300px;" class="center-block">
           <div class="row separar">
             <div class="col-md-10">
+              <label class="label label-primary"><?php echo $prov; ?></label>
               <label class="label label-primary"><?php echo $ciu; ?></label>
               <label class="label label-info"><?php echo $cat; ?></label>
             </div>

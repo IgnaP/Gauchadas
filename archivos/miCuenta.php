@@ -26,6 +26,11 @@
       $("#fecha").val(jDatos.fn2);
       $("#telefono").val(jDatos.tel);
       $("#respuesta").val(jDatos.resp);
+      if (jDatos.imagen=="") {
+        $("#imagen").prop("src", "css/Logo UnaGauchada.png");
+      } else {
+        $("#imagen").prop("src", "imagenes/"+jDatos.imagen);
+      }
       pregunta=jDatos.pre;
       $.get("php/selects.php?select=preguntas", function(datos){
         var jDatos= JSON.parse(datos);
@@ -79,7 +84,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="email" class="control-label">Email</label>
-                      <input type="email" class="form-control inps" id="nMail" placeholder="Email" required pattern="[A-Za-z0-9._+-]{1,}@[a-z]{1,}.com" title="ejemplo@mail.com" name="nMail">
+                      <input type="email" class="form-control inps" id="nMail" placeholder="Email" required pattern="[A-Za-z0-9._+-]{1,}@[a-z]{1,}.com" title="ejemplo@mail.com" name="nMail" disabled>
                     </div>
                   </div>
                 </div>
@@ -140,11 +145,13 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-10">
+                  <div class="col-md-12">
                     <div class="form-group">
                       <label for="imagen">Cambiar imagen</label>
-                      <input type="file" accept="image/jpeg,image/png,image/jpg" class="inps" name="imagen" id="imagen">
+                      <p class="text-center">Actual</p>
+                      <img style="max-width:200px;max-height:200px;" class="center-block" id="imagen">
                     </div>
+                    <input type="file" accept="image/jpeg,image/png,image/jpg" class="inps" name="imagen" id="imagen">
                   </div>
                 </div>
                 <div class="row">
