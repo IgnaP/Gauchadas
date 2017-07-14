@@ -22,6 +22,7 @@
       } else {
               cargarPagina('gauchadas.php');
             }
+            nombreDelUsuario();
     });
   });
   </script>

@@ -25,6 +25,9 @@
       }
       if (jDatos.logueado) {
         if (jDatos.owner==jDatos.usr) {
+          if(jDatos.tienePostulantes){
+            $("#botonModificar").prop('disabled',true);
+          }
           $(".delDueño").prop('hidden', false);
           $.get("debeCalificacionEnPublicacion.php",{pID: pID}, function(debe){
             var jdebe = JSON.parse(debe);
