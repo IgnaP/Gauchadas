@@ -11,13 +11,9 @@ if ($conexion) {
   $filaMax=mysqli_fetch_row($resultado);
   if($funcion=="eliminar"){
       $dato=$_POST["nombreRepu"];
-      if($dato==$filaMin[1] || $dato==$filaMax[1]){
         $sql="UPDATE `reputacion` SET `vigente`= 1 WHERE `Nombre`= '$dato'";
         $resultado = mysqli_query($conexion, $sql);
         $borrado='t';
-      } else {
-        $borrado="No se ha podido borrar la reputacion porque no se encuentra en los extremos.";
-      }
       setcookie('respuestaEli', $borrado, time() + 3600, "/");
 
     }elseif ($funcion== "crear") {
@@ -56,7 +52,7 @@ if ($conexion) {
           }else{
             $puntajeValido='f';
           }
-      $sql="SELECT * FROM `reputacion` WHERE `reputacion`.`Nombre` = '$nombreNuevo'";
+      $sql="SELECT * FROM `reputacion` WHERE `reputacion`.`Nombre` = '$nombreNuevo' AND `reputacion`.`vigente`=0";
       $resultado=mysqli_query($conexion, $sql);
       $cant=mysqli_num_rows($resultado);
     }elseif ($nombreNuevo==''){
@@ -68,7 +64,7 @@ if ($conexion) {
         $cant=0;
         $nombreNuevo=$nombreViejo;
     }else{
-      $sql="SELECT * FROM `reputacion` WHERE `reputacion`.`Nombre` = '$nombreNuevo'";
+      $sql="SELECT * FROM `reputacion` WHERE `reputacion`.`Nombre` = '$nombreNuevo' AND `reputaciones`.`vigente`=0";
       $resultado=mysqli_query($conexion, $sql);
       $cant=mysqli_num_rows($resultado);
       $puntajeValido='t';

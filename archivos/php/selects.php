@@ -16,7 +16,7 @@ if ( isset($_GET["select"]) ) {
   }elseif ( $_GET["select"]=="provincias" ) {
     $sql = "SELECT `provincia` FROM `provincias`";
   }else {
-    $sql = "SELECT `Nombre` FROM `categorias`";
+    $sql = "SELECT `Nombre` FROM `categorias` WHERE `categorias`.`vigente`=1";
   }
   $result=mysqli_query($conexion, $sql);
   if ($result) {

@@ -30,7 +30,7 @@
   $result=mysqli_query($conexion, $sql);
   $row = mysqli_fetch_row($result);
   $pre=$row[0];
-  $cons="SELECT `Nombre` FROM `reputacion` WHERE `Puntos`<='$pRep' OR `Puntos`<=-1";
+  $cons="SELECT `Nombre` FROM `reputacion` WHERE `reputacion`.`vigente`= 0 AND (`Puntos`<='$pRep' OR `Puntos`<=-1)";
   $result=mysqli_query($conexion,$cons);
   $cant=mysqli_num_rows($result);
   if ($cant == 1) {

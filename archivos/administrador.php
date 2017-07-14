@@ -22,7 +22,6 @@
       } else {
               cargarPagina('gauchadas.php');
             }
-      
     });
   });
   </script>
@@ -39,8 +38,8 @@
         <li class="borde"><strong class="navbar-text tituloDeLaNavbar">Una Gauchada</strong></li>
         <li id="pestgauchadas"><a href="administrador.php">Gauchadas</a></li>
         <!--<li id="pestMG"><a onclick="cargarPagina('misGauchadas.php')" class="puntero">Informe ganancias</a></li>
-        <li id="pestNG"><a onclick="cargarPagina('nuevaGauchada.php')" class="puntero">Informe usuarios</a></li>
-        <li id="pestComprar"><a onclick="cargarPagina('creditos.php')" class="puntero">Categorias</a></li> -->
+        <li id="pestNG"><a onclick="cargarPagina('nuevaGauchada.php')" class="puntero">Informe usuarios</a></li>-->
+        <li id="pestComprar"><a onclick="cargarPagina('categorias.php')" class="puntero">Categorias</a></li>
         <li id="pestComprar"><a onclick="cargarPagina('reputaciones.php')" class="puntero">Reputaciones</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

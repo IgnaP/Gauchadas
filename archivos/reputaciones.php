@@ -10,12 +10,8 @@
 $(document).ready(function(){
   $.get("php/buscarCookie.php?nombre=respuestaEli", function (resultado, status){
     if (resultado!="false") {
-      if (resultado == 't') {
         cambiarAlerta(true, "La reputacion se ha borrado correctamente.");
-      } else {
-        cambiarAlerta(false, resultado);
-      }
-    }
+  }
   });
   $.get("php/buscarCookie.php?nombre=respuestaAlta", function (resultado, status){
     if (resultado!="false") {
