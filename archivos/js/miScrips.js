@@ -67,10 +67,13 @@ function cambiarAlerta(tf, txt){
 }
 
 function obtenerDatosConID(pID, usrID, usrN){
-  obtener(pID, usrID, usrN, seleccionarPostulante);
+	$.get("obtenerDatosPostulante.php",{ID: usrID}, function(datosP){
+		var postulante = JSON.parse(datosP);
+		obtener(pID, usrID, usrN, postulante.email, postulante.tel, seleccionarPostulante);
+	});
 }
 
-function obtener(pID, usrID, usrN, seleccionarPostulante){
+function obtener(pID, usrID, usrN, emailP, telP, seleccionarPostulante){
   $.get("obtenerPostulantes.php",{pID: pID, uID: usrID}, function(datos){
   var datosJ = JSON.parse(datos);
   if(datosJ == ""){
@@ -81,7 +84,7 @@ function obtener(pID, usrID, usrN, seleccionarPostulante){
     content: 'Está por seleccionar a <strong>'+usrN+'</strong> y rechazar a los siguientes postulantes: '+'<br/>'+'<br/>'+datosJ.join('<br/>'),
     buttons: {
         Aceptar: function () {
-            seleccionarPostulante(usrN, pID, usrID);
+            seleccionarPostulante(usrN, pID, usrID, emailP, telP);
         },
         cancelar: function () {
       }
@@ -90,13 +93,14 @@ function obtener(pID, usrID, usrN, seleccionarPostulante){
   });
 }
 
-function seleccionarPostulante(usrN, pID, usrID){
+function seleccionarPostulante(usrN, pID, usrID, emailP, telP){
   $.get("php/datosDelUsuario.php?datos=devolver", function(datosU){
     var jDatos = JSON.parse(datosU);
     $.confirm({
-      title: 'Envio de datos al postulante',
-      content: 'Seleccionó al postulante <strong>'+usrN+'</strong> y se le enviará un correo con los siguientes datos personales: '+'<br/><br/>'
-                +'Nombre: '+jDatos.nom+'<br/>'+'Email: '+jDatos.email + '</br> Teléfono: '+jDatos.tel,
+      title: 'Envio de datos para la comunicación',
+      content: 'Seleccionó al postulante <strong>'+usrN+'</strong> y se le enviará un mensaje de correo con los siguientes datos personales: '+'<br/><br/>'
+                +'Nombre: '+jDatos.nom+'<br/>'+'Email: '+jDatos.email + '<br/> Teléfono: '+jDatos.tel+'<br/><br/> Además se le enviará a su correo los siguientes '
+                +'datos de '+usrN+': <br/><br/> Nombre: '+usrN+'<br/> Email: '+emailP+'<br/> Teléfono: '+telP,
       buttons: {
         Aceptar: function () {
             $.get("modificarPorSeleccionado.php",{pID: pID, usrACalificar: usrID});
