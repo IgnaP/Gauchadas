@@ -244,3 +244,44 @@ function cartelDespublicar(pID){
               }
             });
 }
+
+function errorDespostular(){
+	$.confirm({
+              title: '',
+              content: 'No puede despostularse de la gauchada porque ha sido seleccionado para realizarla',
+              buttons: {
+                Aceptar: function () {
+                  volverAPublicacion(pID);
+                }
+              }
+    });
+}
+
+function despostularse(pID){
+	$.get("php/datosDelUsuario.php?datos=devolver", function(datosUsr){
+		var usr = JSON.parse(datosUsr);
+		var usrID = usr.ID;
+		$.get("obtenerPostulanteSeleccionado.php",{pID: pID},function(datos){
+			var seleccionado = JSON.parse(datos);
+			if(seleccionado !== null){
+				if (seleccionado.id == usrID){
+					errorDespostular();
+				} 
+			} else {
+					$.confirm({
+      					title: 'Confirmación despostularse',
+      					content: 'Está por despostularse de la gauchada',
+      					buttons: {
+        					Aceptar: function () {
+            					$.get("despostularseDeGauchada.php",{pID: pID, uID: usrID});
+            					cargarPublicacion(pID);
+        					},
+        					Cancelar: function(){}
+      						}
+      				});
+				}
+		//
+      	//
+      	});
+	});
+}

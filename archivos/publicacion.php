@@ -38,7 +38,7 @@
               $(".delDueño #botonPostulantes, #botonDespublicar, #botonModificar").prop('disabled',true);
             } else {
               if(!jdebe){
-                $(".delDueño #calificar").hide();
+                $("#calificar").hide();
               }
             }
           });
@@ -57,8 +57,11 @@
         }
       }
       if (jDatos.postulado) {
-        $("#postularseBot").prop("disabled",true);
-        $("#postularseBot").text("Ya esta postulado");
+        $("#postularseBot").css("display",'none');
+        //$("#postularseBot").text("Ya esta postulado");
+      }
+      else{
+        $("#botonDesp").css("display",'none');
       }
       dueño=jDatos.owner;
       usr=jDatos.usr;
@@ -157,6 +160,7 @@
       $("#postularseDiv").addClass("hidden");
       $("#postularseBot").text("Ya esta postulado");
       cambiarAlerta(true, "Se ha postulado en esta gauchada");
+      setTimeout("cargarPublicacion(pID)", 1000);
     } else {
       cambiarAlerta(false, datos);
     }
@@ -170,6 +174,9 @@
   });
   $("#botonDespublicaradm").on("click", function(){
     despublicarGauchadaAdm(pID);
+  });
+  $("#botonDesp").on("click",function(){
+    despostularse(pID);
   });
 
 </script>
@@ -207,6 +214,7 @@
             </div>
             <div hidden class="noDueño">
               <button type="button" name="button" class="btn btn-default" onclick="postularseMostrar(true)" id="postularseBot">Postularse</button>
+              <button type="button" name="button" class="btn btn-default" id="botonDesp">Despostularse</button>
             </div>
             <div hidden class="admin">
               <button type="button" name="button" class="btn btn-default" id="botonDespublicaradm">Despublicar gauchada</button>
