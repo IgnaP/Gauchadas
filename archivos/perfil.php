@@ -59,11 +59,12 @@
     }
   }
   function funcionInformacion(){
-    $(".contenido").text("Contenido");
-    
+    //$(".contenido").text("Contenido");
+    $("#calificacionesDadas").load("calificacionesDadas.php");
   }
   function funcionCalificacionesDadas(){
     cambiarPanel("calificacionesDadas");
+
   }
   function funcionCalificacionesRecividas(){
     cambiarPanel("calificacionesRecividas");
