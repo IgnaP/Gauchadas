@@ -56,6 +56,9 @@
         });
         }
       }
+      if(jDatos.activa == 0){
+        $("#botonDesp").css("display",'none');
+      }
       if (jDatos.postulado) {
         $("#postularseBot").css("display",'none');
         //$("#postularseBot").text("Ya esta postulado");
