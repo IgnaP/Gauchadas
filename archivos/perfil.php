@@ -61,13 +61,14 @@
   function funcionInformacion(){
     //$(".contenido").text("Contenido");
     $("#calificacionesDadas").load("calificacionesDadas.php");
+    $("#calificacionesRecibidas").load("calificacionesRecibidas.php");
   }
   function funcionCalificacionesDadas(){
     cambiarPanel("calificacionesDadas");
 
   }
-  function funcionCalificacionesRecividas(){
-    cambiarPanel("calificacionesRecividas");
+  function funcionCalificacionesRecibidas(){
+    cambiarPanel("calificacionesRecibidas");
   }
   function funcionMisPostulaciones(){
     cambiarPanel("misPostulaciones");
@@ -122,14 +123,14 @@
           </div>
           <div class="panel-body contenido" hidden id="calificacionesDadas"></div>
         </div>
-        <div class="panel panel-primary" onclick="funcionCalificacionesRecividas()">
+        <div class="panel panel-primary" onclick="funcionCalificacionesRecibidas()">
           <div class="panel-heading">
             <div class="row">
               <div class="col-sm-11"><b>Calificaciones recibidas</b></div>
               <div class="col-sm-1"><span class="caret"></span></div>
             </div>
           </div>
-          <div class="panel-body contenido" hidden id="calificacionesRecividas"></div>
+          <div class="panel-body contenido" hidden id="calificacionesRecibidas"></div>
         </div>
         <div class="panel panel-primary" onclick="funcionMisPostulaciones()">
           <div class="panel-heading">
