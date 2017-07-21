@@ -29,21 +29,21 @@
 <body>
 	<?php
 		if($rows > 0){ ?>
-		<div class="row separar text-justify">
-				<div class="col-md-4">
-				<div><strong>Usuario Puntuado</strong></div>
+		<div class="row separar text-justify" style="margin-left: 15px; margin-right: 15px; color: white">
+			<div class="col-md-4" style="background-color:#6DBDD6;">
+				<div><strong>Usuario Calificado</strong></div>
 			</div>
-			<div class="col-md-4">
-				<div><strong>Puntaje</strong></div>
+			<div class="col-md-4" style="background-color:#6DBDD6;">
+				<div><b>Puntaje</b></div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4" style="background-color:#6DBDD6;">
 				<div><strong>Comentario</strong></div>
 			</div>
 		</div>
 		<?php while($calificaciones = mysqli_fetch_row($result)){
 				$c = $calificaciones;
 	?>
-				<div class="row separar text-center warning">
+				<div class="row separar text-justify" style="margin-left: 15px; margin-right: 15px; border-width: 2px; border-color: #ECECEA; border-bottom-style: solid;"">
 					<div class="col-md-4 text-justify">
 						<?php echo "$c[0]" ?>
 					</div>
@@ -65,7 +65,7 @@
 		<?php		} ?>
 
 		<?php } else { ?>
-			<div class="separar text-center warning"><strong> No tiene calificaciones dadas </strong></div>
+			<div class="separar text-center"><strong> No tiene calificaciones dadas </strong></div>
 	<?php	}
 	?>
 </body>

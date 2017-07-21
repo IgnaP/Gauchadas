@@ -91,7 +91,7 @@
       </div>
       <div class="">
         <div class="row">
-          <div class="col-sm-5"><label>Reputacion:</label></div>
+          <div class="col-sm-5"><label>Reputación:</label></div>
           <div class="col-sm-7"><p id="repNom" class="text-left"></p></div>
         </div>
         <div class="progress">
@@ -100,7 +100,7 @@
       </div>
       <div class="separar">
         <div class="row">
-          <b class="col-sm-4">Creditos: </b>
+          <b class="col-sm-4">Créditos: </b>
           <div class="col-sm-8"><p id="infoCreditos" class="text-left"></p></div>
         </div>
       </div>
@@ -111,7 +111,7 @@
       </div>
     </div>
     <div class="col-md-7 col-md-offset-1 transparente alturaminima">
-      <h3 class="text-center separar2">Informacion</h3>
+      <h3 class="text-center separar2">Información</h3>
       <div class="conteiner-fluid" id="historialDiv">
         <div class="panel panel-primary" onclick="funcionCalificacionesDadas()">
           <div class="panel-heading">
