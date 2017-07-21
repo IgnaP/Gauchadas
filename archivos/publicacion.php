@@ -58,6 +58,7 @@
       }
       if(jDatos.activa == 0){
         $("#botonDesp").css("display",'none');
+        $("#preguntaForm").prop('hidden',true);
       }
       if (jDatos.postulado) {
         $("#postularseBot").css("display",'none');
