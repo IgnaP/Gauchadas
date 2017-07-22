@@ -150,9 +150,11 @@
     if (tf) {
       $("#postularseDiv").removeClass("hidden");
       $("#postularseBot").prop("disabled", true);
+      $("body,html").animate({ scrollTop: $('body')[0].scrollHeight}, 1000); //para bajar scroll automáticamente
     } else {
       $("#postularseDiv").addClass("hidden");
       $("#postularseBot").prop("disabled", false);
+      $("body,html").animate({ scrollTop: '0px'}, 500); //para subir scroll automáticamente
     }
   }
   $("#postularseForm").submit(function(){
