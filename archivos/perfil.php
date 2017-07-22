@@ -77,6 +77,7 @@
   function cambiarPanel(panel){
     $(".contenido").prop("hidden",true);
     $("#"+panel).prop("hidden",false);
+    $("body,html").animate({ scrollTop: $('body')[0].scrollHeight}, 1000); //para bajar scroll automáticamente
   }
   </script>
 </head>
