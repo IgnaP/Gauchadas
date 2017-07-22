@@ -62,6 +62,7 @@
     //$(".contenido").text("Contenido");
     $("#calificacionesDadas").load("calificacionesDadas.php");
     $("#calificacionesRecibidas").load("calificacionesRecibidas.php");
+    $("#misPostulaciones").load("misPostulaciones.php");
   }
   function funcionCalificacionesDadas(){
     cambiarPanel("calificacionesDadas");
