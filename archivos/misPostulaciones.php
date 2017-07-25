@@ -23,11 +23,15 @@
   $(document).ready(function(){
     $.get("php/estadoDeSesion.php", function (estado, status){
       if (estado!="false") {
-        $(".marca").addClass("publicacionDiv");
+        //$(".marca").addClass("publicacionDiv");
         $(".marcaBoton").removeClass("hidden");
       }
     });
   });
+function cargarPublicacionDesdePerfil(pID){
+  $("li").removeClass("active");
+  $("#lacaja").load("publicacion.php",{"ID":pID,"desdePerfil":true});
+}
 </script>
 <body>
 	<div style="overflow-y: auto; overflow-x:hidden; height:342px">
@@ -115,7 +119,7 @@
           </div>
           <div class="col-md-2 col-md-offset-5 hidden marcaBoton">
             <div class="form-group">
-              <button type="button" name="button" class="btn btn-default detalleG">Ver gauchada</button>
+              <button type="button" name="button" class="btn btn-default detalleG" onclick="cargarPublicacionDesdePerfil(<?php echo "'".$row[0]."'" ?>)">Ver gauchada</button>
             </div>
           </div>
         </div>

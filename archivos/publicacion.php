@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/estilos.css">
 <script>
   var pID=<?php echo $_POST["ID"]; ?>;
+  //var dePostulaciones=<?php //echo $_POST["desdePerfil"]; ?>
   var dueño;
   var usr;
   $(document).ready(function(){
@@ -184,10 +185,18 @@
   $("#botonDesp").on("click",function(){
     despostularse(pID);
   });
-
+  function volverAPerfil(){
+    $("#lacaja").load("perfil.php?postulaciones="+true);
+  }
 </script>
 </head>
 <body>
+    <?php if(isset($_POST["desdePerfil"])){ ?>
+    <div class="row separar">
+      <div class="col-md-2 col-md-offset-1">
+        <button type="button" class="btn btn-default" onclick="volverAPerfil()">Volver a mis postulaciones</button>
+      </div> <?php } ?>
+    </div>
     <div class="row">
       <div class="col-md-10 col-md-offset-1 transparente">
         <div class="alert col-md-10 col-md-offset-1 hidden separar text-center" id="alertaForm">
@@ -273,5 +282,6 @@
         </div>
       </div>
     </div>
+}
 </body>
 </html>
