@@ -59,11 +59,16 @@ function cargarPublicacionDesdePerfil(pID){
         $resPend=false;
         $debe=false;
         $selecciono=false;
-        $sql1 = "SELECT `ID_publicacion` FROM `calificaciones` WHERE `ID_publicacion` = '$pID'";
+        $sql1 = "SELECT `ID_publicacion`, `ID_usuario` FROM `calificaciones` WHERE `ID_publicacion` = '$pID'";
         $query = mysqli_query($conexion,$sql1);
         $cant_filas=mysqli_num_rows($query);
+        $usuarioSeleccionado = false;
           if ($cant_filas>0) {
             $selecciono=true;
+            $datosSelec = mysqli_fetch_row($query);
+            if($datosSelec[1] == $id){
+              $usuarioSeleccionado = true;
+            }
           }
         $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`!='' AND `Publicacion`='$pID' AND `Vista`='0' AND `UsuarioID`='$id'";
         $resultado=mysqli_query($conexion,$consulta);
@@ -87,10 +92,13 @@ function cargarPublicacionDesdePerfil(pID){
               <h3><?php echo $row[1]; ?></h3>
             </div>
             <div class="col-md-2 separar">
-              <?php         
-  				if($selecciono){  ?>
+          <?php         
+  				if($selecciono){  
+            if($usuarioSeleccionado){ ?>
+              <label class="label label-info">Lo seleccionaron</label>
+   <?php           } else { ?>
                 <label class="label label-success">Se seleccionó postulante</label>
-  <?php         } ?>
+  <?php         } } ?>
   <?php         if ( $row[7]=='0' ) { ?>
                 <label class="label label-danger">No vigente</label>
   <?php         } ?>
