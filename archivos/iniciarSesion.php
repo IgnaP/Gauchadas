@@ -45,9 +45,9 @@
               <input type="password" class="form-control" id="inputPassword" placeholder="Clave" required pattern="[A-Za-z0-9]{3,}" title="Minimo 3 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="clave">
             </div>
           </div>
-  <!--        <div class="container">
+          <div class="container">
             <a onclick="cargarPagina('recuperarClave.php')">Recuperar clave</a>
-          </div>                             -->
+          </div>
           <div class="alert col-md-10 col-md-offset-1 hidden text-center" id="alertaForm">
             <strong id="alertaTxt"></strong>
           </div>

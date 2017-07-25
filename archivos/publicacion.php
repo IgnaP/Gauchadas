@@ -107,32 +107,124 @@
         $("#cajaPreguntas").html("<div></div>").addClass("jumbotron").append("<b>No hay preguntas</b>").addClass("text-center");
       } else {
         for (var x in jDatos) {
-          var user= $("<b></b>").append(jDatos[x][3]+" - ");
+          var opcionesTF=false;
+          var admin=false;
+          //botones modificar y eliminar comentario
+          var divOpciones= $("<div class='row'></div>");
+          if ( !(admin) ) {
+            var opcionModificar= $("<span class='puntero glyphicon glyphicon-pencil' aria-hidden='true'></span>");
+            $(divOpciones).append( $("<div class='col-md-1'></div>").append(opcionModificar) );
+          }
+          var opcionEliminar= $("<span class='puntero glyphicon glyphicon-remove' aria-hidden='true'></span>");
+          $(divOpciones).append( $("<div class='col-md-1 col-md-offset-1'></div>").append(opcionEliminar) );
+          var opciones= $("<div></div>").append( $("<div class='col-md-1'></div>").append(divOpciones) );
+          //div principal
+          var crearDiv= $("<div class='separar comentDiv'></div>");
+          $(crearDiv).attr("ID","div"+jDatos[x][0]);
+          //div de la pregunta
+          var user= $("<b></b>");
           if (jDatos[x][3]==usr) {
             var color= $("<span></span>").text(jDatos[x][3]).addClass("letraAzul");
-            user= $("<b></b>").append(color," - ");
+            $(user).append(color," - ");
+            opcionesTF=true;
+          }else {
+            $(user).append(jDatos[x][3]+" - ");
           }
-          var crearPreg= $("<p></p>").append(user,jDatos[x][1]);
-          var crearResp= "";
+          var textoPreg= $("<span></span>").text(jDatos[x][1]).attr("ID","textoPreg"+jDatos[x][0]);
+          var crearPreg= $("<p></p>").append(user,textoPreg);
+          var divPreg= $("<div class='row'></div>").append( $("<div class='col-md-11'></div>").append(crearPreg) );
+          $(divPreg).attr("ID","preg"+jDatos[x][0]);
+          if (opcionesTF | admin) {
+            if ( !(admin) ) {
+              $(opcionModificar).attr("onclick","modificarComentario('preg',"+jDatos[x][0]+")");
+            }
+            $(opcionEliminar).attr("onclick","eliminarComentario('preg',"+jDatos[x][0]+")");
+            $(divPreg).append( $(opciones).html() );
+          }
+          $(crearDiv).append(divPreg);
+          //div de la respuesta
           if (jDatos[x][2]=="") {
             if (dueño==usr) {
               crearResp= $("<a></a>").addClass("puntero botonResp").text("Responder").attr("onclick","eventoResponder(this,"+jDatos[x][0]+")");
+              var divResp= $("<div class='row'></div>").append( $("<div class='col-md-10 col-md-offset-1'></div>").append(crearResp) );
+              $(crearDiv).append(divResp);
             }
           } else {
-            var negrita= $("<b></b>").append(dueño+" - ");
+            opcionesTF=false;
+            var negrita= $("<b></b>");
             if (dueño==usr) {
               var color= $("<span></span>").text(dueño).addClass("letraAzul");
-              negrita= $("<b></b>").append(color," - ");
+              $(negrita).append(color," - ");
+              opcionesTF=true;
+            }else {
+              $(negrita).append(dueño+" - ");
             }
-            crearResp= $("<p></p>").append(negrita,jDatos[x][2]);
+            var textoResp= $("<span></span>").text(jDatos[x][2]).attr("ID","textoResp"+jDatos[x][0]);
+            crearResp= $("<p></p>").append(negrita,textoResp);
+            var container= $("<div class='row'></div>").append( $("<div class='col-md-11'></div>").append(crearResp) );
+            $(container).attr("ID","resp"+jDatos[x][0]);
+            if (opcionesTF | admin) {
+              if ( !(admin) ) {
+                $(opcionModificar).attr("onclick","modificarComentario('resp',"+jDatos[x][0]+")");
+              }
+              $(opcionEliminar).attr("onclick","eliminarComentario('resp',"+jDatos[x][0]+")");
+              $(container).append( $(opciones).html() );
+            }
+            var divResp= $("<div class='row'></div>").append( $("<div class='col-md-11 col-md-offset-1'></div>").append(container) );
+            $(crearDiv).append(divResp);
           }
-          var crearB= $("<div class='col-md-11 col-md-offset-1'></div>").append(crearResp);
-          var crearA= $("<div class='row'></div>").append(crearB);
-          var crearDiv= $("<div class='separar comentDiv'></div>").append(crearPreg,crearA);
           $("#cajaPreguntas").append(crearDiv);
         }
       }
     });
+  }
+  function modificarComentario(tipo,id){
+    cancelar();
+    $("#"+tipo+id).hide();
+    $("#"+tipo+id).addClass("escondido");
+    var canBot=$('<button type="button" class="btn btn-default">Cancelar</button>').attr("onclick","cancelar()");
+    var subBot=$('<button type="button" class="btn btn-default">Modificar</button>').attr("onclick","confirmarModificacion('"+tipo+"','"+id+"')");
+    var divB=$('<div class="row"></div>').append( $('<div class="col-md-1 col-md-offset-4"></div>').append(subBot),$('<div class="col-md-1 col-md-offset-1"></div>').append(canBot) );
+    var inpResp=$('<textarea name="inpModificar" rows="3" class="form-control" placeholder="Comentario" required style="resize: none;" maxlength="200" id="inpModificar"></textarea>');
+    if (tipo=="preg") {
+      $(inpResp).val( $("#textoPreg"+id).text() );
+    } else {
+      $(inpResp).val( $("#textoResp"+id).text() );
+    }
+    var divA=$('<div class="form-group"></div>').append(inpResp);
+    var formulario=$('<form action="" method="post" id="modificarForm" class="quitar"></form>').append(divA,divB);
+    $("#"+tipo+id).after(formulario);
+  }
+  function confirmarModificacion(tipo,id){
+    $.post("php/modificarComentario.php", {"id": id , "tipo": tipo , "texto": $("#inpModificar").val() } , function(){
+      $("#cajaPreguntas").html('');
+      cargarPreguntas();
+    });
+  }
+  function eliminarComentario(tipo,id){
+    cancelar();
+    if (tipo=="preg") {
+      var idCompleta="#div"+id;
+    } else {
+      var idCompleta="#resp"+id;
+    }
+    $(idCompleta).hide();
+    $(idCompleta).addClass("escondido");
+    var bot2=$('<button type="button" class="btn btn-default">Cancelar</button>').attr("onclick","cancelar()");
+    var bot1=$('<button type="button" class="btn btn-default">Eliminar</button>').attr("onclick","confirmarEliminacion('"+tipo+"','"+id+"')");
+    var div=$('<div class="row separar quitar"></div>').append( $('<div class="col-md-1 col-md-offset-4"></div>').append(bot1),$('<div class="col-md-1 col-md-offset-1"></div>').append(bot2) );
+    $(idCompleta).after(div);
+  }
+  function confirmarEliminacion(tipo,id){
+    $.post("php/eliminarComentario.php", {"id": id , "tipo": tipo } , function(){
+      $("#cajaPreguntas").html('');
+      cargarPreguntas();
+    });
+  }
+  function cancelar(){
+    $(".escondido").show();
+    $(".escondido").removeClass("escondido");
+    $(".quitar").remove();
   }
   function eventoResponder(yo,prueba){
     $(".botonResp").prop("hidden",false);
