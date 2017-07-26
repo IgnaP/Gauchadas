@@ -41,6 +41,7 @@
         <li id="pestNG"><a onclick="cargarPagina('nuevaGauchada.php')" class="puntero">Informe usuarios</a></li>-->
         <li id="pestComprar"><a onclick="cargarPagina('categorias.php')" class="puntero">Categorias</a></li>
         <li id="pestComprar"><a onclick="cargarPagina('reputaciones.php')" class="puntero">Reputaciones</a></li>
+        <li id="pestComprar"><a onclick="cargarPagina('usuarios.php')" class="puntero">Usuarios</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
