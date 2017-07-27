@@ -14,9 +14,20 @@
  <link href="css/bootstrap.min.css" rel="stylesheet">
  <link rel="stylesheet" href="css/estilos.css">
 <script>
-	$(document).ready(function(){
-
-	});
+	function desbloquearUsuario(uID, nombre, apellido){
+		$.confirm({
+      		title: 'Confirmación desbloquear',
+      		content: 'Está por desbloquear a '+nombre+' '+apellido,
+      		buttons: {
+        		Aceptar: function () {
+            		$.get("abUsuarios.php",{uID: uID, funcion: 'desbloquear'}, function(datos){
+            			cargarPagina('usuarios.php');
+            		});
+        		},
+        		Cancelar: function(){}
+      		}
+      	});
+	}
 </script>
 </head>
 <body>
@@ -32,7 +43,7 @@
 						<?php echo "$u[2]"." "."$u[1]" ?>
 				</div>
 				<div class="col-md-6 text-center">
-					<button type="button" class="btn btn-default">Desbloquear</button>
+					<button type="button" class="btn btn-default" onclick="desbloquearUsuario(<?php echo "'".$u[0]."'" ?>, <?php echo "'".$u[1]."'" ?>, <?php echo "'".$u[2]."'" ?>)">Desbloquear</button>
 				</div>
 			</div>
 			<?php } ?>

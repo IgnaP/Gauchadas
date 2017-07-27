@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +11,26 @@ $(document).ready(function(){
 	$.get("php/buscarCookie.php?nombre=bloqueado", function (resultado, status){
     	if (resultado!="false") {
     		$("#uTotales").removeClass('active');
-    		$("#home").removeClass('in active')
+    		$("#bloqueados").removeClass('active');
+    		$("#home").removeClass('in active');
+    		$("#uBloqueados").removeClass('in active');
     		$("#activos").addClass('active');
     		$("#uActivos").addClass('in active');
         	cambiarAlerta(true, "Se ha bloqueado al usuario correctamente");
+        	setTimeout(function() {
+        		$("#alertaForm").addClass('hidden');
+        	}, 4000);
+  		}
+  	});
+  	$.get("php/buscarCookie.php?nombre=desbloqueado", function (resultado, status){
+  		if (resultado!="false") {
+    		$("#uTotales").removeClass('active');
+    		$("#activos").removeClass('active');
+    		$("#home").removeClass('in active');
+    		$("#uActivos").removeClass('in active');
+    		$("#bloqueados").addClass('active');
+    		$("#uBloqueados").addClass('in active');
+        	cambiarAlerta(true, "Se ha desbloqueado al usuario correctamente");
         	setTimeout(function() {
         		$("#alertaForm").addClass('hidden');
         	}, 4000);
