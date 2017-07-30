@@ -37,8 +37,8 @@
       <ul class="nav navbar-nav">
         <li class="borde"><strong class="navbar-text tituloDeLaNavbar">Una Gauchada</strong></li>
         <li id="pestgauchadas"><a href="administrador.php">Gauchadas</a></li>
-        <!--<li id="pestMG"><a onclick="cargarPagina('misGauchadas.php')" class="puntero">Informe ganancias</a></li>
-        <li id="pestNG"><a onclick="cargarPagina('nuevaGauchada.php')" class="puntero">Informe usuarios</a></li>-->
+        <!--<li id="pestMG"><a onclick="cargarPagina('misGauchadas.php')" class="puntero">Informe ganancias</a></li>-->
+        <li id="pestNG"><a onclick="cargarPagina('ganancias.php')" class="puntero">Informe ganancias</a></li>
         <li id="pestComprar"><a onclick="cargarPagina('categorias.php')" class="puntero">Categorias</a></li>
         <li id="pestComprar"><a onclick="cargarPagina('reputaciones.php')" class="puntero">Reputaciones</a></li>
       </ul>
@@ -46,8 +46,8 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span> Admin <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <!--<li onclick="" id="pestperfil"><a class="puntero">Perfil</a></li>
-            <li onclick="" id="pestMiCuenta"><a class="puntero">Mi cuenta</a></li>-->
+            <!--<li onclick="" id="pestperfil"><a class="puntero">Perfil</a></li>-->
+            <li onclick="" id="pestMiCuenta"><a class="puntero">Modificar precio de credito</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="php/cerrarSesion.php">Cerrar sesion <span class="glyphicon glyphicon-log-out"></span></a></li>
           </ul>
