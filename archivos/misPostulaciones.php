@@ -34,10 +34,10 @@ function cargarPublicacionDesdePerfil(pID){
 }
 </script>
 <body>
-	<div style="overflow-y: auto; overflow-x:hidden; height:342px">
   <?php
-    if (mysqli_num_rows($result)>0) {
-      while ($row = mysqli_fetch_row($result)) {
+    if (mysqli_num_rows($result)>0) { ?>
+	<div style="overflow-y: auto; overflow-x:hidden; height:342px">
+    <?php  while ($row = mysqli_fetch_row($result)) {
         $pID=$row[0];
         $ciuID=$row[2];
         $catID=$row[4];

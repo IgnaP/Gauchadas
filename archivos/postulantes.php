@@ -5,7 +5,7 @@
 		header("Location: sesion.php"); //si intenta ingresar a esta pagina lo manda al inicio
 	}
 		$publicacion = $_GET["id"];
-  		$sql = "SELECT `usuarioID`, `comentario` FROM `postulantes` WHERE publicacionID = '$publicacion'";
+  		$sql = "SELECT `usuarioID`, `comentario` FROM `postulantes` WHERE (publicacionID = '$publicacion' AND `vigente` = '0')";
   		$result = mysqli_query($conexion, $sql);
   		$num_filas=mysqli_num_rows($result);
 ?>
