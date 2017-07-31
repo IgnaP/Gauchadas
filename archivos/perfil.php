@@ -22,6 +22,10 @@
       funcionCreditos(jDatos.creditos);
     });
     funcionInformacion();
+    
+   <?php if(isset($_GET["postulaciones"])){ ?>
+  	cambiarPanel("misPostulaciones");
+  <?php } ?>
   });
   function barRep(rep){
     $("#barRep").text(rep);

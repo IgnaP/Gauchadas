@@ -30,7 +30,9 @@
   $result=mysqli_query($conexion, $sql);
   $row = mysqli_fetch_row($result);
   $pre=$row[0];
-  $cons="SELECT `Nombre` FROM `reputacion` WHERE `reputacion`.`vigente`= 0 AND (`Puntos`<='$pRep' OR `Puntos`<=-1)";
+  // Evaluo si el valor del puntaje de la reputacion es negativo o positivo.
+  if( $pRep > 0){
+  $cons="SELECT `Nombre` FROM `reputacion` WHERE `reputacion`.`vigente`= 0 AND `Puntos`<='$pRep'";
   $result=mysqli_query($conexion,$cons);
   $cant=mysqli_num_rows($result);
   if ($cant == 1) {
@@ -44,8 +46,16 @@
       }
     }
   }
+}else {
+  $cons="SELECT `Nombre` FROM `reputacion` WHERE `reputacion`.`vigente`= 0 AND `Puntos`>='$pRep'";
+  $result=mysqli_query($conexion,$cons);
+  $cant=mysqli_num_rows($result);
+  $row=mysqli_fetch_row($result);
+  $rep=$row[0];
+
+}
   #Consultar precio de los creditos
-  $sql = "SELECT `Precio` FROM `credito` WHERE `ID_credito`='1'";
+  $sql = "SELECT `Precio` FROM `credito` WHERE `credito`.`Vigente`='0'";
   $result=mysqli_query($conexion, $sql);
   $row = mysqli_fetch_row($result);
   $precioCredito=$row[0];

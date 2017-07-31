@@ -23,17 +23,21 @@
   $(document).ready(function(){
     $.get("php/estadoDeSesion.php", function (estado, status){
       if (estado!="false") {
-        $(".marca").addClass("publicacionDiv");
+        //$(".marca").addClass("publicacionDiv");
         $(".marcaBoton").removeClass("hidden");
       }
     });
   });
+function cargarPublicacionDesdePerfil(pID){
+  $("li").removeClass("active");
+  $("#lacaja").load("publicacion.php",{"ID":pID,"desdePerfil":true});
+}
 </script>
 <body>
-	<div style="overflow-y: auto; overflow-x:hidden; height:342px">
   <?php
-    if (mysqli_num_rows($result)>0) {
-      while ($row = mysqli_fetch_row($result)) {
+    if (mysqli_num_rows($result)>0) { ?>
+	<div style="overflow-y: auto; overflow-x:hidden; height:342px">
+    <?php  while ($row = mysqli_fetch_row($result)) {
         $pID=$row[0];
         $ciuID=$row[2];
         $catID=$row[4];
@@ -55,11 +59,16 @@
         $resPend=false;
         $debe=false;
         $selecciono=false;
-        $sql1 = "SELECT `ID_publicacion` FROM `calificaciones` WHERE `ID_publicacion` = '$pID'";
+        $sql1 = "SELECT `ID_publicacion`, `ID_usuario` FROM `calificaciones` WHERE `ID_publicacion` = '$pID'";
         $query = mysqli_query($conexion,$sql1);
         $cant_filas=mysqli_num_rows($query);
+        $usuarioSeleccionado = false;
           if ($cant_filas>0) {
             $selecciono=true;
+            $datosSelec = mysqli_fetch_row($query);
+            if($datosSelec[1] == $id){
+              $usuarioSeleccionado = true;
+            }
           }
         $consulta="SELECT * FROM `comentarios` WHERE `Respuesta`!='' AND `Publicacion`='$pID' AND `Vista`='0' AND `UsuarioID`='$id'";
         $resultado=mysqli_query($conexion,$consulta);
@@ -83,10 +92,13 @@
               <h3><?php echo $row[1]; ?></h3>
             </div>
             <div class="col-md-2 separar">
-              <?php         
-  				if($selecciono){  ?>
+          <?php         
+  				if($selecciono){  
+            if($usuarioSeleccionado){ ?>
+              <label class="label label-info">Lo seleccionaron</label>
+   <?php           } else { ?>
                 <label class="label label-success">Se seleccionó postulante</label>
-  <?php         } ?>
+  <?php         } } ?>
   <?php         if ( $row[7]=='0' ) { ?>
                 <label class="label label-danger">No vigente</label>
   <?php         } ?>
@@ -115,7 +127,7 @@
           </div>
           <div class="col-md-2 col-md-offset-5 hidden marcaBoton">
             <div class="form-group">
-              <button type="button" name="button" class="btn btn-default detalleG">Ver gauchada</button>
+              <button type="button" name="button" class="btn btn-default detalleG" onclick="cargarPublicacionDesdePerfil(<?php echo "'".$row[0]."'" ?>)">Ver gauchada</button>
             </div>
           </div>
         </div>
