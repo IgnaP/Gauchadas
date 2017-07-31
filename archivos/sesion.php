@@ -48,6 +48,9 @@
     function calificarPostulante(){
       calificar(pID);
     }
+    function acercaDelSitio(){
+      acercaDe();
+    }
   </script>
 </head>
 <body>
@@ -70,6 +73,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span> <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li onclick="cargarPagina('perfil.php')" id="pestperfil"><a class="puntero">Perfil</a></li>
+            <li onclick="acercaDelSitio()" id="acercaDe"><a class="puntero">Acerca del sitio</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="php/cerrarSesion.php">Cerrar sesion <span class="glyphicon glyphicon-log-out"></span></a></li>
           </ul>

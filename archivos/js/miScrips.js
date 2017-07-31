@@ -285,3 +285,14 @@ function despostularse(pID){
       	});
 	});
 }
+
+function acercaDe(){
+  $.get("acercaDelSitio.php?", {funcion: 'obtener'}, function(datos){
+   var dato = JSON.parse(datos);
+    $.dialog({
+      escapeKey:true,
+      title: '<h4>Acerca del sitio</h4>',
+      content: dato.info,
+    });
+  });
+}
