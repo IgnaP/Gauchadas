@@ -105,9 +105,34 @@
       if (jDatos=="") {
         $("#cajaPreguntas").html("<div></div>").addClass("jumbotron").append("<b>No hay preguntas</b>").addClass("text-center");
       } else {
+        var vigente;
+        var admin;
+        $.ajax({ url: "php/datosDeLaPublicacion.php?ID="+pID, type: 'get',
+           dataType: 'html',
+           async: false,
+           success: function(resultado) {
+             var jDatos2= JSON.parse(resultado);
+             if (jDatos2.activa==1) {
+               vigente=true;
+             } else {
+               vigente=false;
+             }
+           }
+        });
+        $.ajax({ url: "php/datosDelUsuario.php?datos=devolver", type: 'get',
+           dataType: 'html',
+           async: false,
+           success: function(resultado) {
+             var jDatos2= JSON.parse(resultado);
+             if (jDatos2.admin==1) {
+               admin=true;
+             } else {
+               admin=false;
+             }
+           }
+        });
         for (var x in jDatos) {
           var opcionesTF=false;
-          var admin=false;
           //botones modificar y eliminar comentario
           var divOpciones= $("<div class='row'></div>");
           if ( !(admin) ) {
@@ -133,7 +158,7 @@
           var crearPreg= $("<p></p>").append(user,textoPreg);
           var divPreg= $("<div class='row'></div>").append( $("<div class='col-md-11'></div>").append(crearPreg) );
           $(divPreg).attr("ID","preg"+jDatos[x][0]);
-          if (opcionesTF | admin) {
+          if ((opcionesTF && vigente && (jDatos[x][2]=="")) | admin) {
             if ( !(admin) ) {
               $(opcionModificar).attr("onclick","modificarComentario('preg',"+jDatos[x][0]+")");
             }
@@ -162,7 +187,7 @@
             crearResp= $("<p></p>").append(negrita,textoResp);
             var container= $("<div class='row'></div>").append( $("<div class='col-md-11'></div>").append(crearResp) );
             $(container).attr("ID","resp"+jDatos[x][0]);
-            if (opcionesTF | admin) {
+            if ((opcionesTF && vigente) | admin) {
               if ( !(admin) ) {
                 $(opcionModificar).attr("onclick","modificarComentario('resp',"+jDatos[x][0]+")");
               }
