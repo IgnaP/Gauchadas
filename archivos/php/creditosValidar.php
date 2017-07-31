@@ -16,7 +16,7 @@ if (!$conexion) {
   $creditos=$creditos + $cant;
   $sql="UPDATE `usuarios` SET `Creditos`='$creditos' WHERE `Email`='$email'";
   $resultado=mysqli_query($conexion,$sql);
-  $sql="SELECT * FROM `credito`";
+  $sql="SELECT * FROM `credito` WHERE `credito`.`Vigente`='0'";
   $creditos=mysqli_query($conexion, $sql);
   $filaCredito=mysqli_fetch_row($creditos);
   $id_credito=$filaCredito[0];

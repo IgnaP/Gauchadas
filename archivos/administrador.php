@@ -23,7 +23,49 @@
               cargarPagina('gauchadas.php');
             }
     });
+  })
+
+  function modificarCredito(precioActual){
+    $.confirm({
+      title: 'Modificacion de tarifa de credito',
+      content: '' +
+      '<form action="calificar.php" class="formulario" method="post">' +
+      '<div class="form-group">' +
+      '<label>Precio actual: $'+ precioActual +' c/u</label></br>' +
+      '</div>' +
+      '<div class="form-group">' +
+      '<label> Precio nuevo: &nbsp;</label>'+
+      '<input type="number" name="precio" id="precio" class="precio" maxlength="10" >'+
+      '</br>'+
+      '</div>'+
+      '</form>',
+      buttons: {
+        fromSubmit: {
+          text: 'Modificar',
+          btnClass: 'btn-blue',
+          action: function() {
+            var precio= this.$content.find('.precio').val();
+            if(!precio){
+              $.alert('Debe completar el campo del precio nuevo.');
+              return false;
+            } else{
+              $.post("modificacionCredito.php",{ precio: precio });
+              $.confirm({
+                title: ' ',
+                content: 'Modificacion realizada correctamente.' ,
+               buttons: {
+                 Aceptar: function () {
+
+                  }
+                }
+              });
+            }
+        }
+      },
+      cancelar: function(){},
+    },
   });
+  }
   </script>
 </head>
 <body>
@@ -37,18 +79,24 @@
       <ul class="nav navbar-nav">
         <li class="borde"><strong class="navbar-text tituloDeLaNavbar">Una Gauchada</strong></li>
         <li id="pestgauchadas"><a href="administrador.php">Gauchadas</a></li>
-        <!--<li id="pestMG"><a onclick="cargarPagina('misGauchadas.php')" class="puntero">Informe ganancias</a></li>-->
-        <li id="pestNG"><a onclick="cargarPagina('ganancias.php')" class="puntero">Informe ganancias</a></li>
         <li id="pestComprar"><a onclick="cargarPagina('categorias.php')" class="puntero">Categorias</a></li>
         <li id="pestComprar"><a onclick="cargarPagina('reputaciones.php')" class="puntero">Reputaciones</a></li>
+        <li id="pestNG"><a onclick="cargarPagina('ganancias.php')" class="puntero">Informe ganancias</a></li>
         <li id="pestComprar"><a onclick="cargarPagina('usuarios.php')" class="puntero">Usuarios</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span> Admin <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <!--<li onclick="" id="pestperfil"><a class="puntero">Perfil</a></li>-->
-            <li onclick="" id="pestMiCuenta"><a class="puntero">Modificar precio de credito</a></li>
+            <li onclick="" id="pestperfil"><a class="puntero">Acerca del sitio</a></li>
+            <?php
+             //Busco el precio del credito vigente.
+             require("php/conexionBD.php");
+             conectarse($conexion);
+            $consulta= "SELECT * FROM `credito` WHERE `credito`.`Vigente`='0'";
+            $resultado= mysqli_query($conexion,$consulta);
+            $precioActual=mysqli_fetch_row($resultado); ?>
+            <li onclick="modificarCredito(<?php echo "'".$precioActual[1]."'"?>)" id="modiCredito"><a class="puntero">Modificar precio de credito</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="php/cerrarSesion.php">Cerrar sesion <span class="glyphicon glyphicon-log-out"></span></a></li>
           </ul>
