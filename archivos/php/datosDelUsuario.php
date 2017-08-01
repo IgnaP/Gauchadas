@@ -32,7 +32,7 @@
   $pre=$row[0];
   // Evaluo si el valor del puntaje de la reputacion es negativo o positivo.
   if( $pRep > 0){
-  $cons="SELECT `Nombre` FROM `reputacion` WHERE `reputacion`.`vigente`= 0 AND `Puntos`<='$pRep'";
+  $cons="SELECT `Nombre` FROM `reputacion` WHERE `reputacion`.`vigente`= 0 AND `Puntos`<='$pRep' ORDER BY `reputacion`.`Puntos`";
   $result=mysqli_query($conexion,$cons);
   $cant=mysqli_num_rows($result);
   if ($cant == 1) {
@@ -47,7 +47,7 @@
     }
   }
 }else {
-  $cons="SELECT `Nombre` FROM `reputacion` WHERE `reputacion`.`vigente`= 0 AND `Puntos`>='$pRep'";
+  $cons="SELECT `Nombre` FROM `reputacion` WHERE `reputacion`.`vigente`= 0 AND `Puntos`>='$pRep' ORDER BY `reputacion`.`Puntos`";
   $result=mysqli_query($conexion,$cons);
   $cant=mysqli_num_rows($result);
   $row=mysqli_fetch_row($result);

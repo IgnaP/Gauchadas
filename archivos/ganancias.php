@@ -10,6 +10,7 @@
 $(document).ready(function(){
   $("#formu").submit(function(){
     $("#informe").load("informeGanancias.php");
+    return false;
   });
 });
 </script>
@@ -19,7 +20,7 @@ $(document).ready(function(){
       <div>
         <h2 class="text-center">Informe de ganancias</h2>
       </div>
-        <form class="form-horizontal " action="" method="post" id="formu">
+        <form class="form-horizontal "  method="post" id="formu">
           <div class="form-group">
               <div class="col-sm-15 text-center">
                 <label> Ingrese las fechas de las cuales quiere ver el informe: </label>
@@ -47,7 +48,7 @@ $(document).ready(function(){
           </div>
           </div>
         </form>
-        
+
   <div id="informe" class="container-fluid">
 
   </div>
