@@ -2,7 +2,7 @@
 	require("php/conexionBD.php");
   	conectarse($conexion);
   	session_start();
-  	$sql = "SELECT `ID`,`Nombre`, `Apellido` FROM `usuarios` WHERE (`Administrador` = '0' AND `Bloqueada` = '0') ORDER BY `Apellido`, `Nombre` ";
+  	$sql = "SELECT `Nombre`, `Apellido`,`Reputacion` FROM `usuarios` WHERE (`Administrador` = '0' AND `Bloqueada` = '0') ORDER BY `Reputacion` DESC";
   	$resultado = mysqli_query($conexion,$sql);
   	$rows = mysqli_num_rows($resultado);
 ?>
@@ -40,13 +40,38 @@
 			<div><h4>Usuarios activos: <?php echo "$rows" ?></h4></div>
 			<?php while($usuarios = mysqli_fetch_row($resultado)){
 				$u = $usuarios;
+				if( $u[2] > 0){
+			  $cons="SELECT `Nombre` FROM `reputacion` WHERE `reputacion`.`vigente`= 0 AND `Puntos`<='$u[2]' ORDER BY `reputacion`.`Puntos`";
+			  $result=mysqli_query($conexion,$cons);
+			  $cant=mysqli_num_rows($result);
+			  if ($cant == 1) {
+			    $row=mysqli_fetch_row($result);
+			    $rep=$row[0];
+			  } else {
+			    $cont=0;
+			    while ($row=mysqli_fetch_row($result)) {
+			      if (++$cont == $cant) {
+			        $rep=$row[0];
+			      }
+			    }
+			  }
+			}else {
+			  $cons="SELECT `Nombre` FROM `reputacion` WHERE `reputacion`.`vigente`= 0 AND `Puntos`>='$u[2]' ORDER BY `reputacion`.`Puntos`";
+			  $result=mysqli_query($conexion,$cons);
+			  $cant=mysqli_num_rows($result);
+			  $row=mysqli_fetch_row($result);
+			  $rep=$row[0];
+			};
 			?>
 			<div class="row separar text-justify" style="margin-left: 1px; margin-right: 15px; border-width: 2px; border-color: #ECECEA; border-bottom-style: solid;">
 				<div class="text-justify col-md-4">
-						<?php echo "$u[2]"." "."$u[1]" ?>
+						<?php echo "$u[1]"." "."$u[0]" ?>
 				</div>
-				<div class="col-md-6 text-center">
-					<button type="button" class="btn btn-default" onclick="bloquearUsuario(<?php echo "'".$u[0]."'" ?>, <?php echo "'".$u[1]."'" ?>, <?php echo "'".$u[2]."'" ?>,)">Bloquear</button>
+				<div class="col-md-3 text-center">
+					<div > <h5> <?php echo $rep; ?> </h5> </div>
+				</div>
+				<div class="col-md-3 text-center">
+					<div> <h5> <?php echo $u[2]; ?> </h5> </div>
 				</div>
 			</div>
 			<?php } ?>

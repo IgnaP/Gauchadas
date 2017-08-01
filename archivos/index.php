@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
+  <link href="css/jquery-confirm.min.css" rel="stylesheet">
+  <link href="css/jquery-confirm.css" rel="stylesheet">
   <link rel="icon" href="css/Logo UnaGauchada.png">
   <title>Una Gauchada</title>
 
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery-confirm.min.js"></script>
   <script src="js/miScrips.js"></script>
   <script>
     $.get("php/estadoDeSesion.php", function (estado, status){
       if (estado=="true") {
-        $.get("php/datosDelUsuario.php?datos=devolver", function(datos){
+        $.get("../php/datosDelUsuario.php?datos=devolver", function(datos){
           var jDatos= JSON.parse(datos);
           if(jDatos.admin == 1){
             window.location = "administrador.php";
@@ -50,6 +53,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li id="pestIS"><a onclick="cargarPagina('iniciarSesion.php')" class="puntero">Iniciar sesion</a></li>
         <li id="pestReg"><a onclick="cargarPagina('registrarse.php')" class="puntero">Registrarse</a></li>
+        <li id="acercaDe"><a onclick="acercaDe()" class="puntero">Acerca del sitio</a></li>
       </ul>
     </div>
   </nav>
