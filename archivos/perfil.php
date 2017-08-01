@@ -22,7 +22,7 @@
       funcionCreditos(jDatos.creditos);
     });
     funcionInformacion();
-    
+
    <?php if(isset($_GET["postulaciones"])){ ?>
   	cambiarPanel("misPostulaciones");
   <?php } ?>
@@ -82,6 +82,18 @@
     $(".contenido").prop("hidden",true);
     $("#"+panel).prop("hidden",false);
     $("body,html").animate({ scrollTop: $('body')[0].scrollHeight}, 1000); //para bajar scroll automáticamente
+  }
+  $("#borrarCForm").submit(function(){
+    var datosFormulario= $(this).serialize();
+    $.post("php/borrarCuenta.php", datosFormulario, borrarResp);
+    return false;
+  });
+  function borrarResp(datos){
+    if (datos=="exito") {
+      window.location = "index.php";
+    } else {
+      cambiarAlerta(false, datos);
+    }
   }
   </script>
 </head>
@@ -148,6 +160,29 @@
           <div class="panel-body contenido" hidden id="misPostulaciones"></div>
         </div>
 
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-7 col-md-offset-3 transparente">
+      <h3 class="text-center">Cuenta</h3>
+      <div class="bordeDiv separar">
+        <div class="container-fluid fondoRojo">
+          <h4 class="letraBlanca">Borrar cuenta</h4>
+        </div>
+        <div class="container-fluid fondoBlanco">
+          <div class="row separar">
+            <form class="form-horizontal" action="" method="post" id="borrarCForm">
+              <label for="clave" class="control-label col-md-1">Clave</label>
+              <div class="col-md-5">
+                <input type="password" class="form-control" id="clave" placeholder="Clave" required pattern="[A-Za-z0-9]{3,}" title="De 3 a 20 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="clave">
+              </div>
+              <div class="col-md-3 col-md-offset-3">
+                <button type="submit" name="borrar" class="btn btn-default"><strong class="letraRoja">Borrar cuenta</strong></button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>

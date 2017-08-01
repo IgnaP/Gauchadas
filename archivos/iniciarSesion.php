@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="container">
-            <a onclick="cargarPagina('recuperarClave.php')">Recuperar clave</a>
+            <a class="puntero" onclick="cargarPagina('recuperarClave.php')">Recuperar clave</a>
           </div>
           <div class="alert col-md-10 col-md-offset-1 hidden text-center" id="alertaForm">
             <strong id="alertaTxt"></strong>

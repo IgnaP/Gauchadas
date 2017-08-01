@@ -50,19 +50,6 @@
     $(".inps").change(function(){
       $("#botonCambiar").prop("disabled", false);
     });
-
-    $("#borrarCForm").submit(function(){
-      var datosFormulario= $(this).serialize();
-      $.post("php/borrarCuenta.php", datosFormulario, borrarResp);
-      return false;
-    });
-    function borrarResp(datos){
-      if (datos=="exito") {
-        window.location = "index.php";
-      } else {
-        cambiarAlerta(false, datos);
-      }
-    }
   </script>
 </head>
 <body>
@@ -158,24 +145,6 @@
                   <div class="col-sm-offset-5 col-sm-5">
                     <button type="submit" class="btn btn-default" id="botonCambiar" disabled>Cambiar</button>
                   </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div class="bordeDiv" hidden>
-          <div class="container-fluid fondoRojo">
-            <h4 class="letraBlanca">Borrar cuenta</h4>
-          </div>
-          <div class="container-fluid fondoBlanco">
-            <div class="row separar">
-              <form class="form-horizontal" action="" method="post" id="borrarCForm">
-                <label for="clave" class="control-label col-md-1">Clave</label>
-                <div class="col-md-5">
-                  <input type="password" class="form-control" id="clave" placeholder="Clave" required pattern="[A-Za-z0-9]{3,}" title="De 3 a 20 caracteres y solo: A-Z a-z 0-9" maxlength="20" name="clave">
-                </div>
-                <div class="col-md-3 col-md-offset-3">
-                  <button type="submit" name="borrar" class="btn btn-default"><strong class="letraRoja">Borrar cuenta</strong></button>
                 </div>
               </form>
             </div>
