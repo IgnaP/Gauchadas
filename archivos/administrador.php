@@ -66,6 +66,9 @@
     },
   });
   }
+  function modificarInfoPagina(){
+    modificarAcercaDe();
+  }
   </script>
 </head>
 <body>
@@ -88,7 +91,7 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="nombreUsuario"></span> Admin <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li onclick="" id="pestperfil"><a class="puntero">Acerca del sitio</a></li>
+            <li onclick="" id="pestperfil"><a onclick="modificarInfoPagina()" class="puntero">Modificar información del sitio</a></li>
             <?php
              //Busco el precio del credito vigente.
              require("php/conexionBD.php");

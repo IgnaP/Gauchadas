@@ -10,6 +10,11 @@
 			$arreglo = array('info' => "$info[1]");
 			$jDatos = json_encode($arreglo); //para que lo pueda entender javaScript
 			echo $jDatos;
+		} elseif ($funcion == "modificar" && isset($_GET["info"])){
+			$info = $_GET["info"];
+			$sql = "UPDATE `informacion` SET `informacion`='$info' WHERE `ID`='1'";
+			$result = mysqli_query($conexion,$sql);
+			echo $info;
 		}
 	}
 ?>

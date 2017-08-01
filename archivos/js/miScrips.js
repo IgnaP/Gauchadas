@@ -287,12 +287,67 @@ function despostularse(pID){
 }
 
 function acercaDe(){
-  $.get("acercaDelSitio.php?", {funcion: 'obtener'}, function(datos){
+  $.get("acercaDelSitio.php", {funcion: 'obtener'}, function(datos){
    var dato = JSON.parse(datos);
     $.dialog({
-      escapeKey:true,
-      title: '<h4>Acerca del sitio</h4>',
-      content: dato.info,
+      columnClass: 'medium',
+      keyboardEnabled: true,
+      closeIcon: true,
+      type: 'blue',
+      title: '<h3>Acerca del sitio</h3>',
+      content: '<p style="white-space: pre-wrap">'+dato.info+'</p>',
     });
+  });
+}
+
+function modificarAcercaDe(){
+  $.get("acercaDelSitio.php", {funcion: 'obtener'}, function(datos){
+    var dato = JSON.parse(datos);
+    $.confirm({
+    columnClass: 'medium',
+    title: 'Modificar información del sitio',
+    content: '' +
+    '<form action="acercaDelSitio.php?funcion=modificar" class="formulario" method="get">' +
+    '<div class="form-group">' +
+    '<label for="info">Información:</label><br/>' +
+    '<textarea name="informacion" class="info" id="info" rows="10" cols="71"  maxlength="2000">' +dato.info+
+    '</textarea>' +
+    '</div>'+
+    '<div class="errorInfo letraRoja"> </div>'+
+    '</form>',
+    buttons: {
+        formSubmit: {
+            text: 'Modificar',
+            btnClass: 'btn-blue',
+            action: function () {
+                var info = this.$content.find('#info').val();
+                var errorInfo = this.$content.find(".errorInfo");
+                if(!info){
+                  errorInfo.html('Debe completar el campo').slideDown(200);
+                  return false;
+                } else {
+                  if (info == dato.info){
+                    $.alert({
+                      title:' ',
+                      content: 'No se ha realizado ningún cambio'
+                    });
+                  } else {
+                      errorInfo.hide();
+                      $.get("acercaDelSitio.php", {funcion: 'modificar', info: info}, function(datosFinales){
+                        $.alert({
+                          columnClass: 'medium',
+                          keyboardEnabled: true,
+                          type: 'blue',
+                          title: '<h4> La información se ha modificado correctamente. Así es como se visualizará:<h4>',
+                          content: '<p style="white-space: pre-wrap">'+datosFinales+'</p>'
+                        });
+                      });
+                  }
+                }
+                }
+            },
+        cancelar: function () {},
+      },
+  });
   });
 }
