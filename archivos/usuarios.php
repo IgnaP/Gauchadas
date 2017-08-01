@@ -39,6 +39,7 @@ $(document).ready(function(){
 	$("#home").load("listaUsuarios.php");
 	$("#uActivos").load("listaUsuariosActivos.php");
 	$("#uBloqueados").load("listaUsuariosBloqueados.php");
+  $("#uTop10").load("top10.php");
 });
 </script>
 <body>
@@ -53,17 +54,21 @@ $(document).ready(function(){
     			<li class="active" id="uTotales"><a data-toggle="tab" href="#home">Usuarios</a></li>
     			<li id="activos"><a data-toggle="tab" href="#uActivos">Usuarios activos</a></li>
     			<li id="bloqueados"><a data-toggle="tab" href="#uBloqueados">Usuarios bloqueados</a></li>
+          <li id="top10"><a data-toggle="tab" href="#uTop10">Top 10</a></li>
   			</ul>
   			<div class="tab-content fondoBlanco">
     			<div id="home" class="tab-pane fade in active">
 
     			</div>
     			<div id="uActivos" class="tab-pane fade">
-      				
+
     			</div>
     			<div id="uBloqueados" class="tab-pane fade">
-      				
+
     			</div>
+          <div id="uTop10" class= "tab-pane fade">
+
+          </div>
   			</div>
 		</div>
 	</div>
