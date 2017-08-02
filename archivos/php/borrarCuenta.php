@@ -12,6 +12,9 @@
     $sql="UPDATE `usuarios` SET `Borrada`='1' WHERE `Email`='$email'";
     $resultado=mysqli_query($conexion,$sql);
     if($resultado){
+      $usrID=$fila[0];
+      $sql="UPDATE `publicaciones` SET `Activa`=0 WHERE `usuario`='$usrID'";
+      mysqli_query($conexion,$sql);
       echo "exito";
       session_destroy();
     } else {
