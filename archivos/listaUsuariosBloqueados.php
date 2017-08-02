@@ -2,7 +2,7 @@
 	require("php/conexionBD.php");
   	conectarse($conexion);
   	session_start();
-  	$sql = "SELECT `ID`,`Nombre`, `Apellido` FROM `usuarios` WHERE (`Administrador` = '0' AND `Bloqueada` = '1') ORDER BY `Apellido`, `Nombre` ";
+  	$sql = "SELECT `ID`,`Nombre`, `Apellido` FROM `usuarios` WHERE (`Administrador` = '0' AND `Bloqueada` = '1' AND `Borrada` = '0') ORDER BY `Apellido`, `Nombre` ";
   	$resultado = mysqli_query($conexion,$sql);
   	$rows = mysqli_num_rows($resultado);
 ?>

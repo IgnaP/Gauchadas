@@ -3,7 +3,7 @@
   	conectarse($conexion);
   	session_start();
 
-  	$sql = "SELECT `ID`,`Nombre`, `Apellido`, `Email` FROM `usuarios` WHERE `Administrador` = '0' ORDER BY `Apellido`, `Nombre`";
+  	$sql = "SELECT `ID`,`Nombre`, `Apellido`, `Email` FROM `usuarios` WHERE (`Administrador` = '0' AND `Borrada` = '0') ORDER BY `Apellido`, `Nombre`";
   	$resultado = mysqli_query($conexion,$sql);
   	$rows = mysqli_num_rows($resultado);
 ?>

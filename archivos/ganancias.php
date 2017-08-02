@@ -9,7 +9,7 @@
 <script>
 $(document).ready(function(){
   $("#formu").submit(function(){
-    $("#informe").load("informeGanancias.php");
+    $("#informe").load("informeGanancias.php", {"fecha1": $("#fecha_inicio").val(), "fecha2": $("#fecha_fin").val()});
     return false;
   });
 });
@@ -20,7 +20,7 @@ $(document).ready(function(){
       <div>
         <h2 class="text-center">Informe de ganancias</h2>
       </div>
-        <form class="form-horizontal "  method="post" id="formu">
+        <form class="form-horizontal"  method="post" id="formu">
           <div class="form-group">
               <div class="col-sm-15 text-center">
                 <label> Ingrese las fechas de las cuales quiere ver el informe: </label>
@@ -33,13 +33,13 @@ $(document).ready(function(){
           <div class="form-group">
               <div class="col-sm-15 text-center" >
                 <label for="fecha" class="control-label"> Desde: </label>
-                <input id="fecha_inicio" type="date" max="<?php echo date("Y-m-d");?>">
+                <input id="fecha_inicio" type="date" max="<?php echo date("Y-m-d");?>" required>
               </div>
           </div>
           <div class="form-group">
             <div class="col-sm-15 text-center">
               <label> Hasta: </label>
-              <input type="date" id="fecha_fin" max="<?php echo date("Y-m-d");?>">
+              <input type="date" id="fecha_fin" max="<?php echo date("Y-m-d");?>" required>
             </div>
           </div>
           <div class="form-group">

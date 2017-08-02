@@ -2,7 +2,7 @@
 	require("php/conexionBD.php");
   	conectarse($conexion);
   	session_start();
-  	$sql = "SELECT `ID`,`Nombre`, `Apellido` FROM `usuarios` WHERE (`Administrador` = '0' AND `Bloqueada` = '0') ORDER BY `Apellido`, `Nombre` ";
+  	$sql = "SELECT `ID`,`Nombre`, `Apellido` FROM `usuarios` WHERE (`Administrador` = '0' AND `Bloqueada` = '0' AND `Borrada` = '0') ORDER BY `Apellido`, `Nombre` ";
   	$resultado = mysqli_query($conexion,$sql);
   	$rows = mysqli_num_rows($resultado);
 ?>
@@ -14,9 +14,6 @@
  <link href="css/bootstrap.min.css" rel="stylesheet">
  <link rel="stylesheet" href="css/estilos.css">
 <script>
-	$(document).ready(function(){
-	});
-
 	function bloquearUsuario(uID, nombre, apellido){
 		$.confirm({
       		title: 'Confirmación bloquear',
@@ -46,7 +43,7 @@
 						<?php echo "$u[2]"." "."$u[1]" ?>
 				</div>
 				<div class="col-md-6 text-center">
-					<button type="button" class="btn btn-default" onclick="bloquearUsuario(<?php echo "'".$u[0]."'" ?>, <?php echo "'".$u[1]."'" ?>, <?php echo "'".$u[2]."'" ?>,)">Bloquear</button>
+					<button type="button" class="btn btn-default" onclick="bloquearUsuario(<?php echo "'".$u[0]."'" ?>, <?php echo "'".$u[1]."'" ?>, <?php echo "'".$u[2]."'" ?>)">Bloquear</button>
 				</div>
 			</div>
 			<?php } ?>
