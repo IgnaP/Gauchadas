@@ -23,11 +23,14 @@ $(document).on('click','.publicacionDiv', function(){
 
 function cargarProvincias(porDefecto){
   $('#provincias').html( $('<option>', {value: porDefecto, text: porDefecto}) );
-  $.get("php/selects.php?select=provincias", function(datos){
-    var jDatos= JSON.parse(datos);
-    for (var x in jDatos) {
-      $('#provincias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
-    }
+  $.ajax({ url: "php/selects.php?select=provincias", type: 'get', dataType: 'html',
+     async: false,
+     success: function(datos) {
+       var jDatos= JSON.parse(datos);
+       for (var x in jDatos) {
+         $('#provincias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
+       }
+     }
   });
 }
 function localidadesFuncion(porDefecto){
@@ -35,11 +38,14 @@ function localidadesFuncion(porDefecto){
   var seleccionado= $("#provincias").val();
   if ( (seleccionado!="Todas") && (seleccionado!='') ) {
     $("#ciudades").prop("disabled",false);
-    $.get("php/selects.php?select=localidades&prov="+seleccionado, function(datos){
-      var jDatos= JSON.parse(datos);
-      for (var x in jDatos) {
-        $('#ciudades').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
-      }
+    $.ajax({ url: "php/selects.php?select=localidades&prov="+seleccionado, type: 'get', dataType: 'html',
+       async: false,
+       success: function(datos) {
+         var jDatos= JSON.parse(datos);
+         for (var x in jDatos) {
+           $('#ciudades').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
+         }
+       }
     });
   }else {
     $("#ciudades").prop("disabled",true);
@@ -47,11 +53,14 @@ function localidadesFuncion(porDefecto){
 }
 function cargarCategorias(porDefecto){
   $('#categorias').html( $('<option>', {value: porDefecto, text: porDefecto}) );
-  $.get("php/selects.php?select=categorias", function(datos){
-    var jDatos= JSON.parse(datos);
-    for (var x in jDatos) {
-      $('#categorias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
-    }
+  $.ajax({ url: "php/selects.php?select=categorias", type: 'get', dataType: 'html',
+     async: false,
+     success: function(datos) {
+       var jDatos= JSON.parse(datos);
+       for (var x in jDatos) {
+         $('#categorias').append($('<option>', {value: jDatos[x], text: jDatos[x]}));
+       }
+     }
   });
 }
 function cambiarAlerta(tf, txt){
@@ -266,7 +275,7 @@ function despostularse(pID){
 			if(seleccionado !== null){
 				if (seleccionado.id == usrID){
 					errorDespostular();
-				} 
+				}
 			} else {
 					$.confirm({
       					title: 'Confirmación despostularse',
