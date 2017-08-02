@@ -23,7 +23,7 @@
     });
     function inicializar(){
       $.post("php/guardarCookie.php?nombre=modificarGauchada&valor="+pID);
-      cargarCategorias('');
+      cargarCategorias("");
       cargarProvincias("");
       limitarFecha();
       $.get("php/datosDeLaPublicacion.php?ID="+pID, function(datos){

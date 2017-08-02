@@ -63,24 +63,19 @@
     }
   }
   function funcionInformacion(){
-    //$(".contenido").text("Contenido");
     $("#calificacionesDadas").load("calificacionesDadas.php");
     $("#calificacionesRecibidas").load("calificacionesRecibidas.php");
     $("#misPostulaciones").load("misPostulaciones.php");
   }
-  function funcionCalificacionesDadas(){
-    cambiarPanel("calificacionesDadas");
-
-  }
-  function funcionCalificacionesRecibidas(){
-    cambiarPanel("calificacionesRecibidas");
-  }
-  function funcionMisPostulaciones(){
-    cambiarPanel("misPostulaciones");
-  }
   function cambiarPanel(panel){
-    $(".contenido").prop("hidden",true);
-    $("#"+panel).prop("hidden",false);
+    $(".panelAbierto").prop("hidden",true);
+    if ( $("#"+panel).hasClass("panelAbierto") ) {
+      $(".panelAbierto").removeClass("panelAbierto");
+    } else {
+      $(".panelAbierto").removeClass("panelAbierto");
+      $("#"+panel).addClass("panelAbierto");
+      $(".panelAbierto").prop("hidden",false);
+    }
     $("body,html").animate({ scrollTop: $('body')[0].scrollHeight}, 1000); //para bajar scroll automáticamente
   }
   $("#borrarCForm").submit(function(){
@@ -132,38 +127,38 @@
     <div class="col-md-7 col-md-offset-1 transparente alturaminima">
       <h3 class="text-center separar2">Información</h3>
       <div class="conteiner-fluid" id="historialDiv">
-        <div class="panel panel-primary" onclick="funcionCalificacionesDadas()">
-          <div class="panel-heading">
+        <div class="panel panel-primary">
+          <div class="panel-heading" onclick="cambiarPanel('calificacionesDadas')">
             <div class="row">
               <div class="col-sm-11"><b>Calificaciones dadas</b></div>
               <div class="col-sm-1"><span class="caret"></span></div>
             </div>
           </div>
-          <div class="panel-body contenido" hidden id="calificacionesDadas"></div>
+          <div class="panel-body" hidden id="calificacionesDadas"></div>
         </div>
-        <div class="panel panel-primary" onclick="funcionCalificacionesRecibidas()">
-          <div class="panel-heading">
+        <div class="panel panel-primary">
+          <div class="panel-heading" onclick="cambiarPanel('calificacionesRecibidas')">
             <div class="row">
               <div class="col-sm-11"><b>Calificaciones recibidas</b></div>
               <div class="col-sm-1"><span class="caret"></span></div>
             </div>
           </div>
-          <div class="panel-body contenido" hidden id="calificacionesRecibidas"></div>
+          <div class="panel-body" hidden id="calificacionesRecibidas"></div>
         </div>
-        <div class="panel panel-primary" onclick="funcionMisPostulaciones()">
-          <div class="panel-heading">
+        <div class="panel panel-primary">
+          <div class="panel-heading" onclick="cambiarPanel('misPostulaciones')">
             <div class="row">
               <div class="col-sm-11"><b>Mis postulaciones</b></div>
               <div class="col-sm-1"><span class="caret"></span></div>
             </div>
           </div>
-          <div class="panel-body contenido" hidden id="misPostulaciones"></div>
+          <div class="panel-body" hidden id="misPostulaciones"></div>
         </div>
 
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row separar">
     <div class="col-md-7 col-md-offset-3 transparente">
       <h3 class="text-center">Cuenta</h3>
       <div class="bordeDiv separar">
