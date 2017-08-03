@@ -161,6 +161,11 @@
   <div class="row separar">
     <div class="col-md-7 col-md-offset-3 transparente">
       <h3 class="text-center">Cuenta</h3>
+      <div class="row">
+        <div class="alert col-md-10 col-md-offset-1 hidden text-center" id="alertaForm">
+          <strong id="alertaTxt"></strong>
+        </div>
+      </div>
       <div class="bordeDiv separar">
         <div class="container-fluid fondoRojo">
           <h4 class="letraBlanca">Borrar cuenta</h4>
